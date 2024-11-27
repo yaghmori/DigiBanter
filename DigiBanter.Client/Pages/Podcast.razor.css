@@ -1,0 +1,30 @@
+﻿.podcast {
+    display: flex;
+    flex-flow: row;
+    gap: 20px;
+}
+
+    .podcast .cover {
+        display: flex;
+        flex-flow: row;
+    }
+
+        .podcast .cover .img {
+            border-radius: 10px;
+        }
+
+    .podcast .body {
+        display: flex;
+        flex-flow: column;
+        gap: 10px;
+        align-items:end;
+    }
+
+        .podcast .body .title {
+            font-size:30px;
+        }
+        .podcast .body .content {
+            text-align: justify;
+            font-size: 15px;
+            margin:0 0 20px 0
+        }

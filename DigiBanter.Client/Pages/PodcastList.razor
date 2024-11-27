@@ -1,0 +1,20 @@
+﻿@page "/podcast"
+@using DigiBanter.Client.Services
+
+
+<PageTitle>Podcast List</PageTitle>
+<div class="podcast-list">
+    @foreach (var item in PodcastService.Collection)
+    {
+        <div class="podcast-item paper-box" onclick="window.location.href='/podcast/@item.id';">
+            <div class="header">
+                <img class="img" decoding="async" src="@item.image" alt="@item.content">
+            </div>
+            <div class="content">@item.title</div>
+        </div>
+    }
+</div>
+@code {
+   
+}
+

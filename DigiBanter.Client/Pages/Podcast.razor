@@ -1,0 +1,46 @@
+﻿@page "/podcast/{Id}"
+@using DigiBanter.Client.Services
+
+
+<PageTitle>@Item?.content</PageTitle>
+
+@if (Item is not null)
+{
+    <div class="podcast">
+        <div class="cover">
+            <img class="img" decoding="async" src="@Item.image" alt="@Item.content">
+        </div>
+        <div class="body">
+
+            <div class="title">
+                @Item.title
+            </div>
+            <div class="content">
+                @Item.content
+            </div>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Rounded.ReadMore" FullWidth="false">
+                Read More ...
+            </MudButton>
+        </div>
+    </div>
+}
+else
+{
+    <p>Podcast not found</p>
+}
+
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+    PodcastItem Item { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Item = PodcastService.Collection.FirstOrDefault(x => x.id == Guid.Parse(Id));
+
+    }
+
+
+}
+

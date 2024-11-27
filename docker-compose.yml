@@ -1,0 +1,6 @@
+services:
+  digibanter:
+    image: ${DOCKER_REGISTRY-}digibanter
+    build:
+      context: .
+      dockerfile: DigiBanter/Dockerfile

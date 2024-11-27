@@ -1,0 +1,36 @@
+﻿
+.podcast-list {
+    display: flex;
+    flex-flow: wrap;
+    gap: 10px;
+}
+
+    .podcast-list .podcast-item {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        width: 180px;
+        gap: 10px;
+        transition: background-color .5s;
+    }
+        .podcast-list .podcast-item:hover {
+            background-color:orange;
+            cursor:pointer;
+            transition:background-color .5s;
+        }
+
+        .podcast-list .podcast-item .header {
+        }
+
+            .podcast-list .podcast-item .header .img {
+                border-radius: 1rem;
+                object-fit: cover;
+                overflow: hidden;
+                width: 150px;
+            }
+
+        .podcast-list .podcast-item .content {
+            font-size: 15px;
+            word-wrap:normal;
+        }

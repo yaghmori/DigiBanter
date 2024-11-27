@@ -3,7 +3,7 @@ name: Build and Push Docker Images
 on:
   push:
     branches:
-      - main  # Trigger on push to main but with commit message filtering
+      - master  # Trigger on push to main but with commit message filtering
 
 jobs:
   build-and-push:

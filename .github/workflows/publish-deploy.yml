@@ -12,7 +12,7 @@ jobs:
 
     env:
       REGISTRY: ghcr.io
-      IMAGE_API: yaghmori/bitbanter
+      IMAGE_API: yaghmori/digibanter
       TAG: latest
 
     steps:
@@ -40,7 +40,7 @@ jobs:
 
       - name: Tag Docker Images
         run: |
-          docker tag bitbanter ${{ env.REGISTRY }}/${{ env.IMAGE_API }}:${{ env.TAG }}
+          docker tag digibanter ${{ env.REGISTRY }}/${{ env.IMAGE_API }}:${{ env.TAG }}
 
       - name: Push Docker Images
         run: |

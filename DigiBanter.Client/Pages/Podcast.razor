@@ -30,6 +30,18 @@ else
 }
 
 
+<div class="mt-5">
+    <hr />
+    <h5>You May Also Like</h5>
+    <hr />
+    <div class="d-flex flex-row gap-3">
+        @foreach (var item in PodcastService.Collection.OrderBy(x => new Random().Next()).Take(5))
+        {
+            <PodcastCard Podcast="item" />
+        }
+
+    </div>
+</div>
 @code {
     [Parameter]
     public string? Id { get; set; }

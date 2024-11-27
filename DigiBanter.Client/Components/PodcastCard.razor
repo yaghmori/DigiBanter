@@ -1,0 +1,13 @@
+﻿
+<div class="podcast-item paper-box" onclick="window.location.href='/podcast/@Podcast.id';">
+    <div class="header">
+        <img class="img" decoding="async" src="@Podcast.image" alt="@Podcast.content">
+    </div>
+    <div class="content">@Podcast.title</div>
+</div>
+
+
+@code {
+    [Parameter]
+    public PodcastItem Podcast { get; set; }
+}

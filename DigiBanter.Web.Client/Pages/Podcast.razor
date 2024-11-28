@@ -1,60 +1,83 @@
 ﻿@page "/podcast/{Id}"
+@attribute [StreamRendering]
 
 
-<PageTitle>@Item?.Title</PageTitle>
-
-@if (Item is not null)
+<PageTitle>@Model?.Title</PageTitle>
+@if(!IsBussy)
 {
-    <div class="podcast">
-        <div class="cover">
-            <img class="img" src="@Item.Image" alt="@Item.Content">
+    @if (Model is not null)
+    {
+        <div class="podcast">
+            <div class="cover">
+                <img class="img" src="@Model.Image" alt="@Model.Content">
+            </div>
+            <div class="body">
+
+                <div class="title">
+                    @Model.Title
+                </div>
+                <div class="date">
+                    <i class="material-icons-two-tone">calendar_today</i>
+
+                    @Model.DateTime
+                </div>
+
+                <div class="content">
+                    @Model.Content
+                </div>
+                <MudButton Color="Color.Dark" Variant="Variant.Filled" FullWidth="false">
+                    Read More
+                </MudButton>
+            </div>
         </div>
-        <div class="body">
+    }
+    else
+    {
+        <p>Podcast not found</p>
+    }
+    <hr />
 
-            <div class="title">
-                @Item.Title
-            </div>
-            <div class="date">
-                <i class="material-icons-two-tone">calendar_today</i>
-
-                @Item.DateTime
-            </div>
-
-            <div class="content">
-                @Item.Content
-            </div>
-            <MudButton Color="Color.Dark" Variant="Variant.Filled" FullWidth="false">
-                Read More
-            </MudButton>
-        </div>
-    </div>
 }
 else
 {
-    <p>Podcast not found</p>
+    <MudProgressLinear Indeterminate/>
+    
 }
 
+<PodcastRandomList/>
 
-<div class="mt-5" style=" width:100%;">
-    <hr />
-    <h5>You May Also Like</h5>
-    <hr />
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem;">
-        @foreach (var item in PodcastService.Collection.OrderBy(x => new Random().Next()).Take(5))
-        {
-            <PodcastCard Podcast="item" />
-        }
-
-    </div>
-</div>
 @code {
     [Parameter]
     public string? Id { get; set; }
-    PodcastItem Item { get; set; }
 
-    protected override void OnInitialized()
+    public bool IsBussy { get; set; }
+
+    [Parameter]
+    public PodcastItem? Model { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
     {
-        Item = PodcastService.Collection.FirstOrDefault(x => x.Id == Guid.Parse(Id));
+
+        try
+        {
+            IsBussy = true;
+            if (string.IsNullOrWhiteSpace(Id))
+                return;
+
+            var response = await _podcastApiService.GetTenantByIdAsync(Guid.Parse(Id));
+            if (response.Succeeded)
+                Model = response.Data;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            IsBussy = false;
+        }
+
 
     }
 

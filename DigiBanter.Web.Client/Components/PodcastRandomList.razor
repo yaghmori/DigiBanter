@@ -1,0 +1,62 @@
+﻿@if (!IsBussy)
+{
+    <div class="mt-5" style=" width:100%;">
+        <h5>You May Also Like</h5>
+        <hr />
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem;">
+            @foreach (var item in PodcastItems.OrderBy(x => new Random().Next()).Take(5))
+            {
+                <PodcastCard Podcast="item" />
+            }
+
+        </div>
+    </div>
+}
+else
+{    <div class="mt-5" style=" width:100%;">
+        <h5>You May Also Like</h5>
+        <hr />
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem;">
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        </div>
+    </div>
+
+}
+
+
+@code {
+    public List<PodcastItem> PodcastItems { get; set; } = new();
+    public bool IsBussy { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+
+        try
+        {
+            IsBussy = true;
+            var responseList = await _podcastApiService.GetPodcastsAsync();
+            if (responseList.Succeeded)
+                PodcastItems = responseList.Data;
+
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            IsBussy = false;
+        }
+
+
+    }
+
+
+}

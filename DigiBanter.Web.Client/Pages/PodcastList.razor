@@ -1,14 +1,58 @@
 ﻿@page "/podcast"
-
+@attribute [StreamRendering]
 
 <PageTitle>Podcast List</PageTitle>
-<div class="podcast-list"style="width:100%">
-    @foreach (var item in PodcastService.Collection)
-    {
-        <PodcastCard Podcast="item" />
-    }
-</div>
+@if (!IsBussy)
+{
+    <div class="podcast-list" style="width:100%">
+        @foreach (var item in PodcastItems)
+        {
+            <PodcastCard Podcast="item" />
+        }
+    </div>
+
+}
+else
+{
+    <div class="podcast-list" style="width:100%">
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+        <PodcastCard Isloading="true" />
+
+    </div>
+
+}
 @code {
-   
+    public bool IsBussy { get; set; }
+
+    public List<PodcastItem> PodcastItems { get; set; } = new();
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IsBussy = true;
+            var response = await _podcastApiService.GetPodcastsAsync();
+            if (response.Succeeded)
+                PodcastItems = response.Data;
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            IsBussy = false;
+        }
+
+    }
 }
 

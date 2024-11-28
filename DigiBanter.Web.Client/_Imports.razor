@@ -1,5 +1,8 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
+@using AutoMapper
+@using DigiBanter.Application.ApiServices.PodcastApiService
+@using DigiBanter.Shared.Services
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
@@ -10,3 +13,13 @@
 @using MudBlazor
 @using DigiBanter.Web.Client.Services
 @using DigiBanter.Web.Client.Components
+
+
+@inject IJSRuntime _jsRuntime
+
+
+@inject IPodcastApiService _podcastApiService;
+
+@inject IJsonSerializer _jsonService
+@inject IMapper _mapper
+@inject ITimeZoneHelper _timeZoneHelper

@@ -1,0 +1,38 @@
+﻿.podcast-item {
+    display: flex;
+    flex-flow: column;
+    gap: .5rem;
+    gap: 1rem;
+    transition: background-color .5s;
+}
+
+    .podcast-item:hover {
+        background-color:orange;
+        cursor: pointer;
+        transition: background-color .5s;
+    }
+
+    .podcast-item .cover {
+    }
+
+        .podcast-item .cover .img {
+            border-radius: .8rem;
+            object-fit: cover;
+            width: 100%;
+        }
+
+    .podcast-item .content {
+        display: flex;
+        flex-flow: column;
+        gap: .5rem;
+    }
+
+        .podcast-item .content .date {
+            display:flex;
+            flex-flow:row;
+            gap:.2rem;
+        }
+
+        .podcast-item .content .title {
+            font-weight: bold;
+        }

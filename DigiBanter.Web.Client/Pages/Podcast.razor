@@ -1,0 +1,63 @@
+﻿@page "/podcast/{Id}"
+
+
+<PageTitle>@Item?.Title</PageTitle>
+
+@if (Item is not null)
+{
+    <div class="podcast">
+        <div class="cover">
+            <img class="img" src="@Item.Image" alt="@Item.Content">
+        </div>
+        <div class="body">
+
+            <div class="title">
+                @Item.Title
+            </div>
+            <div class="date">
+                <i class="material-icons-two-tone">calendar_today</i>
+
+                @Item.DateTime
+            </div>
+
+            <div class="content">
+                @Item.Content
+            </div>
+            <MudButton Color="Color.Dark" Variant="Variant.Filled" FullWidth="false">
+                Read More
+            </MudButton>
+        </div>
+    </div>
+}
+else
+{
+    <p>Podcast not found</p>
+}
+
+
+<div class="mt-5" style=" width:100%;">
+    <hr />
+    <h5>You May Also Like</h5>
+    <hr />
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem;">
+        @foreach (var item in PodcastService.Collection.OrderBy(x => new Random().Next()).Take(5))
+        {
+            <PodcastCard Podcast="item" />
+        }
+
+    </div>
+</div>
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+    PodcastItem Item { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Item = PodcastService.Collection.FirstOrDefault(x => x.Id == Guid.Parse(Id));
+
+    }
+
+
+}
+

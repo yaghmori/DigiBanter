@@ -1,0 +1,14 @@
+﻿@page "/podcast"
+
+
+<PageTitle>Podcast List</PageTitle>
+<div class="podcast-list"style="width:100%">
+    @foreach (var item in PodcastService.Collection)
+    {
+        <PodcastCard Podcast="item" />
+    }
+</div>
+@code {
+   
+}
+

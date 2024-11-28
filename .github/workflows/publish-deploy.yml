@@ -12,7 +12,8 @@ jobs:
 
     env:
       REGISTRY: ghcr.io
-      IMAGE_API: yaghmori/digibanter
+      IMAGE_WEB: yaghmori/digibanter.web
+      IMAGE_API: yaghmori/digibanter.api
       TAG: latest
 
     steps:
@@ -40,8 +41,9 @@ jobs:
 
       - name: Tag Docker Images
         run: |
-          docker tag digibanter ${{ env.REGISTRY }}/${{ env.IMAGE_API }}:${{ env.TAG }}
-
+          docker tag digibanter.web ${{ env.REGISTRY }}/${{ env.IMAGE_WEB }}:${{ env.TAG }}
+          docker tag digibanter.api ${{ env.REGISTRY }}/${{ env.IMAGE_API }}:${{ env.TAG }}
       - name: Push Docker Images
         run: |
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_WEB }}:${{ env.TAG }}
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_API }}:${{ env.TAG }}

@@ -12,20 +12,20 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DigiBanter/DigiBanter.csproj", "DigiBanter/"]
-COPY ["DigiBanter.Client/DigiBanter.Client.csproj", "DigiBanter.Client/"]
-RUN dotnet restore "./DigiBanter/DigiBanter.csproj"
+COPY ["DigiBanter.Web/DigiBanter.Web.csproj", "DigiBanter.Web/"]
+COPY ["DigiBanter.Web.Client/DigiBanter.Web.Client.csproj", "DigiBanter.Web.Client/"]
+RUN dotnet restore "./DigiBanter.Web/DigiBanter.Web.csproj"
 COPY . .
-WORKDIR "/src/DigiBanter"
-RUN dotnet build "./DigiBanter.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/DigiBanter.Web"
+RUN dotnet build "./DigiBanter.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./DigiBanter.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./DigiBanter.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DigiBanter.dll"]
+ENTRYPOINT ["dotnet", "DigiBanter.Web.dll"]

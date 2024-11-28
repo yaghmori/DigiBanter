@@ -32,7 +32,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
+app.Map("/", () => "hello world!");
 app.Run();
 
 void BindAppConfiguration(WebApplicationBuilder builder)

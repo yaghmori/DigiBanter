@@ -1,13 +1,13 @@
 services:
-  digibanter:
-    image: ${DOCKER_REGISTRY-}digibanter
+  digibanter.web:
+    image: ${DOCKER_REGISTRY-}digibanterweb
     build:
       context: .
-      dockerfile: DigiBanter/Dockerfile
+      dockerfile: DigiBanter.Web/Dockerfile
 
-  # digibanter.api:
-  #   image: ${DOCKER_REGISTRY-}digibanterapi
-  #   build:
-  #     context: .
-  #     dockerfile: DigiBanter.Api/Dockerfile
+  digibanter.api:
+    image: ${DOCKER_REGISTRY-}digibanterapi
+    build:
+      context: .
+      dockerfile: DigiBanter.Api/Dockerfile
 

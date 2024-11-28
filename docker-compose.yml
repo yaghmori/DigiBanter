@@ -5,9 +5,9 @@ services:
       context: .
       dockerfile: DigiBanter/Dockerfile
 
-  digibanter.api:
-    image: ${DOCKER_REGISTRY-}digibanterapi
-    build:
-      context: .
-      dockerfile: DigiBanter.Api/Dockerfile
+  # digibanter.api:
+  #   image: ${DOCKER_REGISTRY-}digibanterapi
+  #   build:
+  #     context: .
+  #     dockerfile: DigiBanter.Api/Dockerfile
 

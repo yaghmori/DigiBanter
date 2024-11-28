@@ -13,7 +13,6 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
 
 
-
   digibanter.api:
     image: ${DOCKER_REGISTRY-}digibanter.api
     container_name: digibanter.api

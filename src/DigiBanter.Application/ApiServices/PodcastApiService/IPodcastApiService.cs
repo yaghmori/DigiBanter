@@ -5,8 +5,8 @@ namespace DigiBanter.Application.ApiServices;
 
 public interface IPodcastApiService
 {
-    Task<IApiResult<List<PodcastItem>>> GetPodcastsAsync(CancellationToken cancellationToken = default);
-    Task<IApiResult<PodcastItem>> GetPodcastByIdAsync(Guid podcastId, CancellationToken cancellationToken = default);
+    Task<IApiResult<List<PodcastResponse>>> GetPodcastsAsync(CancellationToken cancellationToken = default);
+    Task<IApiResult<PodcastResponse>> GetPodcastByIdAsync(Guid podcastId, CancellationToken cancellationToken = default);
 
 }
 

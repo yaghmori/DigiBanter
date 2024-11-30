@@ -5,7 +5,7 @@
     <div class="cover">
         <img class="img" src="@Podcast.Image" >
     </div>
-    <div class="content">
+    <div class="body">
         <div class="date">
             <i class="material-icons-two-tone">calendar_today</i>
             @Podcast.DateTime.ToShortDateString()
@@ -36,7 +36,7 @@ else{
 
 @code {
     [Parameter]
-    public PodcastItem Podcast { get; set; }
+    public PodcastResponse Podcast { get; set; }
     [Parameter]
     public bool Isloading { get; set; }
 }

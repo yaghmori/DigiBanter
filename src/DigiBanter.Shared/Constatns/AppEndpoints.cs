@@ -32,5 +32,8 @@ public static class AppEndPoints
         public const string Base = BaseAddress + "/posts";
         public const string GetById = Base + "/{0}";
     }
-
+    public static class Seed
+    {
+        public const string Base = BaseAddress + "/seed";
+    }
 }

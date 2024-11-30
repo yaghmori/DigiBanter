@@ -1,0 +1,28 @@
+//post
+[
+  {
+    "Id": 1,
+    "AuthorId": "00000000-0000-0000-0000-000000000001",
+    "CategoryId": 1,
+    "Image": "https://www.google.com",
+    "PublishedAt": "2024-10-13T00:00:00Z",
+    "Status": 1
+  },
+  {
+
+    "Id": 2,
+    "AuthorId": "00000000-0000-0000-0000-000000000001",
+    "CategoryId": 2,
+    "Image": "https://www.google.com",
+    "PublishedAt": "2024-10-13T00:00:00Z",
+    "Status": 1
+  },
+  {
+    "Id": 3,
+    "AuthorId": "00000000-0000-0000-0000-000000000001",
+    "CategoryId": 3,
+    "Image": "https://www.google.com",
+    "PublishedAt": "2024-10-13T00:00:00Z",
+    "Status": 1
+  }
+]

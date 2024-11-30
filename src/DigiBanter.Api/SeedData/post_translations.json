@@ -1,0 +1,30 @@
+//post_translations
+[
+  {
+
+
+    "Id": 1,
+    "PostId": 1,
+    "LanguageId": 1,
+    "Title": "The Future of Artificial Intelligence",
+    "Slug": "future-of-artificial-intelligence",
+    "Content": "test"
+  },
+  {
+    "Id": 2,
+    "PostId": 1,
+    "LanguageId": 2,
+    "Title": "آینده هوش مصنوعی و چالش های آن",
+    "Slug": "future-of-artificial-intelligence",
+    "Content": "test"
+  },
+  {
+    "Id": 3,
+    "PostId": 1,
+    "LanguageId": 3,
+    "Title": "The Future of Artificial Intelligence",
+    "Slug": "future-of-artificial-intelligence",
+    "Content": "test"
+  }
+
+]

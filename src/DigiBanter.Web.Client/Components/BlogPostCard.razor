@@ -1,0 +1,72 @@
+﻿@if (!Isloading){
+
+
+    <div class="post-card" >
+        <div class="cover">
+            <img class="img" src="@Model.Image">
+        </div>
+        <div class="body">
+            <div class="date">
+                <i class="material-icons-two-tone">calendar_today</i>
+                @Model.PublishedAt.ToShortDateString()
+            </div>
+
+            <div class="title">
+                @Model.Title
+            </div>
+            <div class="author">
+                @Model.Author
+            </div>
+
+            <div class="content">
+                @((MarkupString)Markdown.ToHtml(Model.Content))
+            </div>
+            <div class="action-bar">
+                <MudButton  Color="Color.Dark" Variant="Variant.Filled" Style="min-width:150px;" FullWidth="false" Href="@($"/blog/{Model.Id}")">
+                    Read More
+                </MudButton>
+
+            </div>
+
+        </div>
+    </div>
+}
+else{
+
+    <div class="post-card disable">
+        <div class="cover">
+            <MudSkeleton Style="border-radius:10px; width:100%;min-width:350px;" SkeletonType="SkeletonType.Rectangle" Width="350px" Height="230px" Animation="Animation.Wave" />
+        </div>
+        <div class="body">
+            <div class="date">
+                <MudSkeleton Width="100px"  />
+            </div>
+            <div class="title">
+                <MudSkeleton Width="70%" Height="30px" />
+            </div>
+            <div class="author">
+                <MudSkeleton Width="120px" />
+            </div>
+
+            <div class="content">
+                <MudSkeleton Width="100%" Height="12px"/>
+                <MudSkeleton Width="100%" Height="12px" />
+                <MudSkeleton Width="100%" Height="12px" />
+                <MudSkeleton Width="100%" Height="12px" />
+                <MudSkeleton Width="100%" Height="12px" />
+                <MudSkeleton Width="100%" Height="12px" />
+            </div>
+            <div class="action-bar">
+                <MudSkeleton Width="150px" Height="55px" />
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public BlogPostResponse Model { get; set; }
+    [Parameter]
+    public bool Isloading { get; set; }
+}

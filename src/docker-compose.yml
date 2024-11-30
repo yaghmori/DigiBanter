@@ -1,0 +1,22 @@
+networks:
+  main_network:
+    external: true
+
+services:
+
+  digibanter.api:
+    image: ${DOCKER_REGISTRY-}digibanterapi
+    build:
+      context: .
+      dockerfile: DigiBanter.Api/Dockerfile
+    networks:
+      - main_network
+
+#   digibanter.web:
+#     image: ${DOCKER_REGISTRY-}digibanterweb
+#     build:
+#       context: .
+#       dockerfile: DigiBanter.Web/Dockerfile
+#     networks:
+#       - main_network
+

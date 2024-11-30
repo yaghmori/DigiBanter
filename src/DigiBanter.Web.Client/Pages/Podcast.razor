@@ -1,0 +1,90 @@
+﻿@page "/podcast/{Id}"
+@attribute [StreamRendering]
+
+
+<PageTitle>@Model?.Title</PageTitle>
+@if(!IsBussy)
+{
+    @if (Model is not null)
+    {
+        <div class="podcast">
+            <div class="cover">
+                <img class="img" src="@Model.Image" alt="@Model.Content">
+            </div>
+            <div class="body">
+
+                <div class="title">
+                    @Model.Title
+                </div>
+                <div class="date">
+                    <i class="material-icons-two-tone">calendar_today</i>
+
+                    @Model.DateTime
+                </div>
+
+                <div class="content">
+                    @Model.Content
+                </div>
+                <div class="media">
+                    <audio style="width:100%" autoplay controls><source src="/assets/media/clubbed_to_death.mp3" /></audio>
+                </div>
+
+                <MudButton Color="Color.Dark" Variant="Variant.Filled" FullWidth="false">
+                    Read More
+                </MudButton>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Podcast not found</p>
+    }
+    <hr />
+
+}
+else
+{
+    <MudProgressLinear Indeterminate/>
+    
+}
+
+<PodcastRandomList/>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    public bool IsBussy { get; set; }
+
+    [Parameter]
+    public PodcastItem? Model { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        try
+        {
+            IsBussy = true;
+            if (string.IsNullOrWhiteSpace(Id))
+                return;
+
+            var response = await _podcastApiService.GetPodcastByIdAsync(Guid.Parse(Id));
+            if (response.Succeeded)
+                Model = response.Data;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            IsBussy = false;
+        }
+
+
+    }
+
+
+}
+

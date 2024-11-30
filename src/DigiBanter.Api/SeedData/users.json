@@ -1,0 +1,34 @@
+
+[
+    {
+      "Id": "00000000-0000-0000-0000-000000000001",
+      "ProfileImagePath": "image.jpg",
+      "Email": "admin@digibante.com",
+      "FirstName": "Admin",
+      "LastName": "Admin",
+      "PhoneNumber": "",
+      "BirthDate": "1984-10-13T00:00:00Z",
+      "PhoneNumberConfirmed": true,
+      "PasswordHash": "AQAAAAIAAYagAAAAECwdLRvgJ3KWiPUCepVf99QLNX5kdDQyodTVAboHpRjlN3hcWVad89Elf+E3SdZbeA==",
+      "Gender": 0,
+      "EmailConfirmed": true,
+      "SecurityStamp": "8cf78921-4a77-4f5e-b2f4-e5a3f9487c21",
+      "IsActive": true,
+      "IsOnline": false,
+      "Data": "",
+      "Settings": null,
+      "Profile": null,
+      "UserClaims": [],
+      "UserLogins": [],
+      "UserTokens": [],
+      "UserSessions": [],
+      "UserRoles": [],
+      "CreatedDate": "2024-10-13T00:00:00Z", 
+      "CreatedUserId": null,
+      "CreatedIpAddress": null,
+      "ModifiedDate": null,
+      "ModifiedUserId": null,
+      "ModifiedIpAddress": null
+    }
+  ]
+

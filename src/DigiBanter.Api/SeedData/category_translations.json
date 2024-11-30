@@ -1,0 +1,74 @@
+[
+  {
+    "Id": 1,
+    "CategoryId": 1,
+    "LanguageId": 1, // English language ID
+    "Name": "Electronics",
+    "Slug": "electronics",
+    "Description": ""
+  },
+  {
+    "Id": 2,
+    "CategoryId": 1,
+    "LanguageId": 2, // Persian language ID
+    "Name": "الکترونیک", // Translated name
+    "Slug": "electronics",
+    "Description": ""
+  },
+  {
+    "Id": 3,
+    "CategoryId": 1,
+    "LanguageId": 3, // Spanish language ID
+    "Name": "Electrónica",
+    "Slug": "electronic",
+    "Description": ""
+  },
+  {
+    "Id": 4,
+    "CategoryId": 2,
+    "LanguageId": 1, // English language ID
+    "Name": "Fashion",
+    "Slug": "fashion",
+    "Description": ""
+  },
+  {
+    "Id": 5,
+    "CategoryId": 2,
+    "LanguageId": 2, // Persian language ID
+    "Name": "فشن", // Translated name
+    "Slug": "fashion",
+    "Description": ""
+  },
+  {
+    "Id": 6,
+    "CategoryId": 2,
+    "LanguageId": 3, // Spanish language ID
+    "Name": "Moda",
+    "Slug": "fashion",
+    "Description": ""
+  },
+  {
+    "Id": 7,
+    "CategoryId": 3,
+    "LanguageId": 1, // English language ID
+    "Name": "Home and Garden",
+    "Slug": "home-garden",
+    "Description": ""
+  },
+  {
+    "Id": 8,
+    "CategoryId": 3,
+    "LanguageId": 2, // Persian language ID
+    "Name": "محصولات کشاورزی", // Translated name
+    "Slug": "home-garden",
+    "Description": ""
+  },
+  {
+    "Id": 9,
+    "CategoryId": 3,
+    "LanguageId": 3, // Spanish language ID
+    "Name": "Jardín y Casa",
+    "Slug": "jardin-y-casa",
+    "Description": ""
+  }
+]

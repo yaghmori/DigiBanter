@@ -1,0 +1,42 @@
+﻿@if (!Isloading){
+
+
+    <div class="podcast-card paper-box" onclick="window.location.href='/podcast/@Podcast.Id';">
+    <div class="cover">
+        <img class="img" src="@Podcast.Image" >
+    </div>
+    <div class="content">
+        <div class="date">
+            <i class="material-icons-two-tone">calendar_today</i>
+            @Podcast.DateTime.ToShortDateString()
+        </div>
+        <div class="title">
+            @Podcast.Title
+        </div>
+    </div>
+</div>
+}
+else{
+
+    <div class="podcast-card disable paper-box" >
+        <div class="cover">
+            <MudSkeleton Style="border-radius:8px;" SkeletonType="SkeletonType.Rectangle" Height="150px" Animation="Animation.Wave" />
+        </div>
+        <div class="content">
+            <div class="date">
+                <MudSkeleton Width="40%" />
+            </div>
+            <div class="title">
+                <MudSkeleton Width="100%" />
+                <MudSkeleton Width="80%" />
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public PodcastItem Podcast { get; set; }
+    [Parameter]
+    public bool Isloading { get; set; }
+}

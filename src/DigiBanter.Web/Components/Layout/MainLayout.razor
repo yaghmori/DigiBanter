@@ -1,0 +1,22 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <NavMenu />
+
+    <MudMainContent >
+        <MudContainer class="d-flex flex-column justify-content-center  align-items-center " Style="padding:30px; width:100%">
+            @Body
+        </MudContainer>
+
+    </MudMainContent>
+</MudLayout>
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>

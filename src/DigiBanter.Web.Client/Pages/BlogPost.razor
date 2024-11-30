@@ -1,0 +1,95 @@
+﻿@page "/blog/{Id}"
+@attribute [StreamRendering]
+
+
+<PageTitle>@Model?.Title</PageTitle>
+
+
+        @if (!IsBussy)
+{
+    @if (Model is not null)
+    {
+        <div class="article">
+            <div class="cover">
+                <img class="img" src="@Model.Image" alt="@Model.Content">
+            </div>
+            <div class="body">
+
+                <div class="title">
+                    @Model.Title
+                </div>
+                <div class="author">
+                    @Model.Author
+                </div>
+
+                <div class="date">
+                    <i class="material-icons-two-tone">calendar_today</i>
+
+                    @Model.PublishedAt
+                </div>
+
+                <div class="truncate">
+                    @((MarkupString)Markdown.ToHtml(Model.Content))
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+    else
+    {
+        <p>Post not found</p>
+    }
+    <hr />
+
+}
+else
+{
+    <MudProgressLinear Indeterminate />
+
+}
+<PodcastRandomList />
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string lang { get; set; } = "en-US";
+
+
+    public bool IsBussy { get; set; }
+
+    [Parameter]
+    public BlogPostResponse? Model { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        try
+        {
+            IsBussy = true;
+            if (string.IsNullOrWhiteSpace(Id))
+                return;
+
+            var response = await _blogPostApiService.GetPostByIdAsync(int.Parse(Id), lang);
+            if (response.Succeeded)
+                Model = response.Data;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            IsBussy = false;
+        }
+
+
+    }
+
+
+}
+

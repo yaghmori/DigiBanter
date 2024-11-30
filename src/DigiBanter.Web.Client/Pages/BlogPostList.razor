@@ -1,0 +1,64 @@
+﻿@page "/blog"
+@attribute [StreamRendering]
+
+<PageTitle>Blog Post List</PageTitle>
+@if (!IsBussy)
+{
+    <div class="post-list" style="width:100%">
+        @foreach (var item in ItemSource)
+        {
+            <BlogPostCard Model="item" />
+        }
+    </div>
+
+}
+else
+{
+    <div class="post-list" style="width:100%">
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+        <BlogPostCard Isloading="true" />
+
+
+    </div>
+
+}
+@code {
+    public bool IsBussy { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string lang { get; set; } = "en-US";
+
+    public List<BlogPostResponse> ItemSource { get; set; } = new();
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IsBussy = true;
+            var response = await _blogPostApiService.GetAllPostsAsync(lang);
+            if (response.Succeeded)
+                ItemSource = response.Data;
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            IsBussy = false;
+        }
+
+    }
+}
+

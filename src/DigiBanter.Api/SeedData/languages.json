@@ -1,0 +1,25 @@
+// languages.json
+
+[
+  {
+    "Id": 1,
+    "IsDefault": true,
+    "Image": null,
+    "Code": "en-US",
+    "Name": "English"
+  },
+  {
+    "Id": 2,
+    "IsDefault": false,
+    "Image": null,
+    "Code": "fa-IR",
+    "Name": "فارسی"
+  },
+  {
+    "Id": 3,
+    "IsDefault": false,
+    "Image": null,
+    "Code": "es-MX",
+    "Name": "Español"
+  }
+]

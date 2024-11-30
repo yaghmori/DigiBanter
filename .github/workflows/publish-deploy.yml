@@ -37,7 +37,7 @@ jobs:
 
       - name: Build Docker Images
         run: |
-          docker-compose -f docker-compose.prod.yml build
+          docker-compose -f src/docker-compose.prod.yml build
 
       - name: Tag Docker Images
         run: |

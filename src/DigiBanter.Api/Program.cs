@@ -13,7 +13,7 @@ builder.BindConfigurations();
 builder.RegisterServices();
 var app = builder.Build();
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseMiddlewares();
 app.MapEndpoints();
 app.Run();

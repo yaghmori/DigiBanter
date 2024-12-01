@@ -27,7 +27,6 @@ public class BlogPostService : IBlogPostService
 
     public async Task<ServiceResult<List<BlogPostResponse>>> GetPostAsync(HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
     {
-      await  Task.Delay(1500);
         var posts = await _appDbContext.PostTranslations
             .Where(x => EF.Functions.Like(x.Language.Code, $"%{lang}%"))
             .Select(x => new BlogPostResponse
@@ -48,7 +47,6 @@ public class BlogPostService : IBlogPostService
 
     public async Task<ServiceResult<BlogPostResponse>> GetPostByIdAsync(int Id,HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
     {
-        await Task.Delay(500);
         var post = await _appDbContext.PostTranslations
             .Where(x => x.Post.Id == Id)
             .Where(x => EF.Functions.Like(x.Language.Code, $"%{lang}%"))

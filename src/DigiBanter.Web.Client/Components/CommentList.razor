@@ -1,0 +1,50 @@
+﻿@if (!Isloading)
+{
+
+    <div class="container">
+        <CommentCard Model="@new("Alireza Tadi",DateTime.Now,"https://bootdey.com/img/Content/avatar/avatar1.png","This article provides a comprehensive overview of the current state and future prospects of artificial intelligence. The author does an excellent job of explaining complex concepts in an accessible way",12,1)" />
+        <CommentCard Model="@new("Ehsan Yaghmori",DateTime.Now,"https://bootdey.com/img/Content/avatar/avatar7.png","Thanks for your comment",1,0)" />
+        <CommentCard Model="@new("Meysam Rastegar kisomy",DateTime.Now,"https://bootdey.com/img/Content/avatar/avatar6.png","I found this article to be overly optimistic about the potential benefits of AI. It glosses over some of the more significant challenges and risks associated with the technology.",12,1)" />
+    </div>
+
+}
+else
+{
+
+    <div class="post-card disable">
+        <div class="cover">
+            <MudSkeleton Style="border-radius:10px; width:100%;min-width:350px;" SkeletonType="SkeletonType.Rectangle" Width="350px" Height="230px" Animation="Animation.Wave" />
+        </div>
+        <div class="body">
+            <div class="date">
+                <MudSkeleton Width="100px" />
+            </div>
+            <div class="title">
+                <MudSkeleton Width="70%" Height="30px" />
+            </div>
+            <div class="author">
+                <MudSkeleton Width="120px" />
+            </div>
+
+            <div class="content">
+                <MudSkeleton Width="100%" Height="12px" />
+                <MudSkeleton Width="100%" Height="12px" />
+                <MudSkeleton Width="100%" Height="12px" />
+                <MudSkeleton Width="100%" Height="12px" />
+                <MudSkeleton Width="100%" Height="12px" />
+                <MudSkeleton Width="100%" Height="12px" />
+            </div>
+            <div class="action-bar">
+                <MudSkeleton Width="150px" Height="55px" />
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    [Parameter]
+    public bool Isloading { get; set; }
+}

@@ -45,14 +45,12 @@ public class PodcastService : IPodcastService
 
     public async Task<ServiceResult<List<PodcastResponse>>> GetAllAsync(HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
     {
-        await Task.Delay(2000);
         return ServiceResult<List<PodcastResponse>>.Success(podcastList);
     }
 
 
     public async Task<ServiceResult<PodcastResponse>> GetByIdAsync(Guid id,HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
     {
-        await Task.Delay(1000);
 
         var podcast = podcastList.FirstOrDefault(x => x.Id == id);
         if (podcast == null)

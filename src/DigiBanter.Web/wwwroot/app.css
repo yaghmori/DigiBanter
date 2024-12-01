@@ -1,23 +1,55 @@
+@import url('css/font-awesome/css/all.css');
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
 a, .btn-link {
     color: #006bb7;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+
+.layout {
+    height: 100%;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    .layout .header {
+    }
+
+    .layout .main-layout {
+        height: 100%;
+        padding: 100px 0 0 0;
+        background: gray;
+    }
+
+    .layout .footer-layout {
+        height: 500px;
+        background: #eee;
+        bottom: 0;
+    }
+
+
+    .layout .column {
+        float: left;
+    }
+
+        /* Left and right column */
+        .layout .column.side {
+            width: 25%;
+        }
+
+        /* Middle column */
+        .layout .column.middle {
+            width: 50%;
+        }
+
+@media screen and (max-width: 600px) {
+    .column.side, .column.middle {
+        width: 100%;
+    }
 }
 
-.content {
-    padding-top: 1.1rem;
-}
+
+
 
 h1:focus {
     outline: none;
@@ -86,31 +118,3 @@ h1:focus {
 .material-icons-two-tone {
     font-size: 1rem; /* Preferred icon size */
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

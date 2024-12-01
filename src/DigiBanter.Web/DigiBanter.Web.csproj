@@ -12,7 +12,7 @@
   <ItemGroup>
     <None Include="wwwroot\app.css" />
     <None Include="wwwroot\favicon.png" />
-    <None Include="wwwroot\paperbox.css" />
+    <None Include="wwwroot\css\paperbox.css" />
   </ItemGroup>
 
   <ItemGroup>

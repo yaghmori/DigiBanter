@@ -1,4 +1,5 @@
-﻿@page "/blog/{Id}"
+﻿@page "/blog/{id:int}"
+@page "/{lang}/blog/{id:int}"
 @attribute [StreamRendering]
 
 
@@ -57,10 +58,7 @@
 
 @code {
     [Parameter]
-    public string? Id { get; set; }
-
-    [SupplyParameterFromQuery]
-    public string lang { get; set; } = "en-US";
+    public int? Id { get; set; }
 
 
     public bool IsBussy { get; set; }
@@ -75,10 +73,10 @@
         try
         {
             IsBussy = true;
-            if (string.IsNullOrWhiteSpace(Id))
+            if (Id == null)
                 return;
 
-            var response = await _blogPostApiService.GetPostByIdAsync(int.Parse(Id), lang);
+            var response = await _blogPostApiService.GetPostByIdAsync(Id.Value, lang);
             if (response.Succeeded)
                 Model = response.Data;
         }

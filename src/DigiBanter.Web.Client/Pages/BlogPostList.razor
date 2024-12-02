@@ -1,4 +1,5 @@
 ﻿@page "/blog"
+@page "/{lang}/blog"
 @attribute [StreamRendering]
 
 <PageTitle>Blog Post List</PageTitle>
@@ -36,8 +37,6 @@ else
 @code {
     public bool IsBussy { get; set; }
 
-    [SupplyParameterFromQuery]
-    public string lang { get; set; } = "en-US";
 
     public List<BlogPostResponse> ItemSource { get; set; } = new();
     protected override async Task OnInitializedAsync()

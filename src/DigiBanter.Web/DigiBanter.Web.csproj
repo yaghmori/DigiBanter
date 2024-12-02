@@ -27,4 +27,10 @@
     <ProjectReference Include="..\DigiBanter.Web.Client\DigiBanter.Web.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Components\Pages\404.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>

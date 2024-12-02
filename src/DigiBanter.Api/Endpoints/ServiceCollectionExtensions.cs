@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
         app.MapBlogPostEndpoints();
         app.MapPodcastEndpoints();
         app.MapSeedEndpoints();
-        app.Map("/", () => "hello world!");
+        app.Map("/", () => Results.Redirect("/en"));
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

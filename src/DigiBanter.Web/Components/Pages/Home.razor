@@ -1,8 +1,31 @@
 ﻿@page "/"
-@page "/home"
+@page "/{lang}"
+@page "/{lang}/home"
 
 <PageTitle>Home</PageTitle>
+<div>Language : @lang</div>
 
-<h1>Hello, world!</h1>
-
-Welcome to DigiBanter.
+@switch (Langauge)
+{
+    case "en":
+        <h1>Hello, world!</h1>
+        <div>Welcome to DigiBanter.</div>
+        break;
+    case "es":
+        <h1>¡Hola, mundo!</h1>
+        <div>Bienvenido a DigiBanter.</div>
+        break;
+    case "fr":
+        <h1>Bonjour le monde!</h1>
+        <div> Bienvenue à DigiBanter.</div>
+        break;
+    case "fa":
+        <h1>سلام دنیا</h1>
+        <div>به دیجی بنتر خوش آمدید</div>
+        break;
+    default:
+        <div>Not specified</div>
+        break;
+}
+@code {
+    }

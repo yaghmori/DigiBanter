@@ -1,4 +1,6 @@
 ﻿@page "/about"
+@page "/{lang}/about"
+
 @rendermode InteractiveAuto
 
 <PageTitle>About</PageTitle>
@@ -14,6 +16,7 @@
     private void IncrementCount()
     {
         currentCount++;
+        
     }
 }
 

@@ -14,6 +14,7 @@ jobs:
       REGISTRY: ghcr.io
       IMAGE_WEB: yaghmori/digibanter.web
       IMAGE_API: yaghmori/digibanter.api
+      IMAGE_ADMIN: yaghmori/digibanter.admin
       TAG: latest
 
     steps:
@@ -43,7 +44,9 @@ jobs:
         run: |
           docker tag digibanter.web ${{ env.REGISTRY }}/${{ env.IMAGE_WEB }}:${{ env.TAG }}
           docker tag digibanter.api ${{ env.REGISTRY }}/${{ env.IMAGE_API }}:${{ env.TAG }}
+          docker tag digibanter.admin ${{ env.REGISTRY }}/${{ env.IMAGE_ADMIN }}:${{ env.TAG }}
       - name: Push Docker Images
         run: |
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_WEB }}:${{ env.TAG }}
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_API }}:${{ env.TAG }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_ADMIN }}:${{ env.TAG }}

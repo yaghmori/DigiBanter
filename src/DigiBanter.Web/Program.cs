@@ -10,7 +10,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddMudServices();
-builder.Services.RegisterServices();
+builder.Services.RegisterServices(builder.Environment.EnvironmentName);
 
 var app = builder.Build();
 

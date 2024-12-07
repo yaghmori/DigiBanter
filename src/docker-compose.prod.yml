@@ -12,6 +12,17 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
 
+  digibanter.admin:
+    image: ${DOCKER_REGISTRY-}digibanter.admin
+    container_name: digibanter.admin
+    build:
+      context: .
+      dockerfile: DigiBanter.Admin/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+ 
 
   digibanter.api:
     image: ${DOCKER_REGISTRY-}digibanter.api

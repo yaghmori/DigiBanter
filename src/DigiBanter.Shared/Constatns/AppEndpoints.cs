@@ -36,4 +36,19 @@ public static class AppEndPoints
     {
         public const string Base = BaseAddress + "/seed";
     }
+
+    public static class Auth
+    {
+        public const string Base = BaseAddress + "/auth";
+        public const string Login = Base + "/login";
+        public const string Register = Base + "/register";
+    }
+
+    public static class User
+    {
+        public const string Base = BaseAddress + "/users";
+        public const string GetUsers = Base ;
+        public const string GetUserById = Base + "/{0}";
+    }
+
 }

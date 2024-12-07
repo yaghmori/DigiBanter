@@ -1,4 +1,5 @@
 ﻿using DigiBanter.Shared.Services.TimeZoneResolver;
+using System.Security.Claims;
 
 namespace DigiBanter.Api.Endpoints;
 
@@ -11,13 +12,13 @@ public static class ServiceCollectionExtensions
         app.MapBlogPostEndpoints();
         app.MapPodcastEndpoints();
         app.MapSeedEndpoints();
-        app.Map("/", () => Results.Redirect("/en"));
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        app.MapAuthEndpoints();
+        app.MapGet("/", () => "Hello world!");
+        app.MapGet("/user/me", (ClaimsPrincipal claimprincipal) =>
         {
-            app.MapOpenApi();
-        }
+           return claimprincipal.Claims.ToDictionary(t => t.Type, v => v.Value);
+        }).RequireAuthorization();
+
 
     }
 

@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigiBanter.Web", "DigiBante
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigiBanter.Web.Client", "DigiBanter.Web.Client\DigiBanter.Web.Client.csproj", "{3CE2E2A3-D77F-4C97-BC4C-A46356A30E69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigiBanter.Auth", "DigiBanter.Auth\DigiBanter.Auth.csproj", "{CA8513A3-1481-4D44-8679-66D5700F817D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigiBanter.Admin", "DigiBanter.Admin\DigiBanter.Admin.csproj", "{8F609A7F-6435-4965-AF82-16E38500609D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{3CE2E2A3-D77F-4C97-BC4C-A46356A30E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CE2E2A3-D77F-4C97-BC4C-A46356A30E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CE2E2A3-D77F-4C97-BC4C-A46356A30E69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA8513A3-1481-4D44-8679-66D5700F817D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA8513A3-1481-4D44-8679-66D5700F817D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA8513A3-1481-4D44-8679-66D5700F817D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA8513A3-1481-4D44-8679-66D5700F817D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F609A7F-6435-4965-AF82-16E38500609D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F609A7F-6435-4965-AF82-16E38500609D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F609A7F-6435-4965-AF82-16E38500609D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F609A7F-6435-4965-AF82-16E38500609D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

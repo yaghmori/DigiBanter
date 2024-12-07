@@ -13,7 +13,7 @@ namespace EAllyfe.Api.Helpers;
 
 public static class JwtHelper
 {
-    public static async Task<List<Claim>> GetMasterClaimsAsync(Guid sessionId, Guid userId, AppDbContext appDbContext, CancellationToken cancellationToken = default)
+    public static async Task<List<Claim>> GetClaimsAsync(Guid sessionId, Guid userId, AppDbContext appDbContext, CancellationToken cancellationToken = default)
     {
         //RoleClaims
         var roles = await appDbContext.UserRoles

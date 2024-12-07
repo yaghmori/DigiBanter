@@ -9,17 +9,16 @@ using DigiBanter.Web.Client.HttpDelegateHnadlers;
 using DigiBanter.Web.Client.Services;
 using FluentValidation;
 using Newtonsoft.Json;
-
 namespace DigiBanter.Web.Client.Extensions;
 
 public static class ServiceCollectionExtensions
 {
 
-    public static void RegisterServices(this IServiceCollection services)
+    public static void RegisterServices(this IServiceCollection services,string env)
     {
 
         ConfigureControllerAndJsonSerializer(services);
-        ConfigureAppSettings(services);
+        ConfigureAppSettings(services, env);
         ConfigureAutoMapper(services);
         ConfigureValidators(services);
 
@@ -27,6 +26,7 @@ public static class ServiceCollectionExtensions
         services.AddApiServices();
         services.AddScoped<ITimeZoneHelper, TimeZoneHelper>();
         services.AddScoped<ITimeZoneProvider, TimeZoneProvider>();
+        services.AddLocalization();
 
     }
     static void ConfigureControllerAndJsonSerializer(IServiceCollection services)
@@ -55,18 +55,19 @@ public static class ServiceCollectionExtensions
     }
 
 
-    static void ConfigureAppSettings(IServiceCollection services)
+    static void ConfigureAppSettings(IServiceCollection services,string env)
     {
+
         // Load configuration from appsettings.json
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{env}.json", optional: false, reloadOnChange: true)
             .Build();
 
         var _settings = configuration.Get<EndPointConfiguration>() ?? throw new Exception("Application settings not found");
 
         services.AddSingleton(_settings);
 
-        AppConstants.ServerBaseAddress = _settings.Endpoints.Api;
+        AppConstants.ApiBaseAddress = _settings.Endpoints.Api;
         ConfigureHttpClients(services, _settings);
     }
 

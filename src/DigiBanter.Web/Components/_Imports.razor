@@ -6,13 +6,16 @@
 @using Microsoft.AspNetCore.Components.Web
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.Extensions.Localization
 @using Microsoft.JSInterop
 @using DigiBanter
 @using DigiBanter.Web.Client
 @using DigiBanter.Web.Components
 @using DigiBanter.Web.Components.Pages
 @using DigiBanter.Web.Components.Layout
-
 @using MudBlazor
+@using DigiBanter.Localization
 
 @inherits BaseComponent
+@inject NavigationManager _navigationManager
+@inject IStringLocalizer<ViewResources> _viewLocalizer

@@ -85,7 +85,7 @@ public static class SeedEndpoints
                                 list.Add(new RoleClaim
                                 {
                                     RoleId = role.Id,
-                                    ClaimType = AppClaimTypes.ClaimType,
+                                    ClaimType = AppClaimTypes.auth,
                                     ClaimValue = item,
                                 });
                             }

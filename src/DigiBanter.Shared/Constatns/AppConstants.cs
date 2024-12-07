@@ -4,7 +4,8 @@ namespace DigiBanter.Shared.Constatns;
 public static class AppConstants
 {
     public static string BaseUrl = string.Empty;
-    public static string ServerBaseAddress = "";
+    public static string ApiBaseAddress = "";
+    public static string AuthBaseAddress = "";
     public static string AvatarPreview = "/assets/images/avatar.jpg";
     public static string NoPreview = "/assets/images/nopreview.jpg";
     public static string Logo = "/assets/logo/logo.png";
@@ -35,13 +36,13 @@ public static class AppCacheKeys
 
 public static class AppClientTypes
 {
-    public static string Identity = "client.identity";
+    public static string Auth = "client.auth";
     public static string Master = "client.master";
 }
 public static class AppClaimTypes
 {
     public const string Role = "role";
-    public const string ClaimType = "permission";
+    public const string auth = "permission";
     public const string UserId = "uid";
     public const string SecurityStamp = "sst";
     public const string Email = "email";

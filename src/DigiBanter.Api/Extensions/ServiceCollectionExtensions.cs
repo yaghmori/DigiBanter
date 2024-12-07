@@ -11,6 +11,17 @@ using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using EAllyfe.Api.Middlewares;
+using DigiBanter.Shared.Constatns;
+using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using DigiBanter.Shared.Extensions;
+using System.Security.Claims;
+using EAllyfe.Api.Helpers;
+using DigiBanter.Api.AuthorizationHandler;
 
 namespace DigiBanter.Api.Extensions;
 
@@ -157,5 +168,110 @@ public static class ServiceCollectionExtensions
         builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
         builder.Services.AddProblemDetails();
     }
+    public static void ConfigureAuthentication(this WebApplicationBuilder builder)
+    {
+        var config = builder.Configuration.Get<AppConfig>()!;
+
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.MetadataAddress = config.AuthOptions.MetadataAddress;
+            options.Audience = config.AuthOptions.Audience;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidIssuer = config.AuthOptions.ValidIssuer
+            };
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    var path = context.HttpContext.Request.Path;
+                    if (path.StartsWithSegments("/hubs"))
+                    {
+                        var token = context.Request.Query["access_token"];
+                        if (string.IsNullOrWhiteSpace(token))
+                        {
+                            token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+                        }
+                        context.Token = token;
+                        return Task.CompletedTask;
+                    }
+                    var accessToken = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+                    if (!string.IsNullOrEmpty(accessToken))
+                    {
+                        context.Token = accessToken;
+                    }
+                    else
+                    {
+                        context.Request.Cookies.TryGetValue(AppConstants.AccessToken, out var access);
+                        if (!string.IsNullOrEmpty(access))
+                        {
+                            context.Token = access;
+                        }
+                    }
+                    return Task.CompletedTask;
+                },
+                OnTokenValidated = async context =>
+                {
+                    var dbContext = context.HttpContext.RequestServices.GetRequiredService<AppDbContext>();
+
+                    var sessionId = context.Principal?.GetSessionId();
+                    var userId = context.Principal?.GetUserId();
+
+                    if (string.IsNullOrWhiteSpace(sessionId) || string.IsNullOrWhiteSpace(userId))
+                    {
+                        context.Fail("Required claims are missing in the token.");
+                        return;
+                    }
+
+
+                    IEnumerable<Claim> claims;
+                    try
+                    {
+                        claims = await JwtHelper.GetClaimsAsync(Guid.Parse(sessionId), Guid.Parse(userId), dbContext);
+                    }
+                    catch (Exception ex)
+                    {
+                        context.Fail($"Failed to retrieve claims: {ex.Message}");
+                        return;
+                    }
+
+                    var tenantIdentity = new ClaimsIdentity("Identity");
+                    tenantIdentity.AddClaims(claims);
+
+                    context.Principal!.AddIdentity(tenantIdentity);
+                }
+            };
+        });
+    }
+
+    public static void ConfigureAuthorization(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<IAuthorizationHandler, ClaimRequirementHandler>();
+
+        //Register app claims
+        builder.Services.AddAuthorizationCore(options =>
+        {
+            var claimList = typeof(AppClaims).GetNestedTypes()
+                .SelectMany(c => c.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy));
+            foreach (var claim in claimList)
+            {
+                var value = claim.GetValue(null);
+
+                if (value != null)
+                {
+                    options.AddPolicy(value.ToString()!, policy => policy.RequireAuthenticatedUser()
+                        .Requirements.Add(new ClaimRequirement(value.ToString()!)));
+                }
+            }
+        });
+
+    }
+
 
 }

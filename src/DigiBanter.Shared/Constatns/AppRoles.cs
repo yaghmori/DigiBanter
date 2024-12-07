@@ -7,3 +7,5 @@ public static class AppRoles
     public const string Base = "base";
 
 }
+
+

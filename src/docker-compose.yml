@@ -6,6 +6,7 @@ services:
 
   digibanter.api:
     image: ${DOCKER_REGISTRY-}digibanterapi
+    container_name: digibanter.api
     build:
       context: .
       dockerfile: DigiBanter.Api/Dockerfile

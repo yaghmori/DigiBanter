@@ -4,9 +4,9 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "composeLaunchAction": "None",
-      "composeLaunchServiceName": "digibanter.api",
+      "composeLaunchServiceName": "parslinks.api",
       "serviceActions": {
-        "digibanter.api": "StartDebugging"
+        "parslinks.api": "StartDebugging"
       }
     }
   }

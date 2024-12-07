@@ -4,12 +4,12 @@ networks:
 
 services:
 
-  digibanter.api:
-    image: ${DOCKER_REGISTRY-}digibanterapi
-    container_name: digibanter.api
+  parslinks.api:
+    image: ${DOCKER_REGISTRY-}parslinksapi
+    container_name: parslinks.api
     build:
       context: .
-      dockerfile: DigiBanter.Api/Dockerfile
+      dockerfile: ParsLinks.Api/Dockerfile
     networks:
       - main_network
 

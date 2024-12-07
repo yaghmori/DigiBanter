@@ -1,0 +1,35 @@
+﻿@using System.Net.Http
+@using System.Net.Http.Json
+@using AutoMapper
+@using ParsLinks.Admin.Shared
+@using ParsLinks.Application.ApiServices
+@using ParsLinks.Localization
+@using ParsLinks.Shared.Services
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.Extensions.Localization
+@using Microsoft.JSInterop
+@using ParsLinks.Admin
+@using ParsLinks.Admin.Components
+@using MudBlazor
+@using ParsLinks.Shared.Constatns
+@using Microsoft.AspNetCore.Authorization
+@using ParsLinks.Admin.Components.Shared
+@inherits BaseComponent
+
+@inject IJSRuntime _jsRuntime
+
+
+@inject IPodcastApiService _podcastApiService
+@inject IBlogPostApiService _blogPostApiService
+
+@inject IJsonSerializer _jsonService
+@inject IMapper _mapper
+@inject ITimeZoneHelper _timeZoneHelper
+@inject NavigationManager _navigationManager
+@inject IStringLocalizer<ViewResources> _viewLocalizer
+@inject IStringLocalizer<ViewResources> _viewLocalizer

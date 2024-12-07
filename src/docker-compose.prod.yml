@@ -1,35 +1,35 @@
 
 services:
 
-  digibanter.web:
-    image: ${DOCKER_REGISTRY-}digibanter.web
-    container_name: digibanter.web
+  parslinks.web:
+    image: ${DOCKER_REGISTRY-}parslinks.web
+    container_name: parslinks.web
     build:
       context: .
-      dockerfile: DigiBanter.Web/Dockerfile
+      dockerfile: ParsLinks.Web/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
 
-  digibanter.admin:
-    image: ${DOCKER_REGISTRY-}digibanter.admin
-    container_name: digibanter.admin
+  parslinks.admin:
+    image: ${DOCKER_REGISTRY-}parslinks.admin
+    container_name: parslinks.admin
     build:
       context: .
-      dockerfile: DigiBanter.Admin/Dockerfile
+      dockerfile: ParsLinks.Admin/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
  
 
-  digibanter.api:
-    image: ${DOCKER_REGISTRY-}digibanter.api
-    container_name: digibanter.api
+  parslinks.api:
+    image: ${DOCKER_REGISTRY-}parslinks.api
+    container_name: parslinks.api
     build:
       context: .
-      dockerfile: DigiBanter.Api/Dockerfile
+      dockerfile: ParsLinks.Api/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080

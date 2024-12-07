@@ -7,7 +7,7 @@
     <ProjectGuid>d5ee8cca-d547-420a-b803-e7acac37825b</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>digibanter</DockerServiceName>
+    <DockerServiceName>parslinks</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

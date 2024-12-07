@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D5EE8CCA-D547-420A-B803-E7ACAC37825B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A66D65D3-7F78-44A9-AA20-7263231E3FF5}"
+	ProjectSection(SolutionItems) = preProject
+		.env = .env
+		cli.txt = cli.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsLinks.Admin", "ParsLinks.Admin\ParsLinks.Admin.csproj", "{0C4F5BE9-71C5-423A-A50A-C77A9D911A93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsLinks.Api", "ParsLinks.Api\ParsLinks.Api.csproj", "{28F45402-B947-4CEB-9D04-1049D922F702}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsLinks.Application", "ParsLinks.Application\ParsLinks.Application.csproj", "{DA9657DD-5359-4C09-8B08-D49AFB71C9AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsLinks.Auth", "ParsLinks.Auth\ParsLinks.Auth.csproj", "{970E0412-95C2-42DE-80A9-DC6C0D2846AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsLinks.DataAccess", "ParsLinks.DataAccess\ParsLinks.DataAccess.csproj", "{E7F86848-314F-480D-B950-81E969D01BF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsLinks.Domain", "ParsLinks.Domain\ParsLinks.Domain.csproj", "{A12BD039-CDE0-4EE3-9E7A-2419A4425D35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsLinks.Localization", "ParsLinks.Localization\ParsLinks.Localization.csproj", "{964D8274-558F-4D5D-A866-251C98368081}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsLinks.Shared", "ParsLinks.Shared\ParsLinks.Shared.csproj", "{506D8E4E-28F0-4EB6-A060-B403B3295C75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsLinks.Web.Client", "ParsLinks.Web.Client\ParsLinks.Web.Client.csproj", "{61772259-48AF-48AF-9568-4DB6BA144A1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsLinks.Web", "ParsLinks.Web\ParsLinks.Web.csproj", "{F27AB2BF-7176-4DD6-A64A-37370CD72B90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5EE8CCA-D547-420A-B803-E7ACAC37825B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5EE8CCA-D547-420A-B803-E7ACAC37825B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5EE8CCA-D547-420A-B803-E7ACAC37825B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5EE8CCA-D547-420A-B803-E7ACAC37825B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C4F5BE9-71C5-423A-A50A-C77A9D911A93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C4F5BE9-71C5-423A-A50A-C77A9D911A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C4F5BE9-71C5-423A-A50A-C77A9D911A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C4F5BE9-71C5-423A-A50A-C77A9D911A93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28F45402-B947-4CEB-9D04-1049D922F702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F45402-B947-4CEB-9D04-1049D922F702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F45402-B947-4CEB-9D04-1049D922F702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F45402-B947-4CEB-9D04-1049D922F702}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA9657DD-5359-4C09-8B08-D49AFB71C9AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA9657DD-5359-4C09-8B08-D49AFB71C9AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA9657DD-5359-4C09-8B08-D49AFB71C9AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA9657DD-5359-4C09-8B08-D49AFB71C9AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{970E0412-95C2-42DE-80A9-DC6C0D2846AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{970E0412-95C2-42DE-80A9-DC6C0D2846AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{970E0412-95C2-42DE-80A9-DC6C0D2846AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{970E0412-95C2-42DE-80A9-DC6C0D2846AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7F86848-314F-480D-B950-81E969D01BF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7F86848-314F-480D-B950-81E969D01BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7F86848-314F-480D-B950-81E969D01BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7F86848-314F-480D-B950-81E969D01BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A12BD039-CDE0-4EE3-9E7A-2419A4425D35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A12BD039-CDE0-4EE3-9E7A-2419A4425D35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A12BD039-CDE0-4EE3-9E7A-2419A4425D35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A12BD039-CDE0-4EE3-9E7A-2419A4425D35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{964D8274-558F-4D5D-A866-251C98368081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{964D8274-558F-4D5D-A866-251C98368081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{964D8274-558F-4D5D-A866-251C98368081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{964D8274-558F-4D5D-A866-251C98368081}.Release|Any CPU.Build.0 = Release|Any CPU
+		{506D8E4E-28F0-4EB6-A060-B403B3295C75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{506D8E4E-28F0-4EB6-A060-B403B3295C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{506D8E4E-28F0-4EB6-A060-B403B3295C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{506D8E4E-28F0-4EB6-A060-B403B3295C75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61772259-48AF-48AF-9568-4DB6BA144A1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61772259-48AF-48AF-9568-4DB6BA144A1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61772259-48AF-48AF-9568-4DB6BA144A1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61772259-48AF-48AF-9568-4DB6BA144A1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F27AB2BF-7176-4DD6-A64A-37370CD72B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F27AB2BF-7176-4DD6-A64A-37370CD72B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F27AB2BF-7176-4DD6-A64A-37370CD72B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F27AB2BF-7176-4DD6-A64A-37370CD72B90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

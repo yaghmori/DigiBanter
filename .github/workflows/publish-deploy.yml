@@ -12,9 +12,9 @@ jobs:
 
     env:
       REGISTRY: ghcr.io
-      IMAGE_WEB: yaghmori/digibanter.web
-      IMAGE_API: yaghmori/digibanter.api
-      IMAGE_ADMIN: yaghmori/digibanter.admin
+      IMAGE_WEB: yaghmori/parslinks.web
+      IMAGE_API: yaghmori/parslinks.api
+      IMAGE_ADMIN: yaghmori/parslinks.admin
       TAG: latest
 
     steps:
@@ -42,9 +42,9 @@ jobs:
 
       - name: Tag Docker Images
         run: |
-          docker tag digibanter.web ${{ env.REGISTRY }}/${{ env.IMAGE_WEB }}:${{ env.TAG }}
-          docker tag digibanter.api ${{ env.REGISTRY }}/${{ env.IMAGE_API }}:${{ env.TAG }}
-          docker tag digibanter.admin ${{ env.REGISTRY }}/${{ env.IMAGE_ADMIN }}:${{ env.TAG }}
+          docker tag parslinks.web ${{ env.REGISTRY }}/${{ env.IMAGE_WEB }}:${{ env.TAG }}
+          docker tag parslinks.api ${{ env.REGISTRY }}/${{ env.IMAGE_API }}:${{ env.TAG }}
+          docker tag parslinks.admin ${{ env.REGISTRY }}/${{ env.IMAGE_ADMIN }}:${{ env.TAG }}
       - name: Push Docker Images
         run: |
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_WEB }}:${{ env.TAG }}

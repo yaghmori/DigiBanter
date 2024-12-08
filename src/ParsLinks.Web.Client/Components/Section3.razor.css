@@ -1,0 +1,44 @@
+﻿
+.section-title {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 50px;
+    gap: 1rem;
+}
+
+.team-member {
+
+    display: flex;
+    flex-flow: column;
+    gap: .5rem;
+}
+
+    .team-member .team-member-data {
+        display: flex;
+        flex-flow: column;
+        gap: .2rem;
+        padding:10px;
+    }
+
+        .team-member .team-member-data h5 {
+        }
+
+        .team-member .team-member-data a {
+            width:fit-content;
+            color: mediumpurple;
+        }
+        .team-member .team-member-data a:hover {
+            color: blue;
+        }
+            .team-member .team-member-data p {
+                color: #808080;
+            }
+
+.img {
+    border-radius: 1rem;
+    height: 300px;
+    object-fit: cover;
+}

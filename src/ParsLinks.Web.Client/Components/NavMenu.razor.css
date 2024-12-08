@@ -12,7 +12,7 @@ nav {
     position: fixed;
     z-index: 99;
     width: 100%;
-    background: #242526;
+    background: var(--theme-accent-color);
 }
 
     nav .wrapper {
@@ -53,7 +53,7 @@ nav {
     }
 
         .nav-links li a:hover {
-            background: #3A3B3C;
+            background: var( --theme-accent-hover-color);
         }
 
 .nav-links .mobile-item {
@@ -62,7 +62,7 @@ nav {
 
 .nav-links .drop-menu {
     position: absolute;
-    background: #242526;
+    background: var(--theme-accent-color);
     width: 180px;
     line-height: 45px;
     top: 85px;
@@ -98,7 +98,7 @@ nav {
 }
 
     .mega-box .content {
-        background: #242526;
+    background: var(--theme-accent-color);
         padding: 25px 20px;
         display: flex;
         width: 100%;
@@ -140,9 +140,6 @@ nav {
         display: block;
     }
 
-        .row .mega-links li a:hover {
-            color: #f2f2f2;
-        }
 
 .wrapper .btn {
     color: #fff;
@@ -172,7 +169,7 @@ nav {
         max-width: 350px;
         top: 0;
         left: -100%;
-        background: #242526;
+        background: var( --theme-accent-color);
         display: block;
         padding: 50px 10px;
         line-height: 50px;
@@ -206,8 +203,8 @@ nav {
     }
 
     #menu-btn:checked ~ #overlay {
-        background-color: white;
-        opacity: 70%;
+        background:#000000c0;
+        transition: all 0.3s ease-in-out;
         height: 100%;
         width: 100%;
         position: fixed;
@@ -260,7 +257,7 @@ nav {
     }
 
         .nav-links .mobile-item:hover {
-            background: #3A3B3C;
+            background: var( --theme-accent-hover-color);
         }
 
     .drop-menu li {

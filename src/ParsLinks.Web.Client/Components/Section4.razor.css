@@ -1,0 +1,60 @@
+﻿body {
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: red;
+}
+
+p {
+    color: #888
+}
+
+
+
+
+
+.container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+
+.section-title {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 50px;
+    gap: 1rem;
+}
+
+    .section-title h1 {
+        font-size: 50px;
+    }
+
+.sbox {
+    display: flex;
+    flex-flow: row;
+    gap: 1rem;
+}
+
+    .sbox .img {
+        width: 65px;
+        height: 65px;
+    }
+
+@media (max-width: 990px) {
+
+    .sbox {
+        flex-flow: column;
+        align-items: center;
+    }
+
+        .sbox .txt {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            text-align: justify-all;
+        }
+}

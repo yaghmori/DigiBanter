@@ -27,10 +27,4 @@
     <ProjectReference Include="..\ParsLinks.Web.Client\ParsLinks.Web.Client.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Components\Pages\404.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
-
 </Project>

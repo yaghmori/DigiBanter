@@ -1,0 +1,82 @@
+﻿/* Features Section Styles */
+.section {
+    display: flex;
+    flex-flow: column;
+    padding: 5rem;
+    background: #f4f4f4;
+    text-align: center;
+    position: relative;
+    gap: 3rem;
+}
+
+    .section .header {
+        display: flex;
+        flex-flow: column;
+    }
+
+        .section .header .title {
+            font-size: 2.5rem;
+            font-weight: 500;
+        }
+
+        .section .header .caption {
+            color: var(--mud-palette-text-secondary)
+        }
+
+.body {
+    width:100%;
+    display: flex;
+    flex-flow:wrap;
+    justify-content:center;
+    gap: 2.5rem;
+}
+
+.feature {
+    border-top: var(--mud-palette-text-disabled) solid .5rem;
+    display: flex;
+    flex-flow: column;
+    border-radius: 1rem;
+    gap: 2rem;
+    background: #fff;
+    padding: 2rem;
+    width: 250px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+    .feature.selected {
+        transform: scale(1.1);
+        border-top: var(--mud-palette-primary) solid .5rem;
+    }
+    .feature .title {
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: var(--mud-palette-primary)
+    }
+
+    .feature .pricing-plan {
+    }
+
+        .feature .pricing-plan .price {
+            font-size: 3rem;
+            font-weight: 500;
+        }
+
+        .feature .pricing-plan .pricing-coins {
+            font-size: 1.5rem;
+        }
+
+    .feature ul {
+        text-align: left;
+        display: inline-block;
+        margin: 0 auto;
+    }
+
+        .feature ul li {
+            font-size:.8rem;
+            padding:4px;
+            color: var(--mud-palette-text-disabled);
+        }
+            .feature ul li.selected {
+                color: var(--mud-palette-primary)
+            }

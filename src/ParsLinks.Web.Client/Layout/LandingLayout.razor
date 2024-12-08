@@ -8,12 +8,11 @@
 <MudLayout>
     <NavMenu />
 
-    <MudMainContent >
-        <MudContainer class="d-flex flex-column justify-content-center  align-items-center " Style="padding:30px; width:100%">
+    <MudMainContent>
             @Body
-        </MudContainer>
 
     </MudMainContent>
+    <Footer />
 </MudLayout>
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
@@ -33,7 +32,7 @@
     //     var uri = new Uri(NavigationManager.Uri);
     //     var segments = uri.AbsolutePath.Split('/', StringSplitOptions.RemoveEmptyEntries);
 
-        
+
 
     //     if (httpContext != null && (segments.Length == 0 || !new[] { "en", "fr", "es", "fa" }.Contains(segments[0])))
     //     {

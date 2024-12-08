@@ -1,4 +1,6 @@
 @import url('css/font-awesome/css/all.css');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Play:wght@400;700&display=swap');
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -110,6 +112,8 @@ h1:focus {
     --paperbox-border-radius: 0.625rem;
     --paperbox-border: 1px solid var(--mud-palette-table-lines);
     --paperbox-background: var(--mud-palette-drawer-background);
+    --theme-accent-color: #242526;
+    --theme-accent-hover-color: #3A3B3C;
 }
 
 

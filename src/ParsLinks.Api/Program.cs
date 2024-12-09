@@ -27,22 +27,22 @@ app.UseMiddlewares();
 app.MapOpenApi();
 
 
-app.MapScalarApiReference(options =>
-{
-    options.WithTitle("Welcome to digibante.api");
-        // Fluent API
-        //options
-        //    .WithPreferredScheme("ApiKey") // Security scheme name from the OpenAPI document
-        options.WithApiKeyAuthentication(apiKey =>
-        {
-            apiKey.Token = "your-api-key";
-        });
-});
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider("/app/assets"),
-    RequestPath = "/assets" // This is the URL that the files will be accessible from
-});
+//app.MapScalarApiReference(options =>
+//{
+//    options.WithTitle("Welcome to parslink api");
+//        // Fluent API
+//        //options
+//        //    .WithPreferredScheme("ApiKey") // Security scheme name from the OpenAPI document
+//        options.WithApiKeyAuthentication(apiKey =>
+//        {
+//            apiKey.Token = "your-api-key";
+//        });
+//});
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    FileProvider = new PhysicalFileProvider("/app/assets"),
+//    RequestPath = "/assets" // This is the URL that the files will be accessible from
+//});
 
 app.MapEndpoints();
 

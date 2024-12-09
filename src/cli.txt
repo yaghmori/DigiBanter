@@ -1,1 +1,15 @@
  dotnet ef migrations add Initial --context AppDbContext --output-dir Migrations
+
+
+docker-compose -f docker-compose.yml build
+
+docker tag parslinks.api ghcr.io/yaghmori/parslinks.api:latest
+docker tag parslinks.web ghcr.io/yaghmori/parslinks.web:latest
+docker tag parslinks.admin ghcr.io/yaghmori/parslinks.admin:latest
+
+docker push ghcr.io/yaghmori/parslinks.api:latest
+docker push ghcr.io/yaghmori/parslinks.web:latest
+docker push ghcr.io/yaghmori/parslinks.admin:latest
+
+
+

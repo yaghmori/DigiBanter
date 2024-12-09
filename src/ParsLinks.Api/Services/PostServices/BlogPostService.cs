@@ -32,14 +32,14 @@ public class BlogPostService : IBlogPostService
 
     public async Task<ServiceResult<List<BlogPostResponse>>> GetPostAsync(HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
     {
+        var baseUrl = _config.Endpoints.Api;
         var posts = await _appDbContext.PostTranslations
-            .Include(x => x.Post).ThenInclude(x=>x.Author)
+            .Include(x => x.Post).ThenInclude(x => x.Author)
             .Where(x => EF.Functions.Like(x.Language.Code, $"%{lang}%"))
             .ProjectTo<BlogPostResponse>(_mapper.ConfigurationProvider)
             .ToListAsync();
         foreach (var item in posts)
         {
-            var baseUrl = $"{context.Request.Scheme}://{context.Request.Host.Value}";
             item.Image = $"{baseUrl}{item.Image}";
         }
 
@@ -47,8 +47,9 @@ public class BlogPostService : IBlogPostService
     }
 
 
-    public async Task<ServiceResult<BlogPostResponse>> GetPostByIdAsync(int Id,HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
+    public async Task<ServiceResult<BlogPostResponse>> GetPostByIdAsync(int Id, HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
     {
+        var baseUrl = _config.Endpoints.Api;
 
         var post = await _appDbContext.PostTranslations
             .Where(x => x.Post.Id == Id)
@@ -57,9 +58,8 @@ public class BlogPostService : IBlogPostService
             .FirstOrDefaultAsync(cancellationToken);
 
         if (post == null)
-            return ServiceResult<BlogPostResponse>.Failure("Post not found",statusCode:404);
+            return ServiceResult<BlogPostResponse>.Failure("Post not found", statusCode: 404);
 
-        var baseUrl = $"{context.Request.Scheme}://{context.Request.Host.Value}";
         post.Image = $"{baseUrl}{post.Image}";
 
         return ServiceResult<BlogPostResponse>.Success(post);

@@ -3,6 +3,8 @@ using ParsLinks.Shared.Dto.Response;
 using ParsLinks.Shared.ResultWrapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using ParsLinks.Shared.Models;
+using Microsoft.Identity.Client;
 
 public static class PodcastEndpoints
 {
@@ -23,11 +25,13 @@ public static class PodcastEndpoints
 
     private static async Task<IResult> GetAll(
         IPodcastService podcastService,
+        IConfiguration config,
         HttpContext context,
         CancellationToken cancellationToken,
         [FromQuery] string? lang = "en-US")
     {
-        var result = await podcastService.GetAllAsync(context, cancellationToken, lang);
+        var appConfig = config.Get<AppConfig>();
+        var result = await podcastService.GetAllAsync(context, appConfig, cancellationToken, lang);
 
         if (!result.IsSuccess)
             return Results.BadRequest(result.ErrorMessage);
@@ -37,12 +41,17 @@ public static class PodcastEndpoints
 
     private static async Task<IResult> GetById(
         [FromRoute] Guid id,
+                IConfiguration config,
+
+
     IPodcastService podcastService,
     HttpContext context,
     CancellationToken cancellationToken,
     [FromQuery] string? lang = "en-US")
     {
-        var result = await podcastService.GetByIdAsync(id, context, cancellationToken, lang);
+        var appConfig = config.Get<AppConfig>();
+
+        var result = await podcastService.GetByIdAsync(id, context, appConfig, cancellationToken, lang);
 
         if (!result.IsSuccess)
         {

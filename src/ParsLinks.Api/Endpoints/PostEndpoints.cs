@@ -3,6 +3,7 @@ using ParsLinks.Shared.Dto.Response;
 using ParsLinks.Shared.ResultWrapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using ParsLinks.Shared.Models;
 
 public static class PostEndpoints
 {
@@ -22,7 +23,6 @@ public static class PostEndpoints
 
 
     private static async Task<IResult> GetAllPosts(
-
         IBlogPostService postService,
         HttpContext context,
         CancellationToken cancellationToken,

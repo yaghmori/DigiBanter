@@ -48,9 +48,10 @@ public class PodcastService : IPodcastService
 
     }
 
-    public async Task<ServiceResult<List<PodcastResponse>>> GetAllAsync(HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
+    public async Task<ServiceResult<List<PodcastResponse>>> GetAllAsync(HttpContext context, AppConfig appConfig, CancellationToken cancellationToken, string? lang = "en-US")
     {
-        var baseUrl = context.Request.Scheme + "://" + context.Request.Host.Value;
+
+        var baseUrl = appConfig.Endpoints.Api;
 
         foreach (var podcast in _podcastList)
         {
@@ -62,9 +63,9 @@ public class PodcastService : IPodcastService
     }
 
 
-    public async Task<ServiceResult<PodcastResponse>> GetByIdAsync(Guid id, HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
+    public async Task<ServiceResult<PodcastResponse>> GetByIdAsync(Guid id, HttpContext context, AppConfig appConfig, CancellationToken cancellationToken, string? lang = "en-US")
     {
-        var baseUrl = context.Request.Scheme + "://" + context.Request.Host.Value;
+        var baseUrl = appConfig.Endpoints.Api;
 
         var podcast = _podcastList.FirstOrDefault(x => x.Id == id);
         if (podcast == null)

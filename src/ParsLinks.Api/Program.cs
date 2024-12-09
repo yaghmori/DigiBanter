@@ -38,11 +38,11 @@ app.MapOpenApi();
 //            apiKey.Token = "your-api-key";
 //        });
 //});
-//app.UseStaticFiles(new StaticFileOptions
-//{
-//    FileProvider = new PhysicalFileProvider("/app/assets"),
-//    RequestPath = "/assets" // This is the URL that the files will be accessible from
-//});
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider("/app/assets"),
+    RequestPath = "/assets" // This is the URL that the files will be accessible from
+});
 
 app.MapEndpoints();
 

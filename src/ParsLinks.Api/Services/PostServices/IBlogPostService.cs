@@ -1,5 +1,6 @@
 ﻿using ParsLinks.Api.Services;
 using ParsLinks.Shared.Dto.Response;
+using ParsLinks.Shared.Models;
 
 public interface IBlogPostService
 {

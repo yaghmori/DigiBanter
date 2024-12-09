@@ -13,7 +13,7 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
 
   parslinks.admin:
-    image: ${DOCKER_REGISTRY-}parslinks.admin
+    image: ${DOCKER_REGISTRY-}parslinks.admin 
     container_name: parslinks.admin
     build:
       context: .

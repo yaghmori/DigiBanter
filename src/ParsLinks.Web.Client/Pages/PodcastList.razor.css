@@ -5,3 +5,89 @@
     gap: 1rem;
 }
 
+.section-header {
+    display: flex;
+    flex-flow: row;
+    height:450px;
+    min-height:400px;
+    justify-content: space-between;
+    background: #000A24;
+    gap:50px;
+}
+
+    .section-header .left {
+        display: flex;
+        flex-flow: column;
+        background: #000A24;
+        position: relative;
+        padding:50px;
+    }
+
+        .section-header .left img {
+            position:absolute;
+            left: 0;
+            width: 500px;
+            z-index: 0;
+            opacity: .08
+        }
+
+        .section-header .left h1 {
+            color: white;
+            z-index: 1;
+        }
+        .section-header .left p {
+            color: white;
+            z-index: 1;
+        }
+        .section-header .left a {
+            padding: 10px;
+            display: flex;
+            width: fit-content;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            z-index: 1;
+            outline: solid 1px white;
+            border-radius: .5rem;
+            transition: all .3s ease-in-out;
+        }
+            .section-header .left a:hover {
+                outline: solid 1px var(--mud-palette-primary);
+                transition: all .3s ease-in-out;
+            }
+
+    .section-header .right {
+        position:relative;
+    }
+
+        .section-header .right .img1 {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            max-height:400px;
+            height: auto;
+            z-index: 10;
+        }
+
+        .section-header .right .img2 {
+            width: 500px;
+            z-index: 0;
+        }
+
+
+@media (width< 1000px) {
+
+    .section-header {
+        flex-flow: column;
+        height: 500px;
+        min-height: 400px;
+    }
+
+
+    
+        .section-header .right .img1 {
+            height: 300px;
+
+        }
+
+}

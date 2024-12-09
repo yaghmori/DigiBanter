@@ -1,11 +1,13 @@
 ﻿/* Footer Styles */
 .footer {
     background: var(--theme-accent-color);
-    color: white;
     width: 100%;
-    height: 400px;
-    flex-shrink: 0; /* Prevent shrinking */
+    min-height: 400px;
     padding: 50px;
+    margin: auto;
+    position: unset;
+    bottom: 0;
+    color: white;
 }
 
 
@@ -18,6 +20,7 @@
     .footer-info .logo {
         font-family: Play;
         font-size: 2rem;
+        color:white;
         /*    filter: brightness(0) invert(1);*/
     }
 
@@ -31,7 +34,8 @@
 
         .footer-info .info .title {
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 1.3rem;
+            color: white;
         }
 
         .footer-info .info .txt {
@@ -55,3 +59,20 @@
                 color: white;
                 transition: all .3s ease;
             }
+.footer-links a {
+    color: #808080;
+    transition: all .3s ease;
+}
+    .footer-links a:hover {
+        color: white;
+        transition: all .3s ease;
+    }
+.footer-box a, p {
+    color: #808080;
+    transition: all .3s ease;
+}
+    .footer-box a:hover {
+        color: #808080;
+        color: white;
+        transition: all .3s ease;
+    }

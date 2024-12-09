@@ -6,6 +6,11 @@ using ParsLinks.DataAccess.DbContext;
 using ParsLinks.Shared.Dto.Response;
 using ParsLinks.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using Azure.Core;
+using AutoMapper.QueryableExtensions;
+using System.Buffers.Text;
+using ParsLinks.Domain.Entities;
 
 public class BlogPostService : IBlogPostService
 {
@@ -28,18 +33,15 @@ public class BlogPostService : IBlogPostService
     public async Task<ServiceResult<List<BlogPostResponse>>> GetPostAsync(HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
     {
         var posts = await _appDbContext.PostTranslations
+            .Include(x => x.Post).ThenInclude(x=>x.Author)
             .Where(x => EF.Functions.Like(x.Language.Code, $"%{lang}%"))
-            .Select(x => new BlogPostResponse
-            {
-                Id = x.Post.Id,
-                Author = x.Post.Author.DisplayName,
-                Image = x.Post.Image,
-                Title = x.Title,
-                Content = x.Content.Length > 1000 ? x.Content.Substring(0, 1000) + "..." : x.Content, // Truncate and append "..."
-                Slug = x.Slug,
-                Language = x.Language.Code,
-                PublishedAt = x.Post.PublishedAt.Value.Date
-            }).ToListAsync();
+            .ProjectTo<BlogPostResponse>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+        foreach (var item in posts)
+        {
+            var baseUrl = $"{context.Request.Scheme}://{context.Request.Host.Value}";
+            item.Image = $"{baseUrl}{item.Image}";
+        }
 
         return ServiceResult<List<BlogPostResponse>>.Success(posts);
     }
@@ -47,23 +49,18 @@ public class BlogPostService : IBlogPostService
 
     public async Task<ServiceResult<BlogPostResponse>> GetPostByIdAsync(int Id,HttpContext context, CancellationToken cancellationToken, string? lang = "en-US")
     {
+
         var post = await _appDbContext.PostTranslations
             .Where(x => x.Post.Id == Id)
             .Where(x => EF.Functions.Like(x.Language.Code, $"%{lang}%"))
-            .Select(x => new BlogPostResponse
-            {
-                Id = x.Post.Id,
-                Author = x.Post.Author.DisplayName,
-                Image = x.Post.Image,
-                Title = x.Title,
-                Content = x.Content,
-                Slug = x.Slug,
-                Language = x.Language.Code,
-                PublishedAt = x.Post.PublishedAt.Value.Date
-            }).FirstOrDefaultAsync(cancellationToken);
+            .ProjectTo<BlogPostResponse>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (post == null)
             return ServiceResult<BlogPostResponse>.Failure("Post not found",statusCode:404);
+
+        var baseUrl = $"{context.Request.Scheme}://{context.Request.Host.Value}";
+        post.Image = $"{baseUrl}{post.Image}";
 
         return ServiceResult<BlogPostResponse>.Success(post);
     }

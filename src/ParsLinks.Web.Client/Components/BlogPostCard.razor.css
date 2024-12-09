@@ -5,6 +5,10 @@
     gap: 1rem;
     transition: background-color .5s;
 }
+    .post-card * {
+        transition: all 0.2s ease-out 0s
+    }
+
 
     .post-card:hover {
     }
@@ -15,14 +19,22 @@
     }
 
     .post-card .cover {
+        overflow: hidden;
+        border-radius: .8rem;
+        min-width: 450px;
     }
 
         .post-card .cover .img {
-            width: 450px;
+           width: 450px;
             height: 300px;
             border-radius: .8rem;
             object-fit: cover;
         }
+
+
+    .post-card:hover .cover .img {
+        transform: scale(1.1) rotate(-2deg);
+    }
 
     .post-card .body {
         display: flex;
@@ -62,9 +74,9 @@
         flex-flow: column;
         align-items: normal;
         gap: 1rem;
-        transition: background-color .5s;
     }
 
+        
 
         .post-card .cover .img {
             width: 100%;

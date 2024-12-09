@@ -1,4 +1,5 @@
 ﻿using ParsLinks.Shared.Services.TimeZoneResolver;
+using System.Buffers.Text;
 
 namespace ParsLinks.Api.Services;
 
@@ -13,6 +14,9 @@ public static class ServiceCollectionExtensions
         builder.Services.AddSingleton<IPodcastService, PodcastService>();
         builder.Services.AddSingleton<ILanguageService, LanguageService>();
         builder.Services.AddScoped<IAuthService, AuthService>();
+
+
+     
 
     }
 

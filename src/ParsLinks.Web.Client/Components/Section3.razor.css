@@ -9,36 +9,63 @@
     gap: 1rem;
 }
 
-.team-member {
-
-    display: flex;
-    flex-flow: column;
-    gap: .5rem;
+.team {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 1rem;
+    padding:20px;
 }
 
-    .team-member .team-member-data {
+    .team .member {
         display: flex;
         flex-flow: column;
-        gap: .2rem;
-        padding:10px;
+        gap: .5rem;
+        display: flex;
     }
 
-        .team-member .team-member-data h5 {
+        .team .member * {
+            transition: all 0.2s ease-out 0s
         }
 
-        .team-member .team-member-data a {
-            width:fit-content;
-            color: mediumpurple;
+        .team .member .member-data {
+            display: flex;
+            flex-flow: column;
+            gap: .2rem;
+            padding: 10px;
         }
-        .team-member .team-member-data a:hover {
-            color: blue;
-        }
-            .team-member .team-member-data p {
+
+            .team .member .member-data h5 {
+            }
+
+            .team .member .member-data a {
+                width: fit-content;
+                color: mediumpurple;
+            }
+
+                .team .member .member-data a:hover {
+                    color: blue;
+                }
+
+            .team .member .member-data p {
                 color: #808080;
             }
 
-.img {
-    border-radius: 1rem;
-    height: 300px;
-    object-fit: cover;
-}
+        .team .member .cover {
+            width: fit-content;
+            border-radius: 1rem;
+            overflow: hidden;
+            width: 100%;
+            height: 250px;
+        }
+
+
+            .team .member .cover .img {
+                border-radius: 1rem;
+                object-fit: cover;
+                width:100%;
+                height: 250px;
+            }
+
+        .team .member:hover .cover .img {
+            transform: scale(1.2) rotate(-2deg);
+        }

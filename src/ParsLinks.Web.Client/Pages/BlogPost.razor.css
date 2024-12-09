@@ -1,7 +1,7 @@
 ﻿.container {
     display: flex;
     flex-flow: column;
-    gap: 50px;
+    gap: 10px;
 }
 
     .container .article {
@@ -48,7 +48,6 @@
             }
 
     .container .comments {
-        background: #eee;
         left:0;
         width:100%;
     }

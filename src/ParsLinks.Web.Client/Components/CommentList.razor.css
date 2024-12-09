@@ -3,5 +3,6 @@
     flex-flow: column;
     align-items: center;
     padding:50px;
+    gap:20px;
 
 }

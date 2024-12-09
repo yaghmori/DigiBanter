@@ -1,6 +1,6 @@
 ﻿
 namespace ParsLinks.Shared.Dto.Response;
-public class BlogPostResponse
+public class PostResponse
 {
     public int Id { get; set; }
     public string Author { get; set; } = default!;
@@ -10,7 +10,5 @@ public class BlogPostResponse
     public string Slug  { get; set; } = default!;
     public string Language  { get; set; } = default!;
     public DateTime? PublishedAt { get; set; }
-
-   
 }
 

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.FileProviders;
 using ParsLinks.Api.Endpoints;
 using ParsLinks.Api.Extensions;
 using ParsLinks.Api.Middlewares;
@@ -14,7 +15,7 @@ builder.RegisterServices();
 
 builder.ConfigureAuthentication();
 builder.ConfigureAuthorization();
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddOpenApi();
 var app = builder.Build();
 
@@ -36,41 +37,11 @@ app.MapScalarApiReference(options =>
         {
             apiKey.Token = "your-api-key";
         });
-
-    //// Object initializer
-    //options.Authentication = new ScalarAuthenticationOptions
-    //{
-    //    PreferredSecurityScheme = "ApiKey", // Security scheme name from the OpenAPI document
-    //    ApiKey = new ApiKeyOptions
-    //    {
-    //        Token = "your-api-key"
-    //    }
-    //};
-    //options
-    //.WithPreferredScheme("OAuth2") // Security scheme name from the OpenAPI document
-    //.WithOAuth2Authentication(oauth =>
-    //{
-    //    oauth.ClientId = "public-client";
-    //    oauth.Scopes = ["profile"];
-    //});
-    //// Basic
-    //options
-    //    .WithPreferredScheme("Basic") // Security scheme name from the OpenAPI document
-    //    .WithHttpBasicAuthentication(basic =>
-    //    {
-    //        basic.Username = "your-username";
-    //        basic.Password = "your-password";
-    //    });
-
-    // Bearer
-    //options
-    //    .WithPreferredScheme("Bearer") // Security scheme name from the OpenAPI document
-    //    .WithHttpBearerAuthentication(bearer =>
-    //    {
-    //        bearer.Token = "your-bearer-token";
-    //    });
-
-
+});
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider("/app/assets"),
+    RequestPath = "/assets" // This is the URL that the files will be accessible from
 });
 
 app.MapEndpoints();

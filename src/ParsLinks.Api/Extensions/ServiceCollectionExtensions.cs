@@ -22,6 +22,8 @@ using ParsLinks.Shared.Extensions;
 using System.Security.Claims;
 using EAllyfe.Api.Helpers;
 using ParsLinks.Api.AuthorizationHandler;
+using Microsoft.AspNetCore.Hosting;
+using static ParsLinks.Shared.MappingProfile;
 
 namespace ParsLinks.Api.Extensions;
 
@@ -158,6 +160,7 @@ public static class ServiceCollectionExtensions
     }
     static void ConfigureMapper(WebApplicationBuilder builder)
     {
+        //builder.Services.AddAutoMapper(typeof(SomeProfile).Assembly);
         builder.Services.AddScoped(provider => new MapperConfiguration(cfg =>
         {
             cfg.AddProfile(new MappingProfile(provider.GetService<ITimeZoneProvider>()!, provider.GetService<IJsonSerializer>()!));

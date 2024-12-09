@@ -1,43 +1,55 @@
-﻿.podcast-card {
+﻿
+.podcast-card {
     display: flex;
     flex-flow: column;
-    padding:10px;
-    transition: background-color .5s;
-    gap:1rem;
+    padding: 10px;
+    gap: 1rem;
+    transition: all 0.2s ease-out 0s;
 }
+
+    .podcast-card * {
+        transition: all 0.2s ease-out 0s
+    }
 
     .podcast-card:hover {
         background-color: orange;
         cursor: pointer;
-        transition: background-color .5s;
+        transition: all 0.2s ease-out 0s;
     }
 
-    .podcast-card.disable:hover {
-        background-color: inherit; /* No background change */
-        cursor: default; /* Optional: Prevent pointer cursor */
+
+.podcast-card.disable:hover {
+    background-color: inherit; /* No background change */
+    cursor: default; /* Optional: Prevent pointer cursor */
+}
+
+.podcast-card .cover {
+    overflow: hidden;
+    border-radius: .8rem;
+}
+
+    .podcast-card .cover .img {
+        border-radius: .8rem;
+        object-fit:cover;
+        width: 100%;
+        height: 160px;
     }
 
-    .podcast-card .cover {
+    .podcast-card:hover .cover .img {
+        transform: scale(1.2) rotate(-2deg);
     }
 
-        .podcast-card .cover .img {
-            border-radius: .8rem;
-            object-fit: cover;
-            width: 100%;
-            height:160px;
-        }
+.podcast-card .body {
+    display: flex;
+    flex-flow: column;
+}
 
-    .podcast-card .body {
+    .podcast-card .body .date {
         display: flex;
-        flex-flow: column;
+        flex-flow: row;
+        gap: .2rem;
     }
 
-        .podcast-card .body .date {
-            display: flex;
-            flex-flow: row;
-            gap: .2rem;
-        }
-
-        .podcast-card .body .title {
-            font-weight: bold;
-        }
+    .podcast-card .body .title {
+        font-weight: bold;
+    }

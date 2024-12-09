@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\posts\**" />
+    <Content Remove="wwwroot\posts\**" />
+    <EmbeddedResource Remove="wwwroot\posts\**" />
+    <None Remove="wwwroot\posts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="dotnetenv" Version="3.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
@@ -26,10 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ParsLinks.DataAccess\ParsLinks.DataAccess.csproj" />
     <ProjectReference Include="..\ParsLinks.Domain\ParsLinks.Domain.csproj" />
     <ProjectReference Include="..\ParsLinks.Localization\ParsLinks.Localization.csproj" />
@@ -42,6 +45,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

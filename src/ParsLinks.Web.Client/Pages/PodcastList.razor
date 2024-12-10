@@ -3,9 +3,6 @@
 @attribute [StreamRendering]
 
 <PageTitle>Podcast List</PageTitle>
-<div class="d-flex flex-column" style="gap:50px;">
-
-
 <div class="section-header">
     <div class="left">
         <h1>Find And Listen On Your Favorite Podcast</h1>
@@ -14,7 +11,7 @@
             content of a page when looking at its layout.
         </p>
         <a href="#">Get Started<i class="fas fa-circle-arrow-right"></i></a>
-        
+
         <img src="https://live.themewild.com/yocast/assets/img/shape/06.png" alt="">
     </div>
     <div class="right">
@@ -22,6 +19,8 @@
         <img class="img2" src="https://live.themewild.com/yocast/assets/img/shape/05.png" alt="">
     </div>
 </div>
+
+
 
 @if (!IsBussy)
 {
@@ -52,7 +51,6 @@ else
 
 }
 
-</div>
 @code {
 
     public bool IsBussy { get; set; }

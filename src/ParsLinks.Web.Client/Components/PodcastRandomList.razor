@@ -1,6 +1,6 @@
 ﻿@if (!IsBussy)
 {
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1rem;">
             @foreach (var item in PodcastItems.OrderBy(x => new Random().Next()).Take(5))
             {
                 <PodcastCard Podcast="item" />
@@ -10,7 +10,7 @@
 }
 else
 {    
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1rem;">
         <PodcastCard Isloading="true" />
         <PodcastCard Isloading="true" />
         <PodcastCard Isloading="true" />

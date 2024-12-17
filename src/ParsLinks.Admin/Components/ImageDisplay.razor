@@ -1,0 +1,12 @@
+﻿<div class="image-container">
+    <img class="thumbnail" src="@(Src??Preview)" height="@Height" width="@Width" />
+</div>
+
+@code {
+    [Parameter] public string? Src { get; set; } 
+    [Parameter] public string Height { get; set; } = "auto";
+    [Parameter] public string Width { get; set; } = "auto"; 
+    [Parameter] public string? Preview { get; set; } = AppConstants.NoPreview;
+
+}
+

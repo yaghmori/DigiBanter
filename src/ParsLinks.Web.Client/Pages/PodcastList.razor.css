@@ -80,7 +80,6 @@
 
 
 @media (width< 1000px) {
-
     .section-header {
         flex-flow: column;
         height: 500px;

@@ -27,9 +27,13 @@
 
                         @Model.PublishedAt
                     </div>
+                    <div class="info">
+                        <i class="fa-sharp-duotone fa-solid fa-timer"></i>
+                        <span>@Model.EstimatedReadingTime min read</span>
+                    </div>
 
                     <div class="truncate">
-                        @((MarkupString)Markdown.ToHtml(Model.Content))
+                        @((MarkupString)Model.Content)
                     </div>
 
                 </div>

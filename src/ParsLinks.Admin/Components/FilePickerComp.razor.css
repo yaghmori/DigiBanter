@@ -1,0 +1,56 @@
+﻿
+
+
+
+.image-preview {
+    all: unset; /* Resets all inherited properties */
+
+    padding: 5px;
+    display: flex;
+    flex-flow: column;
+    align-content: center;
+    justify-content: center;
+    align-items: start;
+}
+
+    .image-preview .buttons {
+        gap: 10px;
+        padding: 5px;
+        display: flex;
+        flex-flow: row;
+    }
+
+
+
+.picker-preview {
+    all: unset; /* Resets all inherited properties */
+
+    padding: 5px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+    .picker-preview .footer {
+        padding:5px;
+        display: flex;
+        flex-flow: column;
+    }
+
+        .picker-preview .footer .action {
+            display: flex;
+            flex-flow: wrap;
+            justify-content: space-between;
+        }
+
+            .picker-preview .footer .action .title {
+                display: flex;
+                flex-flow: column;
+            }
+
+            .picker-preview .footer .action .buttons {
+                display: flex;
+                gap:6px;
+                flex-flow: row;
+                align-items: center;
+            }

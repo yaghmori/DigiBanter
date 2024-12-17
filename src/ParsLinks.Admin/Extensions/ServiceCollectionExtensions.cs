@@ -1,4 +1,11 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
+using MudBlazor.Services;
+using Newtonsoft.Json;
 using ParsLinks.Admin.Services;
 using ParsLinks.Application.Extensions;
 using ParsLinks.Shared;
@@ -6,13 +13,6 @@ using ParsLinks.Shared.Constatns;
 using ParsLinks.Shared.Models;
 using ParsLinks.Shared.Services;
 using ParsLinks.Shared.Services.TimeZoneResolver;
-using FluentValidation;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using System.Net.Http;
 namespace ParsLinks.Admin.Extensions;
 
 public static class ServiceCollectionExtensions
@@ -20,6 +20,20 @@ public static class ServiceCollectionExtensions
 
     public static void RegisterServices(this IServiceCollection services, string env)
     {
+        services.AddMudServices(config =>
+        {
+            config.SnackbarConfiguration.PositionClass = MudBlazor.Defaults.Classes.Position.BottomRight;
+            config.SnackbarConfiguration.BackgroundBlurred = true;
+            config.SnackbarConfiguration.PreventDuplicates = false;
+            config.SnackbarConfiguration.ClearAfterNavigation = false;
+            config.SnackbarConfiguration.NewestOnTop = false;
+            config.SnackbarConfiguration.ShowCloseIcon = true;
+            config.SnackbarConfiguration.VisibleStateDuration = 7000;
+            config.SnackbarConfiguration.HideTransitionDuration = 300;
+            config.SnackbarConfiguration.ShowTransitionDuration = 300;
+            config.SnackbarConfiguration.SnackbarVariant = MudBlazor.Variant.Filled;
+        });
+
 
         ConfigureControllerAndJsonSerializer(services);
         ConfigureAppSettings(services, env);
@@ -30,6 +44,8 @@ public static class ServiceCollectionExtensions
         services.AddApiServices();
         services.AddScoped<ITimeZoneHelper, TimeZoneHelper>();
         services.AddScoped<ITimeZoneProvider, TimeZoneProvider>();
+        services.AddScoped<ISnackbarService, SnackbarService>();
+        services.AddScoped<IDialogService, DialogService>();
         services.AddLocalization();
     }
     public static void ConfigureAuthentication(this IServiceCollection services)
@@ -68,7 +84,7 @@ public static class ServiceCollectionExtensions
                 options.TokenValidationParameters.ValidIssuers = [clientIdpUrl, backendIdpUrl];
                 options.TokenValidationParameters.NameClaimType = "name"; // This is what populates @context.User.Identity?.Name
                 options.TokenValidationParameters.RoleClaimType = "role";
-               //options.RequireHttpsMetadata = Environment.GetEnvironmentVariable("OIDC_REQUIRE_HTTPS_METADATA") != "false"; // disable only in dev env
+                //options.RequireHttpsMetadata = Environment.GetEnvironmentVariable("OIDC_REQUIRE_HTTPS_METADATA") != "false"; // disable only in dev env
                 options.ResponseType = OpenIdConnectResponseType.Code;
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.SaveTokens = true;
@@ -153,7 +169,7 @@ public static class ServiceCollectionExtensions
         {
             httpClient.BaseAddress = new Uri(configuration.Endpoints.Auth);
         });
-            //.AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+        //.AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
 
 

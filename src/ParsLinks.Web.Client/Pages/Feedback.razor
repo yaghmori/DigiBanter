@@ -1,5 +1,5 @@
 ﻿@page "/{lang}/feedback"
-@rendermode InteractiveServer
+@rendermode @(new InteractiveServerRenderMode(prerender:false))
 <PageTitle>Feedback</PageTitle>
 
 
@@ -42,8 +42,12 @@ else
 <p role="status">Current count: @currentCount</p>
 @if (RendererInfo.IsInteractive)
 {
-    <MudButton Variant="@Variant.Filled" Color="Color.Secondary" @onclick="IncrementCount">Click me</MudButton>
+    <MudButton Variant="@Variant.Filled" Color="Color.Secondary" Size="MudBlazor.Size.Large" @onclick="IncrementCount">Click me</MudButton>
 
+}
+else
+{
+    <MudProgressLinear Indeterminate="true"/>
 }
 @code {
     private WeatherForecast[]? forecasts;

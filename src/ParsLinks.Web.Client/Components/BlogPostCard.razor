@@ -19,13 +19,16 @@
             </div>
 
             <div class="content">
-                @((MarkupString)Markdown.ToHtml(Model.Content))
+                @((MarkupString)Model.Content)
             </div>
             <div class="action-bar">
                 <MudButton Color="Color.Dark" Variant="Variant.Filled" Style="min-width:150px;" FullWidth="false" Href="@($"/{Langauge}/blog/{Model.Id}")">
                     Read More
                 </MudButton>
-
+                <div class="info">
+                    <i class="fad fa-timer"></i>
+                    <span>@Model.EstimatedReadingTime min read</span>
+                </div>
             </div>
 
         </div>
@@ -70,5 +73,6 @@ else{
 
     [Parameter]
     public bool Isloading { get; set; }
+
 
 }

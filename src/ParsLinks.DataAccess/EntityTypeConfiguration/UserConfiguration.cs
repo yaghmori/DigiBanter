@@ -13,6 +13,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.ToTable("Users");
 
         builder.HasKey(x => x.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
         #region Navigation Properties
         builder.HasMany(u => u.UserClaims)

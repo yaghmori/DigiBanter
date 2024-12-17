@@ -19,17 +19,43 @@
 @using ParsLinks.Shared.Constatns
 @using Microsoft.AspNetCore.Authorization
 @using ParsLinks.Admin.Components.Shared
-@inherits BaseComponent
+@using ParsLinks.Shared.Dto.Request
+@using ParsLinks.Shared.Dto.Response
+@using ParsLinks.Shared.Services;
+@using ParsLinks.Shared.Dto
+@using ParsLinks.Shared.Extensions
+@using ParsLinks.Domain.Enums
+@using SixLabors.ImageSharp
+@using SixLabors.ImageSharp.Formats.Png
+@using SixLabors.ImageSharp.Processing
+@using ParsLinks.Admin.Themes
+@using Blazored.FluentValidation
+@using Radzen
+@using Radzen.Blazor
+
 
 @inject IJSRuntime _jsRuntime
+@inherits BaseComponent
+
+
+
+
+
+
 
 
 @inject IPodcastApiService _podcastApiService
 @inject IBlogPostApiService _blogPostApiService
+@inject ILanguageApiService _languageApiService
+@inject ICategoryApiService _categoryApiService
 
 @inject IJsonSerializer _jsonService
 @inject IMapper _mapper
 @inject ITimeZoneHelper _timeZoneHelper
 @inject NavigationManager _navigationManager
 @inject IStringLocalizer<ViewResources> _viewLocalizer
-@inject IStringLocalizer<ViewResources> _viewLocalizer
+@inject IStringLocalizer<MessageResources> _messageLocalizer
+
+
+@inject ISnackbarService _snackbarService
+@inject ParsLinks.Shared.Services.IDialogService _dialogService

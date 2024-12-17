@@ -9,6 +9,7 @@ public class TagTranslationConfiguration : IEntityTypeConfiguration<TagTranslati
     public void Configure(EntityTypeBuilder<TagTranslation> builder)
     {
         builder.HasKey(x => x.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
         builder.Property(t => t.Name)
                .IsRequired()

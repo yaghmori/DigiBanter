@@ -1,0 +1,30 @@
+﻿<div class="btn-container" @onclick="@OnClick">
+    <i class="fad fa-solid fa-pen-to-square btn-icon"
+       @onmouseover="OnMouseOver"
+       @onmouseout="OnMouseOut">
+    </i>
+    <div class="btn-content">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    private bool isHovered = false;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private void OnMouseOver()
+    {
+        isHovered = true;
+    }
+
+    private void OnMouseOut()
+    {
+        isHovered = false;
+    }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+}

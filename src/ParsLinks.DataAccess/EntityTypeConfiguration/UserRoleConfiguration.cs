@@ -12,6 +12,7 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
         builder.ToTable("UserRoles");
 
         builder.HasKey(ur => ur.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
         #region Navigation Properties
         builder.HasOne(ur => ur.User)

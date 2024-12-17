@@ -10,6 +10,7 @@ public class PostTranslationConfiguration : IEntityTypeConfiguration<PostTransla
     public void Configure(EntityTypeBuilder<PostTranslation> builder)
     {
         builder.HasKey(x => x.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
         builder.HasOne(pt => pt.Post)
                .WithMany(p => p.Translations)

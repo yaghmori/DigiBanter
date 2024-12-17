@@ -3,7 +3,6 @@ using ParsLinks.Api.Endpoints;
 using ParsLinks.Api.Extensions;
 using ParsLinks.Api.Middlewares;
 using ParsLinks.Api.Services;
-using Scalar.AspNetCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +25,7 @@ app.UseMiddlewares();
 
 app.MapOpenApi();
 
+app.UseAntiforgery();
 
 //app.MapScalarApiReference(options =>
 //{

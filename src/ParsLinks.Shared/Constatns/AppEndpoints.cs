@@ -31,6 +31,20 @@ public static class AppEndPoints
     {
         public const string Base = BaseAddress + "/posts";
         public const string GetById = Base + "/{0}";
+        public const string AddPost = Base ;
+    }
+    public static class LanguageEndpoints
+    {
+        public const string Base = BaseAddress + "/languages";
+        public const string GetById = Base + "/{0}";
+    }
+
+    public static class CategoryEndpoints
+    {
+        public const string Base = BaseAddress + "/categories";
+        public const string GetById = Base + "/{0}";
+        public const string AddCategory = Base;
+
     }
     public static class Seed
     {

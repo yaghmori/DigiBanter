@@ -16,7 +16,7 @@ public class LanguageMiddleware
         { "fr", "fr-FR" },
         { "fa", "fa-IR" }
     };
-    public async Task Invoke(HttpContext context,ILanguageService languageService)
+    public async Task Invoke(HttpContext context,ILanguageReslover languageService)
     {
         // Try to get `lang` from route or query string
         var lang = context.Request.RouteValues["lang"]?.ToString() ??

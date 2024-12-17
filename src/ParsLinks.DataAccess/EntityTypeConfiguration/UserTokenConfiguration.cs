@@ -12,6 +12,7 @@ public class UserTokenConfiguration : IEntityTypeConfiguration<UserToken>
         builder.ToTable("UserTokens");
 
         builder.HasKey(ut => ut.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
         #region Navigation Properties
         builder.HasOne(ut => ut.User)

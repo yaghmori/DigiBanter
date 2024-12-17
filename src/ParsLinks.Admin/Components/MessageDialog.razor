@@ -1,0 +1,58 @@
+﻿@inherits BaseComponent
+<MudDialog>
+
+    <TitleContent>
+
+        <MudText Class="pa-2" Typo="Typo.h6">
+            @if (!string.IsNullOrWhiteSpace(TitleIcon))
+            {
+                <MudIcon Icon="@TitleIcon" Class="mb-1" />
+            }
+            @Title
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <div class="d-flex flex-row align-items-center gap-2">
+            <i class="@Icon fa-2xl" style="color:@IconColor;"></i>
+            <MudText>@ContentText</MudText>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <div class="d-flex flex-row justify-content-end m-2 gap-2">
+            @if (AllowCancel)
+            {
+                <MudButton OnClick="Cancel" Size="MudBlazor.Size.Large"
+                           Variant="MudBlazor.Variant.Text">
+                    @BtnCancel
+                </MudButton>
+            }
+            <MudButton StartIcon="@ButtonIcon"
+                       Size="MudBlazor.Size.Large"
+                       Style="min-width:100px;"
+                       Color="@ButtonColor"
+                       Variant="@ButtonVariant"
+                       OnClick="Submit">
+                @ButtonText
+            </MudButton>
+        </div>
+
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+    [Parameter] public string ContentText { get; set; } = "";
+    [Parameter] public string BtnCancel { get; set; } = "Cancel";
+    [Parameter] public bool AllowCancel { get; set; } = true;
+    [Parameter] public string ButtonText { get; set; } = "OK";
+    [Parameter] public string ButtonIcon { get; set; } = "";
+    [Parameter] public string TitleIcon { get; set; } = "";
+    [Parameter] public string Icon { get; set; } = "";
+    [Parameter] public string IconColor { get; set; } = "";
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public MudBlazor.Color ButtonColor { get; set; } = MudBlazor.Color.Primary;
+    [Parameter] public MudBlazor.Variant ButtonVariant { get; set; } = MudBlazor.Variant.Filled;
+
+    void Submit() => _mudDialog?.Close(DialogResult.Ok(true));
+    void Cancel() => _mudDialog?.Cancel();
+}

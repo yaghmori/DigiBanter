@@ -10,8 +10,9 @@ public class CategoryTranslationConfiguration : IEntityTypeConfiguration<Categor
     public void Configure(EntityTypeBuilder<CategoryTranslation> builder)
     {
         builder.HasKey(x => x.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
- 
+
 
         builder.HasOne(ct => ct.Category)
                .WithMany(c => c.Translations)

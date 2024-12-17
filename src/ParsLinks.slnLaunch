@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "Multi-Launch",
+    "Projects": [
+      {
+        "Path": "docker-compose.dcproj",
+        "Action": "Start",
+        "DebugTarget": "Docker Compose"
+      },
+      {
+        "Path": "ParsLinks.Web\\ParsLinks.Web.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  }
+]

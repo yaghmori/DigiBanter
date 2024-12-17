@@ -1,6 +1,6 @@
 ﻿namespace ParsLinks.Api.Services;
 
-public interface ILanguageService
+public interface ILanguageReslover
 {
     string Language { get; set; }
 }

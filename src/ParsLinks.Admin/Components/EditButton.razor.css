@@ -1,0 +1,54 @@
+﻿.btn-container {
+    display: flex;
+    flex-flow: row;
+    gap: 3px;
+    align-items: center;
+    cursor: pointer;
+}
+
+    .btn-container:hover .btn-icon {
+        Color: var(--mud-palette-primary);
+    }
+
+.btn-icon {
+    transition: color 0.2s ease-in;
+    display: inline-block;
+}
+/* Flip in animation when hovering over the button */
+.btn-container:hover .btn-icon {
+    color: var(--mud-palette-primary);
+    animation: scale-in 0.3s forwards;
+}
+
+/* Flip out animation when the mouse leaves the button */
+.btn-container:not(:hover) .btn-icon {
+    animation: scale-out 0.3s forwards;
+}
+
+@keyframes scale-in {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(.8);
+    }
+
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes scale-out {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(.8);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+

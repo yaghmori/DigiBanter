@@ -1,0 +1,265 @@
+﻿@using System.Net
+@if (!IsReadOnly)
+{
+    <EditForm Context="editform" EditContext="editContext">
+        @if (File == null)
+        {
+
+            <MudFileUpload T="IBrowserFile"
+                           Accept="@(string.Join(", ",AllowedExtensions))"
+                           OnFilesChanged="OnFileChangedAsync"
+                           MaximumFileCount="100" Hidden="@false"
+                           InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20"
+                           InputStyle="opacity:0"
+                           Disabled="@(IsBusy || IsDisabled)"
+                           @ondragenter="@SetDragClass"
+                           @ondragleave="@ClearDragClass"
+                           @ondragend="@ClearDragClass">
+                <ActivatorContent>
+                    <MudPaper Outlined="true" Class="@("d-flex flex-column align-items-center gap-2 "+_dragClass)">
+                        <i class="far fa-cloud-arrow-up fa-5x" style="color: #2464f0;"></i>
+                        <span>Drag and drop files here</span>
+                        <div class="d-flex flex-row align-items-center justify-content-center gap-2 my-1">
+                            <hr style="width:25px" />
+                            <span style="opacity:.6">Or</span>
+                            <hr style="width:25px" />
+                        </div>
+                        <MudButton HtmlTag="label"
+                                   Color="MudBlazor.Color.Primary"
+                                   Variant="MudBlazor.Variant.Filled">
+                            BrowseFiles
+                        </MudButton>
+
+                        @if (hasError)
+                        {
+                            <small class="text-danger mt-3 mb-1">Supported file types : @string.Join(" ", AllowedExtensions)</small>
+                        }
+                    </MudPaper>
+
+                </ActivatorContent>
+            </MudFileUpload>
+        }
+        else
+        {
+            <div class="picker-preview">
+                <FilePreviewComp File="@File"
+                                 IconSize="5x"
+                                 ShowFooter=false
+                                 ShowHeader=false />
+
+                <div class="footer">
+                    <div class="action">
+                        <div class="title">
+                            <small><b>@File.Name</b></small>
+                            <small>@($"Size : {File.Size.ByteToString()}")</small>
+                        </div>
+                        <div class="buttons">
+                            <XCloseButton OnClick="ClearFileAsync">
+                                @_viewLocalizer[ViewResources.Delete]
+                            </XCloseButton>
+                            <MudFileUpload T="IBrowserFile"
+                                           Accept="@(string.Join(", ",AllowedExtensions))"
+                                           OnFilesChanged="OnFileChangedAsync"
+                                           InputStyle="opacity:0"
+                                           Disabled="@(IsBusy || IsDisabled)">
+                                <ActivatorContent>
+                                    <EditButton>
+                                        @_viewLocalizer[ViewResources.Change]
+                                    </EditButton>
+                                </ActivatorContent>
+                            </MudFileUpload>
+                        </div>
+                    </div>
+                    <div>
+                        @if (!File.IsUploaded)
+                        {
+
+
+                            <div class="progressbar">
+                                <MudProgressLinear Color="MudBlazor.Color.Primary"
+                                                   Rounded="true"
+                                                   Value="@File.UploadedBytes"
+                                                   Max="@File.Size">
+                                </MudProgressLinear>
+                                @if (File.UploadedBytes > 0)
+                                {
+                                    <small style="opacity:.5">@($"{Math.Round(File.UploadedPercentage)}%")</small>
+                                }
+                            </div>
+
+                            @if (!string.IsNullOrWhiteSpace(File.ErrorMessage))
+                            {
+                                <div class="error">
+                                    <MudTooltip Text="@File.ErrorMessage">
+                                        <i class="fad fa-circle-exclamation text-danger"></i>
+                                    </MudTooltip>
+
+                                    <small class="text-danger">@_messageLocalizer[MessageResources.FileUploadError]</small>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="success">
+                                <i class="fad fa-circle-check text-success"></i>
+                                <small class="text-success">@_messageLocalizer[MessageResources.FileUploadSucceed]</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+    </EditForm>
+}
+else
+{
+    <h1 class="tex-danger">Not Implemented!</h1>
+}
+@code {
+    [CascadingParameter]
+    public EditContext? editContext { get; set; }
+
+    [Parameter]
+    public FileDto? File { get; set; }
+
+
+
+
+    [Parameter]
+    public string? ImageBase64 { get; set; }
+
+    [Parameter]
+    public string Width { get; set; } = "auto";
+
+    [Parameter]
+    public string Height { get; set; } = "auto";
+
+    [Parameter]
+    public int ImageSize { get; set; } = 1080;
+
+    [Parameter]
+    public List<string> AllowedExtensions { get; set; } = [".jpeg", ".jpg", ".png"];
+
+    [Parameter]
+    public EventCallback<FileDto?> FileChanged { get; set; }
+
+
+
+    [Parameter]
+    public EventCallback FileDeleted { get; set; }
+
+
+    private bool hasError = false;
+
+
+    protected override void OnInitialized()
+    {
+        if (editContext is null)
+            editContext = new(File);
+    }
+    private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full z-10";
+    private string _dragClass = DefaultDragClass;
+
+    private void SetDragClass()
+    => _dragClass = $"{DefaultDragClass} mud-border-primary";
+
+    private void ClearDragClass()
+    => _dragClass = DefaultDragClass;
+
+    private async Task OnFileChangedAsync(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            IsBusy = true;
+            hasError = false;
+            string extension = Path.GetExtension(e.File.Name);
+            if (!AllowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase))
+            {
+                hasError = true;
+                return;
+            }
+
+            var resizedImage = await e.File.RequestImageFileAsync("image/jpeg", ImageSize, ImageSize);
+            if (resizedImage == null)
+            {
+                hasError = true;
+                return;
+            }
+            var dto = new FileDto(resizedImage);
+            var imageMemoryStream = new MemoryStream();
+            await e.File.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024).CopyToAsync(imageMemoryStream);
+            imageMemoryStream.Position = 0;
+
+            dto.StreamContent = new StreamContent(imageMemoryStream);
+            dto.Base64 = ImageBase64 = await resizedImage.ToBase64StringAsync();
+            dto.FileName = WebUtility.HtmlEncode(e.File.Name);
+            File = dto;
+
+        }
+        catch (Exception ex)
+        {
+
+            _snackbarService.DisplayError(ex.Message);
+            hasError = true;
+        }
+        finally
+        {
+            await FileChanged.InvokeAsync(File);
+            StateHasChanged();
+            IsBusy = false;
+        }
+    }
+
+    private async Task ClearFileAsync()
+    {
+        File = null;
+        ClearDragClass();
+        ImageBase64 = null;
+        await InvokeAsync(StateHasChanged);
+        hasError = false;
+
+        await FileChanged.InvokeAsync(File);
+
+    }
+    private async Task DeleteFileAsync()
+    {
+        ImageBase64 = null;
+        await FileDeleted.InvokeAsync();
+
+        await InvokeAsync(StateHasChanged);
+
+
+    }
+
+    public async Task<byte[]>
+    ConvertToBytesAsync(IBrowserFile file, CancellationToken cancellationToken = default!)
+    {
+        // Initialize buffer size (4KB)
+        const int bufferSize = 4096;
+
+        // Open a stream to read the file content
+        using (var stream = file.OpenReadStream())
+        {
+            // Create a MemoryStream with pre-allocated buffer
+            using (var memoryStream = new MemoryStream())
+            {
+                // Allocate a buffer for reading from the file stream
+                byte[] buffer = new byte[bufferSize];
+                int bytesRead;
+
+                // Read from the file stream into the buffer
+                while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                {
+                    // Write the read bytes into the MemoryStream
+                    await memoryStream.WriteAsync(buffer, 0, bytesRead);
+                }
+
+                // Convert the MemoryStream to a byte array
+                return memoryStream.ToArray();
+            }
+        }
+    }
+}

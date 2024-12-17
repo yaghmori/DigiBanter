@@ -1,0 +1,18 @@
+﻿<div class="btn-container" @onclick="@OnClick">
+    <div class="btn-icon" >
+        <div class="line1" />
+        <div class="line2" />
+    </div>
+
+    <div class="btn-content">
+        @ChildContent
+    </div>
+</div>
+@code {
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+}

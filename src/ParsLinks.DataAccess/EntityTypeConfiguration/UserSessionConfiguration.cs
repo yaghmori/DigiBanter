@@ -12,6 +12,7 @@ public class UserSessionConfiguration : IEntityTypeConfiguration<UserSession>
         builder.ToTable("UserSessions");
 
         builder.HasKey(us => us.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
         #region Navigation Properties
         builder.HasOne(us => us.User)

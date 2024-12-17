@@ -1,0 +1,58 @@
+﻿.btn-container {
+    display: flex;
+    width:100%;
+    height:100%;
+    flex-flow: row;
+    gap: 4px;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+
+.btn-icon {
+    position: relative;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #e8e8e8ff;
+    transition: background 0.2s ease-in;
+}
+
+
+.line1, .line2 {
+    height: 1px;
+    width: 9px;
+    top: 6px;
+    left: 2px;
+    position: absolute;
+    border-radius: 2px;
+    background: #000000;
+}
+
+
+.line1 {
+    transform: rotate(45deg);
+    transition: transform 0.2s ease-in;
+}
+
+.line2 {
+    transform: rotate(-45deg);
+    transition: transform 0.2s ease-in;
+}
+
+.btn-container:hover .line1 {
+    height: 0.1rem;
+    transform: rotate(-45deg);
+    background: #ffffff;
+}
+
+.btn-container:hover .line2 {
+    height: 0.1rem;
+    transform: rotate(45deg);
+    background: #ffffff;
+}
+
+.btn-container:hover .btn-icon {
+    background: red;
+}

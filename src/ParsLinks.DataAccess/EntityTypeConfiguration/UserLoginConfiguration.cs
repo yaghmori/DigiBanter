@@ -12,6 +12,7 @@ public class UserLoginConfiguration : IEntityTypeConfiguration<UserLogin>
         builder.ToTable("UserLogins");
 
         builder.HasKey(ul => ul.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
         #region Navigation Properties
         builder.HasOne(ul => ul.User)

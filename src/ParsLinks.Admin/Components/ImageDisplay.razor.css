@@ -1,0 +1,9 @@
+﻿.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.thumbnail {
+    object-fit: cover;
+    border-radius: 5px;
+}

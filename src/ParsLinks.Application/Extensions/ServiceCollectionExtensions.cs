@@ -1,5 +1,5 @@
-﻿using ParsLinks.Application.ApiServices;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ParsLinks.Application.ApiServices;
 
 namespace ParsLinks.Application.Extensions;
 
@@ -11,7 +11,9 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IPodcastApiService, PodcastApiService>();
         services.AddScoped<IBlogPostApiService, BlogPostApiService>();
-      
+        services.AddScoped<ILanguageApiService, LanguageApiService>();
+        services.AddScoped<ICategoryApiService, CategoryApiService>();
+
         return services;
 
 

@@ -1,6 +1,13 @@
 ﻿
 .post-list {
     display: grid;
-    grid-template-columns: repeat(100%,minmax(200px,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(700px,1fr));
     gap: 2rem;
+}
+
+@media (max-width: 900px) {
+    .post-list {
+        grid-template-columns: repeat(auto-fit,minmax(400px,1fr));
+        gap: 3rem;
+    }
 }

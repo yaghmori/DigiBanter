@@ -1,0 +1,163 @@
+﻿@inherits BaseComponent
+
+<div class="file-preview @Class" style="@Style">
+
+    @if (ShowHeader)
+    {
+        <div class="header">
+            <div class="title">
+                <small>@(File?.Name)</small>
+            </div>
+        </div>
+    }
+    @if (!string.IsNullOrWhiteSpace(File?.ContentType))
+    {
+        if (File.ContentType.Contains("image"))
+        {
+            <img class="image" style="@ImageStyle" src="@Preview" />
+        }
+        else
+        {
+            var icon = FileTypeEnum.other.GetDisplayShortName();
+            <div class="icon" style="@IconStyle">
+                @if (File.ContentType.Contains("audio"))
+                {
+                    icon = FileTypeEnum.Audio.GetDisplayShortName();
+                }
+                else if (File.ContentType.Contains("video"))
+                {
+                    icon = FileTypeEnum.Video.GetDisplayShortName();
+                }
+                else if (File.ContentType.Contains("zip-compressed"))
+                {
+                    icon = FileTypeEnum.Zip.GetDisplayShortName();
+                }
+                else if (File.ContentType.Contains(".sheet"))
+                {
+                    icon = FileTypeEnum.Sheet.GetDisplayShortName();
+                }
+                else if (File.ContentType.Contains(".document"))
+                {
+                    icon = FileTypeEnum.Document.GetDisplayShortName();
+                }
+                else if (File.ContentType.Contains("pdf"))
+                {
+                    icon = FileTypeEnum.PDF.GetDisplayShortName();
+                }
+                else if (File.ContentType.Contains("text"))
+                {
+                    icon = FileTypeEnum.Text.GetDisplayShortName();
+                }
+
+                <i class="fad fa-@icon fa-@IconSize mx-3 my-5"></i>
+
+            </div>
+        }
+
+
+    }
+    @if (ShowFooter)
+    {
+        <div class="footer">
+            <div class="title">
+                <code>@(File?.Size.ByteToString())</code>
+            </div>
+            @if (!IsReadOnly)
+            {
+                <div class="action">
+
+                    <MudTooltip Text="@_viewLocalizer[ViewResources.Delete]" Arrow="true" Placement="Placement.Top">
+                        <MudIconButton OnClick="OnDeleteAsync" Color="@MudBlazor.Color.Error"><i class="fas fa-trash-can" /></MudIconButton>
+                    </MudTooltip>
+                </div>
+            }
+
+
+        </div>
+
+    }
+
+</div>
+
+
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public FileDto File { get; set; }
+    private FileDto? _file = null;
+
+
+    [Parameter]
+    public string? Preview { get; set; } = AppConstants.NoPreview;
+
+    [Parameter]
+    public bool ShowHeader { get; set; } = true;
+
+    [Parameter]
+    public bool ShowFooter { get; set; } = true;
+
+    [Parameter]
+    public int Width { get; set; } = 250;
+
+    [Parameter]
+    public string? ImageStyle { get; set; } 
+    [Parameter]
+    public string? IconStyle { get; set; }
+
+    [Parameter]
+    public int Height { get; set; } = 0;
+
+    [Parameter]
+    public bool IsRounded { get; set; } = true;
+
+    [Parameter]
+    public string IconSize { get; set; } = "5x";
+
+    [Parameter]
+    public EventCallback OnDeleteConfirmed { get; set; }
+
+
+    public async Task OnDeleteAsync()
+    {
+
+        var dgResult = await _dialogService.ShowDeleteMessageBoxAsync(_messageLocalizer[MessageResources.AttachmentDeleteConfirmation].Value);
+        if (dgResult)
+        {
+            await OnDeleteConfirmed.InvokeAsync();
+        }
+    }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        if (File != _file)
+        {
+            _file = File;
+            if (File != null)
+            {
+                try
+                {
+
+                    if (File.ContentType.Contains("image"))
+                    {
+                        Preview = $"data:{File.ContentType};base64,{File.Base64}";
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Preview = AppConstants.NoPreview;
+                    _snackbarService.DisplayError(ex.Message);
+                }
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+    }
+
+
+
+
+
+}

@@ -1,16 +1,15 @@
 using ParsLinks.Admin.Components;
 using ParsLinks.Admin.Extensions;
-using MudBlazor.Services;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-builder.Services.AddMudServices();
 builder.Services.RegisterServices(builder.Environment.EnvironmentName);
-//builder.Services.ConfigureAuthentication();
-//builder.Services.AddAuthorization();
+
+builder.Services.AddRadzenComponents();
 
 builder.Services.AddCascadingAuthenticationState();
 

@@ -12,6 +12,7 @@ public class RoleClaimConfiguration : IEntityTypeConfiguration<RoleClaim>
         builder.ToTable("RoleClaims");
 
         builder.HasKey(rc => rc.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
         #region Configure Relationship
         builder.HasOne(rc => rc.Role)

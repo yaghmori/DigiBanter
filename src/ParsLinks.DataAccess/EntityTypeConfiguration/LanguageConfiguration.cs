@@ -10,5 +10,7 @@ public class LanguageConfiguration : IEntityTypeConfiguration<Language>
     public void Configure(EntityTypeBuilder<Language> builder)
     {
         builder.HasKey(l => l.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
+
     }
 }

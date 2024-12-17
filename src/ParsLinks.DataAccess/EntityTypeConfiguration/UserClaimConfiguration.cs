@@ -12,6 +12,7 @@ public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
         builder.ToTable("UserClaims");
 
         builder.HasKey(uc => uc.Id);
+        builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
         #region Configure Relationship
         builder.HasOne(uc => uc.User)

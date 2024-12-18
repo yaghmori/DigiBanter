@@ -132,4 +132,10 @@
   <data name="FileUploadSucceed" xml:space="preserve">
     <value>The file upload was successful</value>
   </data>
+  <data name="PostDeleteConfirmation" xml:space="preserve">
+    <value>Are you sure you want to delete this post? This action will permanently delete all related data as well.</value>
+  </data>
+  <data name="PostSuccessfullyDeleted" xml:space="preserve">
+    <value>Post has been successfully deleted.</value>
+  </data>
 </root>

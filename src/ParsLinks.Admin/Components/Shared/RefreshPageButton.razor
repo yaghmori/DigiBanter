@@ -1,0 +1,19 @@
+﻿@inherits BaseComponent
+
+<div class="@Class" style="@Style">
+    <MudButton StartIcon="fad fa-rotate"
+               OnClick="()=>OnActionCompleted.InvokeAsync()"
+               Color="MudBlazor.Color.Primary">
+        <i class=""></i><span class="text-secondary">@_viewLocalizer[ViewResources.Refresh]</span>
+    </MudButton>
+</div>
+@code {
+    [CascadingParameter]
+    public EditContext? editContext { get; set; }
+
+    [Parameter]
+    public EventCallback OnActionCompleted { get; set; }
+
+
+
+}

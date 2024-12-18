@@ -15,67 +15,6 @@ namespace ParsLinks.Admin.Themes
 
         public static MudTheme DefaultTheme = new MudTheme()
         {
-            Typography = new Typography
-            {
-
-                Default = new Default
-                {
-                    FontSize = "12px",
-                    FontFamily = ["roboto", "inter",]
-                },
-                Body1 = new Body1
-                {
-                    FontSize = "12px",
-                    FontFamily = ["roboto", "inter",]
-
-                },
-                Button = new Button
-                {
-                    FontSize = "13px",
-                    TextTransform = string.Empty,
-                    FontFamily = ["roboto", "inter",]
-
-
-
-                },
-                H6 = new H6
-                {
-                    FontSize = "17px",
-                    FontFamily = ["roboto", "inter",]
-
-                },
-                H5 = new H5
-                {
-                    FontSize = "18px",
-                    FontFamily = ["roboto", "inter",]
-
-
-                },
-                H4 = new H4
-                {
-                    FontSize = "19px",
-                    FontFamily = ["roboto", "inter",]
-
-                },
-                H3 = new H3
-                {
-                    FontSize = "20px",
-                    FontFamily = ["roboto", "inter",]
-
-                },
-                H2 = new H2
-                {
-                    FontSize = "21px",
-                    FontFamily = ["roboto", "inter",]
-
-                },
-                H1 = new H1
-                {
-                    FontSize = "22px",
-                    FontFamily = ["roboto", "inter",]
-
-                }
-            },
             PaletteLight = new PaletteLight()
             {
                 TableLines = "#F1F1F4",

@@ -1,8 +1,35 @@
-
+@import url('css/font-awesome/css/all.css');
+:root {
+    --rz-dialog-zindex: 3001;
+    --rz-dialog-mask-zindex: 3000;
+    --shadow-1: 0px 5px 0 -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+    --hover-color: #f5f8fc;
+    --hover-padding: 15px;
+    --background: rgba(246,246,246,1);
+    --primary-hex-color: #1e90ff;
+    --primary-color: 30,144,255;
+    --secondary-hex-color: #666666;
+    --secondary-color: 102,102,102;
+    --danger-hex-color: #ff3838;
+    --danger-color: 255,56,56;
+    --warning-hex-color: #ffba00;
+    --warning-color: 255,186,0;
+    --success-hex-color: #18cd63;
+    --success-color: 24,205,99;
+    --paperbox-box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
+    --paperbox-border-radius: 0.625rem;
+    --paperbox-border: 1px solid var(--mud-palette-table-lines);
+    --paperbox-background: var(--mud-palette-drawer-background);
+    --theme-accent-color: #242526;
+    --theme-accent-hover-color: #3A3B3C;
+}
 
 
 a, .btn-link {
     color: #006bb7;
+}
+.material-icons-two-tone, .material-icons-outlined {
+    font-size: 1rem; /* Preferred icon size */
 }
 
 .btn-primary {

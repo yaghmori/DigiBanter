@@ -25,7 +25,7 @@
                     <div class="date">
                         <i class="material-icons-two-tone">calendar_today</i>
 
-                        @Model.PublishedAt
+                        @Model.PublishedAt.ToElapsedTime()
                     </div>
                     <div class="info">
                         <span>
@@ -95,7 +95,10 @@
             if (Id == null)
                 return;
 
-            var response = await _blogPostApiService.GetPostByIdAsync(Id.Value, lang);
+            var response = await _blogPostApiService.GetPostByIdAsync(Id.Value, new BlogPostQueryParameters
+                {
+                    Lang = lang
+                }, cancellationToken);
             if (response.Succeeded)
                 Model = response.Data;
         }

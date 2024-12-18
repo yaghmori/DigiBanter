@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
-using ParsLinks.Shared.Constatns;
+﻿using ParsLinks.Shared.Constatns;
 using ParsLinks.Shared.Dto;
 using ParsLinks.Shared.Dto.Request;
 using ParsLinks.Shared.Dto.Response;
 using ParsLinks.Shared.Extensions;
+using ParsLinks.Shared.Models;
+using ParsLinks.Shared.PagedCollections;
 using ParsLinks.Shared.ResultWrapper;
 using ParsLinks.Shared.Services;
 using System.Text;
@@ -34,24 +35,37 @@ namespace ParsLinks.Application.ApiServices
             var response = await _httpClient.PostAsync(uri, formData, cancellationToken);
             return await response.ToResultAsync<int>(_jsonService, cancellationToken);
         }
-
-        public async Task<IApiResult<List<BlogPostResponse>>> GetAllPostsAsync(string? lang = "en-US", CancellationToken cancellationToken = default)
+        public async Task<IApiResult> DeletePostByIdAsync(int postId, CancellationToken cancellationToken = default)
         {
-            var uri = AppEndPoints.BlogPosts.Base;
+            var uri = string.Format(AppEndPoints.BlogPosts.DeleteById, postId);
+            var response = await _httpClient.DeleteAsync(uri, cancellationToken);
+            return await response.ToResultAsync(_jsonService, cancellationToken);
+        }
 
-            if (!string.IsNullOrWhiteSpace(lang))
-                uri = QueryHelpers.AddQueryString(uri, nameof(lang), lang);
+        public async Task<IApiResult<List<BlogPostResponse>>> GetAllPostsAsync(BlogPostQueryParameters parameters, CancellationToken cancellationToken = default)
+        {
+            parameters.Paged = false;
+            var queryString = parameters.ToQueryString();
+            var uri = $"{AppEndPoints.BlogPosts.Base}{queryString}";
 
             var response = await _httpClient.GetAsync(uri, cancellationToken);
             return await response.ToResultAsync<List<BlogPostResponse>>(_jsonService, cancellationToken);
         }
-
-        public async Task<IApiResult<BlogPostResponse>> GetPostByIdAsync(int postId, string? lang = "en-US", CancellationToken cancellationToken = default)
+        public async Task<IApiResult<IPagedList<BlogPostResponse>>> GetPagedAllPostsAsync(BlogPostQueryParameters parameters, CancellationToken cancellationToken = default)
         {
-            var uri = string.Format(AppEndPoints.BlogPosts.GetById, postId);
+            parameters.Paged = true;
+            var queryString = parameters.ToQueryString();
+            var uri = $"{AppEndPoints.BlogPosts.Base}{queryString}";
+            var response = await _httpClient.GetAsync(uri, cancellationToken);
+            return await response.ToResultAsync<IPagedList<BlogPostResponse>>(_jsonService, cancellationToken);
 
-            if (!string.IsNullOrWhiteSpace(lang))
-                uri = QueryHelpers.AddQueryString(uri, nameof(lang), lang);
+        }
+
+        public async Task<IApiResult<BlogPostResponse>> GetPostByIdAsync(int postId, BlogPostQueryParameters parameters, CancellationToken cancellationToken = default)
+        {
+            var queryString = parameters.ToQueryString();
+            var uri = $"{string.Format(AppEndPoints.BlogPosts.GetById, postId)}{queryString}";
+
 
             var response = await _httpClient.GetAsync(uri, cancellationToken);
             return await response.ToResultAsync<BlogPostResponse>(_jsonService, cancellationToken);

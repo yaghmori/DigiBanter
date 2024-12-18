@@ -1,12 +1,14 @@
-﻿namespace ParsLinks.Domain.Entities;
+﻿using ParsLinks.Domain.Enums;
 
-public class Post:BaseEntity<int>
+namespace ParsLinks.Domain.Entities;
+
+public class Post : BaseEntity<int>
 {
     public Guid? AuthorId { get; set; }
     public int? CategoryId { get; set; }
     public string? Image { get; set; }
     public DateTimeOffset? PublishedAt { get; set; }
-    public int Status { get; set; } = 1; // Draft, Published, Archived
+    public BlogPostStatusEnum Status { get; set; }
 
     // Navigation properties
     public User? Author { get; set; }

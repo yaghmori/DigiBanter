@@ -22,14 +22,14 @@ namespace ParsLinks.Localization {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class MessageResources {
+    public class EnumResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal MessageResources() {
+        internal EnumResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace ParsLinks.Localization {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ParsLinks.Localization.MessageResources", typeof(MessageResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ParsLinks.Localization.EnumResources", typeof(EnumResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,29 @@ namespace ParsLinks.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this attachment?.
+        ///   Looks up a localized string similar to Archived.
         /// </summary>
-        public static string AttachmentDeleteConfirmation {
+        public static string BlogPostStatusEnum_Archived {
             get {
-                return ResourceManager.GetString("AttachmentDeleteConfirmation", resourceCulture);
+                return ResourceManager.GetString("BlogPostStatusEnum_Archived", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file size exceeds the maximum limit {0}..
+        ///   Looks up a localized string similar to Draft.
         /// </summary>
-        public static string FileSizeExceedsMmaximumLimit {
+        public static string BlogPostStatusEnum_Draft {
             get {
-                return ResourceManager.GetString("FileSizeExceedsMmaximumLimit", resourceCulture);
+                return ResourceManager.GetString("BlogPostStatusEnum_Draft", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file has been successfully uploaded..
+        ///   Looks up a localized string similar to Published.
         /// </summary>
-        public static string FileSuccessfullyUploaded {
+        public static string BlogPostStatusEnum_Published {
             get {
-                return ResourceManager.GetString("FileSuccessfullyUploaded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The file upload was intrupted.
-        /// </summary>
-        public static string FileUploadError {
-            get {
-                return ResourceManager.GetString("FileUploadError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The file upload was successful.
-        /// </summary>
-        public static string FileUploadSucceed {
-            get {
-                return ResourceManager.GetString("FileUploadSucceed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this post? This action will permanently delete all related data as well..
-        /// </summary>
-        public static string PostDeleteConfirmation {
-            get {
-                return ResourceManager.GetString("PostDeleteConfirmation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Post has been successfully deleted..
-        /// </summary>
-        public static string PostSuccessfullyDeleted {
-            get {
-                return ResourceManager.GetString("PostSuccessfullyDeleted", resourceCulture);
+                return ResourceManager.GetString("BlogPostStatusEnum_Published", resourceCulture);
             }
         }
     }

@@ -1,0 +1,24 @@
+﻿@inherits BaseComponent
+    <MudButton StartIcon="@Icons.Material.Rounded.AddCircle"
+               Variant="MudBlazor.Variant.Filled"
+               
+               OnClick="()=>OpenDialogAsync()"
+               Color="MudBlazor.Color.Primary">@_viewLocalizer[ViewResources.AddNewPost]</MudButton>
+@code {
+    [CascadingParameter]
+    public EditContext? editContext { get; set; }
+
+    [Parameter]
+    public EventCallback<int?> OnActionCompleted { get; set; }
+
+    public async Task OpenDialogAsync()
+    {
+        var parameters = new Dictionary<string, object> {
+                { nameof(NewPostPage.OnValidSubmit),EventCallback.Factory.Create(this,async () => await OnActionCompleted.InvokeAsync())} };
+        var options = new DialogOptions()
+            { CloseButton = true, BackdropClick = false, FullWidth = true, MaxWidth = MaxWidth.Large };
+        _dialogService.ShowDialog<NewPostPage>(parameters, options, _viewLocalizer[ViewResources.AddNewPost]);
+    }
+
+
+}

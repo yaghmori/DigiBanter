@@ -44,7 +44,10 @@ else
         try
         {
             IsBussy = true;
-            var response = await _blogPostApiService.GetAllPostsAsync(lang);
+            var response = await _blogPostApiService.GetAllPostsAsync(new BlogPostQueryParameters
+                {
+                    Lang = lang
+                }, cancellationToken);
             if (response.Succeeded)
                 ItemSource = response.Data;
 

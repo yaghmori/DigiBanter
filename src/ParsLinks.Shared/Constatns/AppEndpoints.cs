@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ParsLinks.Shared.Constatns;
+﻿namespace ParsLinks.Shared.Constatns;
 public static class AppEndPoints
 {
 
@@ -31,7 +25,8 @@ public static class AppEndPoints
     {
         public const string Base = BaseAddress + "/posts";
         public const string GetById = Base + "/{0}";
-        public const string AddPost = Base ;
+        public const string DeleteById = Base + "/{0}";
+        public const string AddPost = Base;
     }
     public static class LanguageEndpoints
     {
@@ -61,7 +56,7 @@ public static class AppEndPoints
     public static class User
     {
         public const string Base = BaseAddress + "/users";
-        public const string GetUsers = Base ;
+        public const string GetUsers = Base;
         public const string GetUserById = Base + "/{0}";
     }
 

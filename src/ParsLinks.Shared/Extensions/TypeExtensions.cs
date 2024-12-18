@@ -45,6 +45,27 @@ public static class TimeExtensions
         else
             return date.GetValueOrDefault().ToString("MMMM dd, yyyy");
     }
+
+    public static string ToElapsedTime(this DateTime date)
+    {
+        if (date == null)
+            return string.Empty;
+
+        TimeSpan timeSince = DateTime.UtcNow - date;
+
+        if (timeSince.TotalSeconds < 5)
+            return "just now";
+        else if (timeSince.TotalSeconds < 60)
+            return $"{Math.Floor(timeSince.TotalSeconds)} seconds ago";
+        else if (timeSince.TotalMinutes < 60)
+            return $"{Math.Floor(timeSince.TotalMinutes)} minutes ago";
+        else if (timeSince.TotalHours < 24)
+            return $"{Math.Floor(timeSince.TotalHours)} hours ago";
+        else if (timeSince.TotalDays < 7)
+            return $"{Math.Floor(timeSince.TotalDays)} days ago";
+        else
+            return date.ToString("MMMM dd, yyyy");
+    }
 }
 
 public static class StreamExtensions

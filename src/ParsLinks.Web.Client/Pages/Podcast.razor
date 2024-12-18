@@ -2,7 +2,6 @@
 @page "/{lang}/podcast/{Id}"
 @attribute [StreamRendering]
 
-
 <PageTitle>@Model?.Title</PageTitle>
 @if(!IsBussy)
 {
@@ -20,7 +19,7 @@
                 <div class="date">
                     <i class="material-icons-two-tone">calendar_today</i>
 
-                    @Model.DateTime
+                    @Model.DateTime.ToElapsedTime()
                 </div>
 
                 <div class="content">

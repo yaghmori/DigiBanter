@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParsLinks.Shared.Constatns;
 using ParsLinks.Shared.Dto.Request;
-using ParsLinks.Shared.Dto.Response;
+using ParsLinks.Shared.Models;
 using ParsLinks.Shared.ResultWrapper;
 using System.Net;
 
@@ -14,7 +14,8 @@ public static class BlogPostEndpoints
 
         posts.MapPost("/", AddPost).AllowAnonymous().DisableAntiforgery();
         posts.MapGet("/", GetAllPosts).AllowAnonymous();
-        posts.MapGet("/{id}", GetPostById).AllowAnonymous();
+        posts.MapGet("/{postId}", GetPostById).AllowAnonymous();
+        posts.MapDelete("/{postId}", DeletePostById).AllowAnonymous();
     }
 
 
@@ -22,7 +23,6 @@ public static class BlogPostEndpoints
         [FromForm] IFormCollection form,
         IBlogPostService postService,
         IJsonSerializer jsonSerializer,
-        HttpContext context,
         CancellationToken cancellationToken)
     {
 
@@ -30,7 +30,7 @@ public static class BlogPostEndpoints
         var request = jsonSerializer.Deserialize<BlogPostRequest>(jsonData);
         var image = form.Files.GetFile("image");
 
-        var result = await postService.AddPostAsync(image, request, context, cancellationToken);
+        var result = await postService.AddPostAsync(image, request, cancellationToken);
 
         if (!result.IsSuccess)
         {
@@ -44,37 +44,29 @@ public static class BlogPostEndpoints
 
     private static async Task<IResult> GetAllPosts(
         IBlogPostService postService,
-        HttpContext context,
         CancellationToken cancellationToken,
-        [FromQuery] string? lang = "en-US")
+        [AsParameters] BlogPostQueryParameters parameters)
     {
-        var result = await postService.GetPostAsync(context, cancellationToken, lang);
+        return await postService.GetPostAsync(parameters, cancellationToken);
 
-        if (!result.IsSuccess)
-            return Results.BadRequest(result.ErrorMessage);
-
-        return TypedResults.Ok(ApiResult<List<BlogPostResponse>>.Success(result.Data));
     }
 
     private static async Task<IResult> GetPostById(
-        [FromRoute] int id,
+        [FromRoute] int postId,
+        [AsParameters] BlogPostQueryParameters parameters,
         IBlogPostService postService,
-        HttpContext context,
-        CancellationToken cancellationToken,
-        [FromQuery] string? lang = "en-US")
+        CancellationToken cancellationToken)
     {
-        var result = await postService.GetPostByIdAsync(id, context, cancellationToken, lang);
-
-        if (!result.IsSuccess)
-        {
-            if (result.StatusCode == (int)HttpStatusCode.NotFound)
-                return Results.NotFound(result.ErrorMessage);
-            else
-                return Results.BadRequest(result.ErrorMessage);
-        }
-        return TypedResults.Ok(ApiResult<BlogPostResponse>.Success(result.Data));
+        return await postService.GetPostByIdAsync(postId, parameters, cancellationToken);
     }
 
+    private static async Task<IResult> DeletePostById(
+      [FromRoute] int postId,
+      IBlogPostService postService,
+      CancellationToken cancellationToken)
+    {
+        return await postService.DeletePostAsync(postId, cancellationToken);
+    }
 
 
 

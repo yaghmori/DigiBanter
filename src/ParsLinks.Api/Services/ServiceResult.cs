@@ -29,6 +29,7 @@
             return new ServiceResult { IsSuccess = true, StatusCode = statusCode };
         }
 
+
         public static ServiceResult Failure(string errorMessage, int statusCode = 400)
         {
             return new ServiceResult { IsSuccess = false, ErrorMessage = errorMessage, StatusCode = statusCode };

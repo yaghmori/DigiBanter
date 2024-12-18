@@ -10,7 +10,7 @@
             <div class="date">
                 <span>
                     <i class="material-icons-two-tone">calendar_today</i>
-                    @Model.PublishedAt?.ToShortDateString()
+                    @Model.PublishedAt.ToElapsedTime()
                 </span>
 
             </div>

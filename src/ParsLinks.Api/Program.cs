@@ -25,7 +25,7 @@ app.UseMiddlewares();
 
 app.MapOpenApi();
 
-app.UseAntiforgery();
+//pp.UseAntiforgery();
 
 //app.MapScalarApiReference(options =>
 //{

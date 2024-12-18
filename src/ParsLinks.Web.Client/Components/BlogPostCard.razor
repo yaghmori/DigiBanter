@@ -8,8 +8,11 @@
         </div>
         <div class="body">
             <div class="date">
-                <i class="material-icons-two-tone">calendar_today</i>
-                @Model.PublishedAt?.ToShortDateString()
+                <span>
+                    <i class="material-icons-two-tone">calendar_today</i>
+                    @Model.PublishedAt?.ToShortDateString()
+                </span>
+
             </div>
 
             <div class="title">
@@ -23,13 +26,20 @@
                 <MarkupStringComp ChildContent="@Model.Content" />
             </div>
             <div class="action-bar">
-                <MudButton Color="Color.Dark" Variant="Variant.Filled" Style="min-width:150px;" FullWidth="false" Href="@($"/{Langauge}/blog/{Model.Id}")">
-                    Read More
-                </MudButton>
-                <div class="info">
-                    <i class="fad fa-timer"></i>
-                    <span>@Model.EstimatedReadingTime min read</span>
+                <div class="buttons">
+                    <MudButton Color="Color.Dark" Variant="Variant.Filled" Style="min-width:150px;" FullWidth="false" Href="@($"/{Langauge}/blog/{Model.Id}")">
+                        Read More
+                    </MudButton>
+                    <span>
+                        <i class="fad fa-timer"></i>
+                        <span style="color:darkgray">@Model.EstimatedReadingTime min read</span>
+                    </span>
                 </div>
+                @if (!string.IsNullOrWhiteSpace(Model.Category))
+                {
+                    <MudChip se Variant="MudBlazor.Variant.Text" Size="MudBlazor.Size.Small" T="string" Text="@Model.Category" />
+                }
+
             </div>
 
         </div>

@@ -97,6 +97,7 @@ public class BlogPostService : IBlogPostService
         var baseUrl = _config.Endpoints.Api;
         var posts = await _appDbContext.PostTranslations
             .Include(x => x.Post).ThenInclude(x => x.Author)
+            .Include(x => x.Post).ThenInclude(x => x.Category).ThenInclude(x => x.Translations)
             .Where(x => EF.Functions.Like(x.Language.Code, $"%{lang}%"))
             .ProjectTo<BlogPostResponse>(_mapper.ConfigurationProvider)
             .ToListAsync();

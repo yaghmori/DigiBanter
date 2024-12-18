@@ -1,4 +1,5 @@
-﻿<nav>
+﻿@attribute [StreamRendering]
+<nav>
     <div class="wrapper">
         <div class="logo">
             <a href="/@Langauge" class="d-flex flex-row justify-content-center align-items-center gap-1" alt="ParsLinks">
@@ -21,10 +22,13 @@
                 <input type="checkbox" id="showDrop">
                 <label for="showDrop" class="mobile-item">Blog</label>
                 <ul class="drop-menu">
-                    <li><a href="/@Langauge/blog">Category 1</a></li>
-                    <li><a href="/@Langauge/blog">Category 2</a></li>
-                    <li><a href="/@Langauge/blog">Category 3</a></li>
-                    <li><a href="/@Langauge/blog">Category 4</a></li>
+                    @if (!IsLoading)
+                    {
+                        @foreach (var category in categories)
+                        {
+                            <li><a href="/@Langauge/blog">@category.Name</a></li>
+                        }
+                    }
                 </ul>
             </li>
             <li>
@@ -39,10 +43,15 @@
                         <div class="row">
                             <header>Design Services</header>
                             <ul class="mega-links">
-                                <li><a href="/@Langauge/podcast">Graphics</a></li>
-                                <li><a href="/@Langauge/podcast">Vectors</a></li>
-                                <li><a href="/@Langauge/podcast">Business cards</a></li>
-                                <li><a href="/@Langauge/podcast">Custom logo</a></li>
+                                @if (!IsLoading)
+                                {
+
+
+                                    @foreach (var category in categories)
+                                    {
+                                        <li><a href="/@Langauge/@category.Name">@category.Name</a></li>
+                                    }
+                                }
                             </ul>
                         </div>
                         <div class="row">
@@ -74,3 +83,28 @@
     </div>
 </nav>
 
+@code {
+    List<CategoryResponse> categories = new List<CategoryResponse>();
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+
+            IsLoading = true;
+            var response = await _categoryApiService.GetAllAsync(cancellationToken);
+            if (response.Succeeded)
+            {
+                categories = response.Data;
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
+        finally
+        {
+            IsLoading = false;
+
+        }
+    }
+}

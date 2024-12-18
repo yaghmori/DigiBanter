@@ -5,11 +5,13 @@
     padding: 5rem;
     background: #f4f4f4;
     text-align: center;
-    position: relative;
     gap: 3rem;
+    width:100%;
+    justify-content:center;
 }
 
     .section .header {
+        width: 100%;
         display: flex;
         flex-flow: column;
     }
@@ -23,60 +25,76 @@
             color: var(--mud-palette-text-secondary)
         }
 
-.body {
-    width:100%;
-    display: flex;
-    flex-flow:wrap;
-    justify-content:center;
-    gap: 2.5rem;
-}
-
-.feature {
-    border-top: var(--mud-palette-text-disabled) solid .5rem;
-    display: flex;
-    flex-flow: column;
-    border-radius: 1rem;
-    gap: 2rem;
-    background: #fff;
-    padding: 2rem;
-    width: 250px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-
-    .feature.selected {
-        transform: scale(1.1);
-        border-top: var(--mud-palette-primary) solid .5rem;
-    }
-    .feature .title {
-        font-size: 1.3rem;
-        font-weight: 500;
-        color: var(--mud-palette-primary)
+    .section .body {
+        display: flex;
+        flex-flow: wrap;
+        justify-content: center;
+/*        grid-template-columns: repeat(auto-fit,minmax(300px,1fr));*/
+        gap: 2.5rem;
     }
 
-    .feature .pricing-plan {
-    }
-
-        .feature .pricing-plan .price {
-            font-size: 3rem;
-            font-weight: 500;
+        .section .body .feature {
+            border-top: var(--mud-palette-text-disabled) solid .5rem;
+            display: flex;
+            flex-flow: column;
+            border-radius: 1rem;
+            gap: 2rem;
+            background: #fff;
+            padding: 2rem;
+            width: 100%;
+            max-width: 330px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .feature .pricing-plan .pricing-coins {
-            font-size: 1.5rem;
-        }
 
-    .feature ul {
-        text-align: left;
-        display: inline-block;
-        margin: 0 auto;
-    }
+            .section .body .feature.selected {
+                transform: scale(1.1);
+                border-top: var(--mud-palette-primary) solid .5rem;
+            }
 
-        .feature ul li {
-            font-size:.8rem;
-            padding:4px;
-            color: var(--mud-palette-text-disabled);
-        }
-            .feature ul li.selected {
+            .section .body .feature .title {
+                font-size: 1.3rem;
+                font-weight: 500;
                 color: var(--mud-palette-primary)
             }
+
+            .section .body .feature .pricing-plan {
+            }
+
+                .section .body .feature .pricing-plan .price {
+                    font-size: 3rem;
+                    font-weight: 500;
+                }
+
+                .section .body .feature .pricing-plan .pricing-coins {
+                    font-size: 1.5rem;
+                }
+
+            .section .body .feature ul {
+                text-align: left;
+                display: inline-block;
+                margin: 0 auto;
+            }
+
+                .section .body .feature ul li {
+                    font-size: .8rem;
+                    padding: 4px;
+                    color: var(--mud-palette-text-disabled);
+                }
+
+                    .section .body .feature ul li.selected {
+                        color: var(--mud-palette-primary)
+                    }
+
+
+@media (max-width: 576px) {
+    .section .body {
+        display: flex;
+        flex-flow: column;
+        gap: 3rem;
+    }
+
+    .section .body .feature {
+        max-width: 600px;
+    }
+}

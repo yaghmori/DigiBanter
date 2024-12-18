@@ -28,12 +28,18 @@
                         @Model.PublishedAt
                     </div>
                     <div class="info">
-                        <i class="fa-sharp-duotone fa-solid fa-timer"></i>
-                        <span>@Model.EstimatedReadingTime min read</span>
+                        <span>
+                            <i class="fad fa-solid fa-timer"></i>
+                            <span style="color:gray">@Model.EstimatedReadingTime min read</span>
+                        </span>
+                        @if (!string.IsNullOrWhiteSpace(Model.Category))
+                        {
+                            <MudChip se Variant="MudBlazor.Variant.Text" Size="MudBlazor.Size.Small" T="string" Text="@Model.Category" />
+                        }
                     </div>
 
                     <div class="truncate">
-                        <MarkupStringComp ChildContent="@Model.Content"/>
+                        <MarkupStringComp ChildContent="@Model.Content" />
                     </div>
 
                 </div>

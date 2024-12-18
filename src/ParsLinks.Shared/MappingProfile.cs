@@ -36,6 +36,13 @@ public class MappingProfile : AutoMapper.Profile
             .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Post.Image))
             .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
             .ForMember(dest => dest.PublishedAt, opt => opt.MapFrom(src => src.Post.PublishedAt))
+    .ForMember(dest => dest.Category, opt => opt.MapFrom(src =>
+        src.Post.Category != null &&
+        src.Post.Category.Translations != null &&
+        src.Post.Category.Translations.Any(x => x.LanguageId == src.LanguageId)
+            ? src.Post.Category.Translations
+                .First(x => x.LanguageId == src.LanguageId).Name
+            : null))
             .ForMember(dest => dest.EstimatedReadingTime, opt => opt.MapFrom(src => CalculateReadingTime(src.Content)));
 
 

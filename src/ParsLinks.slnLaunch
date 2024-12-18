@@ -11,6 +11,11 @@
         "Path": "ParsLinks.Web\\ParsLinks.Web.csproj",
         "Action": "Start",
         "DebugTarget": "https"
+      },
+      {
+        "Path": "ParsLinks.Admin\\ParsLinks.Admin.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
       }
     ]
   }

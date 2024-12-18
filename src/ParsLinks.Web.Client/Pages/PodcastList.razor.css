@@ -11,10 +11,9 @@
 .section-header {
     display: flex;
     flex-flow: row;
-    height: 450px;
-    min-height: 400px;
     justify-content: space-between;
     background: #000A24;
+    min-height: 500px;
     gap: 50px;
 }
 
@@ -87,8 +86,7 @@
 @media (width< 1000px) {
     .section-header {
         flex-flow: column;
-        height: 500px;
-        min-height: 400px;
+        min-height: 500px;
     }
 
 

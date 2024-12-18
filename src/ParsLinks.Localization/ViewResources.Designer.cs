@@ -70,6 +70,15 @@ namespace ParsLinks.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New Post.
+        /// </summary>
+        public static string AddNewPost {
+            get {
+                return ResourceManager.GetString("AddNewPost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Categories.
         /// </summary>
         public static string Categories {

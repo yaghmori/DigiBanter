@@ -1,6 +1,7 @@
 using ParsLinks.Admin.Components;
 using ParsLinks.Admin.Extensions;
 using Radzen;
+using Sitko.Blazor.CKEditor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,13 @@ builder.Services.RegisterServices(builder.Environment.EnvironmentName);
 builder.Services.AddRadzenComponents();
 
 builder.Services.AddCascadingAuthenticationState();
+
+builder.Services.AddCKEditor(builder.Configuration, options =>
+{
+    options.ScriptPath = "https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js";
+    options.EditorClassName = "ClassicEditor";
+});
+
 
 var app = builder.Build();
 

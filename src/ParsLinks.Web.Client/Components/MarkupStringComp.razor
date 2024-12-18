@@ -1,0 +1,29 @@
+﻿<style>
+    .markup {
+        display: grid;
+        max-width: 100%;
+        grid-template-columns: repeat(1,minmax(200px,1fr));
+        overflow-wrap: break-word; /* Ensure long words break and wrap */
+        word-wrap: break-word; /* Fallback for older browsers */
+        font-weight: 400;
+        font-size: 16px;
+        font-style:normal;
+        line-height:26px;
+    }
+
+        .markup * {
+            border-radius: 1rem;
+            max-width: 100%;
+            height: auto; /* Maintain aspect ratio */
+        }
+
+</style>
+
+<article class="markup">
+    @((MarkupString)ChildContent)
+</article>
+
+@code {
+    [Parameter]
+    public string? ChildContent { get; set; }
+}

@@ -1,48 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@inherits BaseLayout
+@layout BaseLayout
 
-<MudThemeProvider />
-<MudPopoverProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
-
-<MudLayout>
-    <NavMenu />
-
-    <MudMainContent>
-        <MudContainer Class="d-flex flex-column justify-content-center align-items-center body-content" Style="padding:30px" MaxWidth="MaxWidth.Large">
-            @Body
-        </MudContainer>
-
-    <Footer />
-    </MudMainContent>
-</MudLayout>
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>
-
-
-
-@inject NavigationManager NavigationManager
-
-@code {
-    // [CascadingParameter]
-    // public HttpContext? httpContext { get; set; }
-    // protected override void OnInitialized()
-    // {
-    //     var uri = new Uri(NavigationManager.Uri);
-    //     var segments = uri.AbsolutePath.Split('/', StringSplitOptions.RemoveEmptyEntries);
-
-
-
-    //     if (httpContext != null && (segments.Length == 0 || !new[] { "en", "fr", "es", "fa" }.Contains(segments[0])))
-    //     {
-    //         var route = uri.PathAndQuery;
-    //         // Default to English if no language is provided
-    //         //NavigationManager.NavigateTo("/en" + route);
-    //         httpContext.Response.Redirect("/en" + route);
-
-    //     }
-    // }
-}
+<MudContainer Class="d-flex flex-column justify-content-center align-items-center body-content"
+              Style="padding-top:30px;padding-bottom:40px"
+              MaxWidth="MaxWidth.Large">
+              @Body
+              </MudContainer>

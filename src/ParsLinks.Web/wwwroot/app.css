@@ -50,8 +50,50 @@ a, .btn-link {
     }
 }
 
+/* Base styles for the scroll-to-top button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+}
 
+    .scroll-to-top:hover {
+        opacity: 1;
+    }
 
+/* Show the button when the body is scrolled down */
+body:has(.sentinel) .scroll-to-top {
+    opacity: 0.8;
+    visibility: visible;
+}
+
+/* The sentinel element at the top of the page */
+.sentinel {
+    position: sticky;
+    top: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+html {
+    scroll-behavior: smooth; /* Enables smooth scrolling for anchor links */
+}
+
+html {
+    scroll-behavior: smooth; /* Enables smooth scrolling for anchor links */
+}
 
 h1:focus {
     outline: none;

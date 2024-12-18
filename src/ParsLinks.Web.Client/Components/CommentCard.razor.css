@@ -1,5 +1,6 @@
 ﻿
 .comment {
+    position:relative;
     display: flex;
     flex-flow: row;
     gap: 1rem;
@@ -29,6 +30,7 @@
     }
 
 .comment .img {
+    background-color: white;
     height: 50px;
     width: 50px;
     border-radius: 50%;
@@ -42,4 +44,22 @@
         outline: 1px solid #d4d4d4;
     }
 
+@media (max-width:768px ) {
+    .comment {
+        display: flex;
+        flex-flow: column;
+        gap: 1rem;
+        width: 100%;
+    }
+
+        .comment .img {
+            position: absolute;
+            top: -25px;
+            left: 15px;
+        }
+
+    .content {
+        padding-top: 2rem;
+    }
+}
 

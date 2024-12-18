@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="truncate">
-                        @((MarkupString)Model.Content)
+                        <MarkupStringComp ChildContent="@Model.Content"/>
                     </div>
 
                 </div>

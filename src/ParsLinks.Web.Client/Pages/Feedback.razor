@@ -1,5 +1,6 @@
 ﻿@page "/{lang}/feedback"
-@rendermode @(new InteractiveServerRenderMode(prerender:false))
+@attribute [StreamRendering]
+@rendermode InteractiveServer
 <PageTitle>Feedback</PageTitle>
 
 
@@ -11,10 +12,11 @@
 
 @if (forecasts == null)
 {
-    <p><em>Loading...</em></p>
+    <MudProgressLinear Indeterminate="true" />
 }
 else
 {
+
     <table class="table">
         <thead>
             <tr>

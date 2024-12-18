@@ -1,46 +1,4 @@
-﻿@inherits LayoutComponentBase
+﻿@inherits BaseLayout
+@layout BaseLayout
 
-<MudThemeProvider />
-<MudPopoverProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
-
-<MudLayout>
-    <NavMenu />
-
-    <MudMainContent>
-            @Body
-
-    </MudMainContent>
-    <Footer />
-</MudLayout>
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>
-
-
-
-@inject NavigationManager NavigationManager
-
-@code {
-    // [CascadingParameter]
-    // public HttpContext? httpContext { get; set; }
-    // protected override void OnInitialized()
-    // {
-    //     var uri = new Uri(NavigationManager.Uri);
-    //     var segments = uri.AbsolutePath.Split('/', StringSplitOptions.RemoveEmptyEntries);
-
-
-
-    //     if (httpContext != null && (segments.Length == 0 || !new[] { "en", "fr", "es", "fa" }.Contains(segments[0])))
-    //     {
-    //         var route = uri.PathAndQuery;
-    //         // Default to English if no language is provided
-    //         //NavigationManager.NavigateTo("/en" + route);
-    //         httpContext.Response.Redirect("/en" + route);
-
-    //     }
-    // }
-}
+@Body

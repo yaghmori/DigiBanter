@@ -27,7 +27,7 @@
         .section-header .left img {
             position: absolute;
             left: 0;
-            width: 500px;
+            max-width: 450px;
             z-index: 0;
             opacity: .08
         }
@@ -74,7 +74,7 @@
         }
 
         .section-header .right .img2 {
-            width: 500px;
+            max-width: 100%;
             z-index: 0;
         }
 

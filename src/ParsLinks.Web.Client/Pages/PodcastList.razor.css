@@ -1,4 +1,6 @@
-﻿
+﻿* {
+    transition: all .3s ease-in-out;
+}
 .podcast-list {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
@@ -52,14 +54,17 @@
             z-index: 1;
             outline: solid 1px white;
             border-radius: .5rem;
-            transition: all .3s ease-in-out;
+            z-index: 20;
         }
 
             .section-header .left a:hover {
-                outline: solid 1px var(--mud-palette-primary);
-                transition: all .3s ease-in-out;
-            }
 
+                outline: solid 1px var(--mud-palette-primary);
+                cursor: pointer;
+            }
+            .section-header .left a:hover i{
+                color: var(--mud-palette-primary);
+            }
     .section-header .right {
         position: relative;
     }

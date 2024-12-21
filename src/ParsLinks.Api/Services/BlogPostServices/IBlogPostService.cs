@@ -8,4 +8,6 @@ public interface IBlogPostService
     Task<IResult> GetPostAsync(BlogPostQueryParameters parameters, CancellationToken cancellationToken);
     Task<IResult> GetPostByIdAsync(int postId, BlogPostQueryParameters parameters, CancellationToken cancellationToken);
     Task<IResult> DeletePostAsync(int postId, CancellationToken cancellationToken);
+    Task<IResult> UpdatePostAsync(BlogPostRequest request, IFormFile? image, CancellationToken cancellationToken);
+    Task<IResult> GetPostDetailByIdAsync(int postId, CancellationToken cancellationToken);
 }

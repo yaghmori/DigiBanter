@@ -53,6 +53,7 @@ public class MappingProfile : AutoMapper.Profile
 
 
         CreateMap<Post, BlogPostRequest>().ReverseMap();
+        CreateMap<BlogPostResponse, BlogPostRequest>().ReverseMap();
         CreateMap<PostTranslation, BlogPostTranslationRequest>().ReverseMap();
         CreateMap<LanguageResponse, Language>().ReverseMap();
         CreateMap<Category, CategoryResponse>().ReverseMap();

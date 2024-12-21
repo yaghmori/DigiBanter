@@ -97,6 +97,90 @@ public class BlogPostService : IBlogPostService
         return ServiceResult<int>.Success(postEntity.Entity.Id);
     }
 
+    public async Task<IResult> UpdatePostAsync(BlogPostRequest request, IFormFile? image, CancellationToken cancellationToken)
+    {
+
+        if (request == null || request.Id == null)
+            return TypedResults.BadRequest("Invalid request");
+
+        var blogPost = await _appDbContext.Posts
+            .Include(b => b.Translations)
+            .Where(x => x.Id == request.Id)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (blogPost == null)
+            return TypedResults.NotFound("Post not found or assumed to be deleted.");
+
+        string? imagePath = null;
+        var basePath = "assets/images";
+        if (image != null && image.Length > 0)
+        {
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), basePath);
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            // Generate a unique filename
+            var uniqueFileName = $"{DateTime.UtcNow.Ticks}{Path.GetExtension(image.FileName)}";
+            imagePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            // Save the file to the server
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                await image.CopyToAsync(stream, cancellationToken);
+            }
+
+            // Store relative path for database
+            imagePath = $"/{basePath}/{uniqueFileName}";
+            blogPost.Image = imagePath;
+
+        }
+
+        // Update main properties
+        blogPost.AuthorId = request.AuthorId;
+        blogPost.CategoryId = request.CategoryId;
+        blogPost.Status = request.Status;
+        blogPost.PublishedAt = request.PublishedAt;
+
+
+
+        // Update translations
+        foreach (var translation in request.Translations)
+        {
+            var existingTranslation = blogPost.Translations
+                .FirstOrDefault(t => t.LanguageId == translation.LanguageId);
+
+            if (existingTranslation != null)
+            {
+                // Update existing translation
+                existingTranslation.LanguageId = translation.LanguageId;
+                existingTranslation.Title = translation.Title;
+                existingTranslation.Slug = translation.Slug;
+                existingTranslation.Content = translation.Content;
+            }
+            else
+            {
+                // Add new translation
+                blogPost.Translations.Add(new PostTranslation
+                {
+                    PostId = request.Id.Value,
+                    LanguageId = translation.LanguageId,
+                    Title = translation.Title,
+                    Slug = translation.Slug,
+                    Content = translation.Content
+                });
+            }
+        }
+
+
+        await _appDbContext.SaveChangesAsync(cancellationToken);
+
+        // Return success with the ID of the first translation
+        return TypedResults.Ok(ApiResult.Success("Post successfully updated."));
+    }
+
+
     public async Task<IResult> DeletePostAsync(int postId, CancellationToken cancellationToken)
     {
         var post = await _appDbContext.Posts
@@ -111,7 +195,6 @@ public class BlogPostService : IBlogPostService
 
         return TypedResults.Ok(ApiResult.Success("Post successfully deleted."));
     }
-
 
     public async Task<IResult> GetPostAsync(BlogPostQueryParameters parameters, CancellationToken cancellationToken)
     {
@@ -215,6 +298,25 @@ public class BlogPostService : IBlogPostService
 
     }
 
+
+
+    public async Task<IResult> GetPostDetailByIdAsync(int postId, CancellationToken cancellationToken)
+    {
+        var baseUrl = _config.Endpoints.Api;
+
+        var post = await _appDbContext.PostTranslations
+            .Where(x => x.Post.Id == postId)
+            .ProjectTo<BlogPostRequest>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (post == null)
+            return TypedResults.NotFound("Post not found or assumed to be deleted.");
+
+        //post.Image = $"{baseUrl}{post.Image}";
+
+        return TypedResults.Ok(ApiResult<BlogPostRequest>.Success(post));
+
+    }
 
 
 

@@ -1,4 +1,8 @@
-﻿.post-card {
+﻿
+* {
+    transition: all .2s ease-in-out;
+}
+.post-card {
     display: flex;
     flex-flow: row;
     align-items: center;
@@ -7,17 +11,13 @@
     transition: background-color .5s;
 }
 
-    .post-card * {
-        transition: all 0.2s ease-out 0s
-    }
-
 
     .post-card:hover {
     }
 
     .post-card.disable:hover {
         background-color: inherit; /* No background change */
-        cursor: default; /* Optional: Prevent pointer cursor */
+        cursor: default; 
     }
 
     .post-card .cover {

@@ -35,8 +35,13 @@ public abstract class BaseComponent : ComponentBase, IDisposable
     [Parameter]
     public bool IsAuthorized { get; set; } = true;
 
+    [Parameter]
     public bool IsLoading { get; set; } = false;
+
+    [Parameter]
     public bool IsSaving { get; set; } = false;
+
+    [Parameter]
     public bool HasInit { get; set; } = false;
 
     public virtual void Dispose()

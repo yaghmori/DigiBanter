@@ -1,0 +1,84 @@
+﻿@page "/Posts"
+
+<div class="page">
+    <div class="header">
+        <div class="title">
+            <i class="fad fa-blog fa-2x"></i>
+            <h4>
+                @_viewLocalizer[ViewResources.BlogPostList]
+            </h4>
+        </div>
+        <div class="action-group">
+            <div class="add-btn-lg">
+                <BlogPostAddButton OnActionCompleted="LoadDataAsync" />
+            </div>
+            <RefreshPageButton OnActionCompleted="LoadDataAsync" />
+        </div>
+
+    </div>
+    <div class="body">
+        <div class="list">
+            @if (!IsLoading)
+            {
+                @foreach (var post in BlogPosts)
+                {
+                    <BlogPostAdminCard Model="@post" OnDeleted="LoadDataAsync" IsBusy="true" />
+                }
+            }
+            else
+            {
+
+                <BlogPostAdminCard IsLoading="true" />
+                <BlogPostAdminCard IsLoading="true" />
+                <BlogPostAdminCard IsLoading="true" />
+                <BlogPostAdminCard IsLoading="true" />
+            }
+        </div>
+    </div>
+
+
+</div>
+<div class="add-btn-sm">
+    <BlogPostAddFabButton OnActionCompleted="LoadDataAsync" />
+</div>
+@code {
+
+
+
+    public List<BlogPostResponse> BlogPosts { get; set; } = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+
+    }
+
+    async Task LoadDataAsync()
+    {
+        try
+        {
+            IsLoading = true;
+            var response = await _blogPostApiService.GetAllPostsAsync(new BlogPostQueryParameters
+                {
+                    Lang = lang
+                }, cancellationToken);
+            if (response.Succeeded)
+            {
+                BlogPosts = response.Data;
+            }
+            else
+            {
+                _snackbarService.DisplayError(response.Messages);
+            }
+        }
+        catch (Exception ex)
+        {
+            _snackbarService.DisplayError(ex.Message);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+}

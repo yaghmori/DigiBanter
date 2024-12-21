@@ -1,7 +1,7 @@
 @import url('css/font-awesome/css/all.css');
 :root {
-    --rz-dialog-zindex: 3001;
-    --rz-dialog-mask-zindex: 3000;
+    --rz-dialog-zindex: 3001 !important;
+    --rz-dialog-border-radius: 1rem !important;
     --shadow-1: 0px 5px 0 -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
     --hover-color: #f5f8fc;
     --hover-padding: 15px;

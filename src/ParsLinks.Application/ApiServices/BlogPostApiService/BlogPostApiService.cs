@@ -35,6 +35,21 @@ namespace ParsLinks.Application.ApiServices
             var response = await _httpClient.PostAsync(uri, formData, cancellationToken);
             return await response.ToResultAsync<int>(_jsonService, cancellationToken);
         }
+        public async Task<IApiResult> UpdatePostAsync(FileDto? image, BlogPostRequest request, CancellationToken cancellationToken = default)
+        {
+            var uri = AppEndPoints.BlogPosts.UpdateById;
+
+            var formData = new MultipartFormDataContent();
+
+            image.StreamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(image.ContentType);
+            formData.Add(image.StreamContent, nameof(image), image.Name);
+            formData.Add(new StringContent(_jsonService.Serialize(request), Encoding.UTF8, "application/json"), nameof(request));
+
+            var response = await _httpClient.PostAsync(uri, formData, cancellationToken);
+            return await response.ToResultAsync(_jsonService, cancellationToken);
+        }
+
+
         public async Task<IApiResult> DeletePostByIdAsync(int postId, CancellationToken cancellationToken = default)
         {
             var uri = string.Format(AppEndPoints.BlogPosts.DeleteById, postId);
@@ -42,17 +57,23 @@ namespace ParsLinks.Application.ApiServices
             return await response.ToResultAsync(_jsonService, cancellationToken);
         }
 
-        public async Task<IApiResult<List<BlogPostResponse>>> GetAllPostsAsync(BlogPostQueryParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<IApiResult<List<BlogPostResponse>>> GetAllPostsAsync(BlogPostQueryParameters? parameters = null, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+                parameters = new();
             parameters.Paged = false;
+
             var queryString = parameters.ToQueryString();
             var uri = $"{AppEndPoints.BlogPosts.Base}{queryString}";
 
             var response = await _httpClient.GetAsync(uri, cancellationToken);
             return await response.ToResultAsync<List<BlogPostResponse>>(_jsonService, cancellationToken);
         }
-        public async Task<IApiResult<IPagedList<BlogPostResponse>>> GetPagedAllPostsAsync(BlogPostQueryParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<IApiResult<IPagedList<BlogPostResponse>>> GetPagedAllPostsAsync(BlogPostQueryParameters? parameters = null, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+                parameters = new();
+
             parameters.Paged = true;
             var queryString = parameters.ToQueryString();
             var uri = $"{AppEndPoints.BlogPosts.Base}{queryString}";
@@ -61,14 +82,25 @@ namespace ParsLinks.Application.ApiServices
 
         }
 
-        public async Task<IApiResult<BlogPostResponse>> GetPostByIdAsync(int postId, BlogPostQueryParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<IApiResult<BlogPostResponse>> GetPostByIdAsync(int postId, BlogPostQueryParameters? parameters = null, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+                parameters = new();
+
             var queryString = parameters.ToQueryString();
             var uri = $"{string.Format(AppEndPoints.BlogPosts.GetById, postId)}{queryString}";
 
 
             var response = await _httpClient.GetAsync(uri, cancellationToken);
             return await response.ToResultAsync<BlogPostResponse>(_jsonService, cancellationToken);
+        }
+        public async Task<IApiResult<BlogPostRequest>> GetPostByDetailIdAsync(int postId, CancellationToken cancellationToken = default)
+        {
+            var uri = $"{string.Format(AppEndPoints.BlogPosts.GetDetailById, postId)}";
+
+
+            var response = await _httpClient.GetAsync(uri, cancellationToken);
+            return await response.ToResultAsync<BlogPostRequest>(_jsonService, cancellationToken);
         }
 
     }

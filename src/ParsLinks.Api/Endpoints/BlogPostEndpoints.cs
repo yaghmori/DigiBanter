@@ -15,7 +15,9 @@ public static class BlogPostEndpoints
         posts.MapPost("/", AddPost).AllowAnonymous().DisableAntiforgery();
         posts.MapGet("/", GetAllPosts).AllowAnonymous();
         posts.MapGet("/{postId}", GetPostById).AllowAnonymous();
+        posts.MapGet("/{postId}/detail", GetPostDetailById).AllowAnonymous();
         posts.MapDelete("/{postId}", DeletePostById).AllowAnonymous();
+        posts.MapPatch("/", UpdatePostById).AllowAnonymous();
     }
 
 
@@ -60,12 +62,34 @@ public static class BlogPostEndpoints
         return await postService.GetPostByIdAsync(postId, parameters, cancellationToken);
     }
 
+
+    private static async Task<IResult> GetPostDetailById(
+        [FromRoute] int postId,
+        IBlogPostService postService,
+        CancellationToken cancellationToken)
+    {
+        return await postService.GetPostDetailByIdAsync(postId, cancellationToken);
+    }
+
     private static async Task<IResult> DeletePostById(
-      [FromRoute] int postId,
-      IBlogPostService postService,
-      CancellationToken cancellationToken)
+    [FromRoute] int postId,
+    IBlogPostService postService,
+    CancellationToken cancellationToken)
     {
         return await postService.DeletePostAsync(postId, cancellationToken);
+    }
+
+    private static async Task<IResult> UpdatePostById(
+        [FromForm] IFormCollection form,
+        IJsonSerializer jsonSerializer,
+        IBlogPostService postService,
+        CancellationToken cancellationToken)
+    {
+        var jsonData = form["request"].ToString();
+        var request = jsonSerializer.Deserialize<BlogPostRequest>(jsonData);
+        var image = form.Files.GetFile("image");
+        return await postService.UpdatePostAsync(request, image, cancellationToken);
+
     }
 
 

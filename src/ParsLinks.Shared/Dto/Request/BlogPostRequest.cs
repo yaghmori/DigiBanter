@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Newtonsoft.Json;
+using ParsLinks.Domain.Enums;
 using ParsLinks.Shared.Extensions;
 
 namespace ParsLinks.Shared.Dto.Request;
@@ -7,14 +8,13 @@ public class BlogPostRequest
 {
     public int? Id { get; set; }
     public Guid? AuthorId { get; set; }
+    public string? ImageBase64 { get; set; }
     public int? CategoryId { get; set; }
-    public int Status { get; set; } = 1;
+    public BlogPostStatusEnum Status { get; set; } = BlogPostStatusEnum.Draft;
     public DateTime? PublishedAt { get; set; }
     public List<BlogPostTranslationRequest> Translations { get; set; } = new();
-
-
-
 }
+
 public class BlogPostRequestValidator : AbstractValidator<BlogPostRequest>
 {
     public BlogPostRequestValidator()

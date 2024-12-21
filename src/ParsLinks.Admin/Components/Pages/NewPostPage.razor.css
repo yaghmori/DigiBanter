@@ -1,6 +1,5 @@
-﻿*{
-    transition: all .3s ease;
-
+﻿* {
+    transition: all .3s ease-in-out;
 }
 .form {
     display: flex;

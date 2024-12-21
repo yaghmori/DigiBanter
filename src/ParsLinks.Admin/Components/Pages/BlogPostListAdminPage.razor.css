@@ -1,0 +1,64 @@
+﻿
+.add-btn-lg {
+    display: block;
+}
+
+.add-btn-sm {
+    display: none;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+}
+
+.page {
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+}
+
+.header {
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
+    .header .title {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        gap: 1rem;
+        padding-inline: 5px;
+    }
+
+        .header .title i {
+            font-size: 35px;
+        }
+
+        .header .title h4 {
+            margin-top: 10px;
+        }
+
+    .header .action-group {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        gap: 1rem;
+    }
+
+.list {
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+}
+
+@media (max-width:768px) {
+    .add-btn-lg {
+        display: none;
+    }
+
+    .add-btn-sm {
+        display: block;
+    }
+}

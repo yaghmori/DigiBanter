@@ -1,4 +1,5 @@
 ﻿@page "/post"
+@page "/{Id:int?}/post"
 @using Radzen
 @using Radzen.Blazor
 
@@ -138,6 +139,7 @@
 
 
 @code {
+
     public FileDto? ImageFile { get; set; }
     EditContext? editContext;
     int activeTabIndex;
@@ -152,6 +154,9 @@
     [Parameter]
     public EventCallback OnValidSubmit { get; set; }
 
+    [Parameter]
+    public int? Id { get; set; }
+    private EventHandler<FieldChangedEventArgs> _handler;
 
     protected override async Task OnInitializedAsync()
     {
@@ -174,12 +179,31 @@
             }
 
 
-            Model.Translations.Add(new BlogPostTranslationRequest
+            if (Id != null)
+            {
+                var response = await _blogPostApiService.GetPostByDetailIdAsync(Id.Value, cancellationToken: cancellationToken);
+                if (response.Succeeded)
                 {
-                    LanguageId = Languages.FirstOrDefault()?.Id ?? 0,
-                    CategoryId = Categories.FirstOrDefault()?.Id
-                });
-            editContext.NotifyValidationStateChanged();
+                    Model = _mapper.Map<BlogPostRequest>(response.Data);
+                }
+
+            }
+            else
+            {
+                Model = new();
+                Model.Translations.Add(new BlogPostTranslationRequest
+                    {
+                        LanguageId = Languages.FirstOrDefault()?.Id ?? 0,
+                        CategoryId = Categories.FirstOrDefault()?.Id
+                    });
+            }
+
+            _handler = (sender, eventArgs) =>
+            {
+                editContext?.NotifyFieldChanged(new FieldIdentifier(editContext.Model, eventArgs.FieldIdentifier.FieldName));
+            };
+
+            editContext.OnFieldChanged += _handler;
 
         }
         catch (Exception ex)
@@ -211,19 +235,6 @@
                 return;
             }
 
-            // foreach (var item in Model.Translations)
-            // {
-            //     if (EditorRefs.TryGetValue(item.Key, out var editorRef) && editorRef != null)
-            //     {
-            //         item.Content = await editorRef.GetHTML();
-            //         if (string.IsNullOrWhiteSpace(await editorRef.GetText()))
-            //         {
-            //             var fieldIdentifier = new FieldIdentifier(Model, nameof(BlogPostTranslationRequest.Content));
-            //             _snackbarService.DisplayWarning($"Content for {Languages.FirstOrDefault(x => x.Id == item.LanguageId)?.Name} cannot be empty.");
-            //             return;
-            //         }
-            //     }
-            // }
 
             if (editContext?.Validate() == false)
             {
@@ -233,20 +244,39 @@
 
 
 
-
-            var response = await _blogPostApiService.AddPostAsync(ImageFile, Model, cancellationToken);
-            if (response.Succeeded)
+            if (Id == null)//New
             {
-                await OnValidSubmit.InvokeAsync();
-                _mudDialog?.Close();
 
-                _snackbarService.DisplaySuccess("Post successfully added.");
+
+                var response = await _blogPostApiService.AddPostAsync(ImageFile, Model, cancellationToken);
+                if (response.Succeeded)
+                {
+                    await OnValidSubmit.InvokeAsync();
+                    _mudDialog?.Close();
+
+                    _snackbarService.DisplaySuccess("Post successfully added.");
+                }
+                else
+                {
+                    _snackbarService.DisplayError(response.Messages);
+                }
             }
             else
             {
-                _snackbarService.DisplayError(response.Messages);
-            }
+                var response = await _blogPostApiService.UpdatePostAsync(ImageFile, Model, cancellationToken);
+                if (response.Succeeded)
+                {
+                    await OnValidSubmit.InvokeAsync();
+                    _mudDialog?.Close();
 
+                    _snackbarService.DisplaySuccess("Post successfully added.");
+                }
+                else
+                {
+                    _snackbarService.DisplayError(response.Messages);
+                }
+
+            }
         }
         catch (Exception ex)
         {
@@ -259,6 +289,7 @@
 
         }
     }
+
     private void AddNewTranslation()
     {
         // Find the first LanguageId that is not present in Model.Translations
@@ -274,11 +305,11 @@
         }
     }
 
-
-
     public override void Dispose()
     {
         base.Dispose();
+        editContext.OnFieldChanged -= _handler;
+
     }
 
 

@@ -1,0 +1,166 @@
+﻿@if (!IsLoading)
+{
+    if (Model != null)
+    {
+        <div class="paper-box post-item">
+            <div class="cover">
+                <img class="img" src="@Model.Image" />
+            </div>
+            <div class="content-group">
+                <div class="content">
+                    <div class="title">@Model.Title</div>
+                    <div class="info">
+                        <i class="material-icons-two-tone">calendar_today</i>
+                        <span>@Model.PublishedAt.ToElapsedTime()</span>
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(Model.Author))
+                    {
+                        <div class="info">
+                            <i class="material-icons-outlined">account_circle</i>
+                            <span>@Model.Author</span>
+                        </div>
+                    }
+
+
+                    <div class="categories">
+                        <div class="chipset">
+                            @foreach (var item in Model.Categories)
+                            {
+                                <MudChip Color="@MudBlazor.Color.Inherit"
+                                         Variant="@MudBlazor.Variant.Text"
+                                         Size="MudBlazor.Size.Small"
+                                         T="string"
+                                         Text="@item.Name" />
+                            }
+                        </div>
+                    </div>
+                    <div class="translation">
+
+                        <div class="chipset">
+                            @foreach (var item in Model.AvailableTranslations)
+                            {
+                                <MudChip Color="@MudBlazor.Color.Primary"
+                                         Variant="@MudBlazor.Variant.Text"
+                                         Size="MudBlazor.Size.Small"
+                                         T="string"
+                                         Text="@item" />
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="action-group">
+
+                    <MudButtonGroup Color="@MudBlazor.Color.Primary" Variant="@MudBlazor.Variant.Text">
+
+                        <MudIconButton Color="@MudBlazor.Color.Primary">@_viewLocalizer[ViewResources.AddTranslation]</MudIconButton>
+
+                        <MudTooltip Text="@_viewLocalizer[ViewResources.Edit]" Arrow="true" Placement="Placement.Top">
+                            <MudIconButton OnClick="()=>OnEditAsync(Model)" Color="@MudBlazor.Color.Inherit"><i class="far fa-edit" /></MudIconButton>
+                        </MudTooltip>
+
+                        <MudTooltip Text="@_viewLocalizer[ViewResources.Delete]" Arrow="true" Placement="Placement.Top">
+                            <MudIconButton OnClick="()=>OnDeleteAsync(Model)" Color="@MudBlazor.Color.Error"><i class="fas fa-trash-can" /></MudIconButton>
+                        </MudTooltip>
+                    </MudButtonGroup>
+
+                </div>
+            </div>
+        </div>
+    }
+
+}
+else
+{
+    <div class="paper-box post-item disable">
+        <div class="cover">
+            <MudSkeleton Class="img" Style="border-radius:10px; width:250;min-width:250px; height:150px" SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" />
+        </div>
+        <div class="content-group">
+            <div class="content">
+
+
+                <div class="title">
+                    <MudSkeleton Animation="Animation.Pulse" Width="40%" Height="25px" />
+                </div>
+
+
+                <div class="date">
+                    <MudSkeleton Animation="Animation.Pulse" Width="100px" />
+                </div>
+
+
+                <div class="author">
+                    <MudSkeleton Animation="Animation.Pulse" Width="120px" />
+                </div>
+
+                <div class="chipset" style="gap:5px;">
+                    <MudSkeleton Animation="Animation.Pulse" Width="50px" Height="30px" Style="border-radius:.5rem;" />
+                </div>
+                <div class="chipset" style="gap:5px;">
+                    <MudSkeleton Animation="Animation.Pulse" Width="30px" Height="30px" Style="border-radius:.5rem;" />
+                    <MudSkeleton Animation="Animation.Pulse" Width="40px" Height="30px" Style="border-radius:.5rem;" />
+                    <MudSkeleton Animation="Animation.Pulse" Width="40px" Height="30px" Style="border-radius:.5rem;" />
+                </div>
+
+            </div>
+
+            <div class="action-group">
+                <MudSkeleton Animation="Animation.Pulse" Width="170px" Height="45px" />
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+}
+
+
+@code {
+    [Parameter]
+    public BlogPostResponse Model { get; set; }
+
+
+    [Parameter]
+    public EventCallback<BlogPostResponse> OnDeleted { get; set; }
+
+    [Parameter]
+    public EventCallback<BlogPostResponse> OnEdited { get; set; }
+
+    public async Task OnDeleteAsync(BlogPostResponse post)
+    {
+
+        var dgResult = await _dialogService.ShowDeleteMessageBoxAsync(_messageLocalizer[MessageResources.PostDeleteConfirmation].Value);
+        if (dgResult)
+        {
+            var response = await _blogPostApiService.DeletePostByIdAsync(post.Id);
+            if (response.Succeeded)
+            {
+                _snackbarService.DisplaySuccess(_messageLocalizer[MessageResources.PostSuccessfullyDeleted]);
+                await OnDeleted.InvokeAsync(post);
+            }
+            else
+            {
+                _snackbarService.DisplayError(response?.Messages);
+            }
+
+        }
+    }
+    public async Task OnEditAsync(BlogPostResponse post)
+    {
+
+        var parameters = new Dictionary<string, object>
+        {
+            { nameof(NewPostPage.OnValidSubmit),EventCallback.Factory.Create(this,async () => await OnEdited.InvokeAsync())},
+            { nameof(NewPostPage.Id),post.Id}
+        };
+
+        var options = new DialogOptions()
+            { CloseButton = true, BackdropClick = false, FullWidth = true, MaxWidth = MaxWidth.Large };
+        _dialogService.ShowDialog<NewPostPage>(parameters, options, _viewLocalizer[ViewResources.EditPost]);
+
+    }
+}

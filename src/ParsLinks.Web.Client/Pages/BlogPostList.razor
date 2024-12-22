@@ -20,15 +20,6 @@ else
         <BlogPostCard Isloading="true" />
         <BlogPostCard Isloading="true" />
         <BlogPostCard Isloading="true" />
-        <BlogPostCard Isloading="true" />
-        <BlogPostCard Isloading="true" />
-        <BlogPostCard Isloading="true" />
-        <BlogPostCard Isloading="true" />
-        <BlogPostCard Isloading="true" />
-        <BlogPostCard Isloading="true" />
-        <BlogPostCard Isloading="true" />
-        <BlogPostCard Isloading="true" />
-        <BlogPostCard Isloading="true" />
 
 
     </div>
@@ -46,7 +37,8 @@ else
             IsBussy = true;
             var response = await _blogPostApiService.GetAllPostsAsync(new BlogPostQueryParameters
                 {
-                    Lang = lang
+                    Lang = lang,
+                    Status = ((int)BlogPostStatusEnum.Published).ToString()
                 }, cancellationToken);
             if (response.Succeeded)
                 ItemSource = response.Data;

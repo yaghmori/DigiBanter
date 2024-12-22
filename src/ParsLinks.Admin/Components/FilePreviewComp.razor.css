@@ -1,0 +1,7 @@
+﻿.img-preview {
+    height: auto;
+    width: auto;
+    object-fit: cover;
+    border-radius: .5rem;
+    max-width: 100%;
+}

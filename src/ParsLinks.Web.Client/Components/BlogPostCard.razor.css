@@ -46,10 +46,12 @@
     }
 
 
-        .post-card .body .date {
+        .post-card .body .info {
             display: flex;
             flex-flow: row;
-            gap: .2rem;
+            align-items: center;
+            gap: 5px;
+            text-emphasis-color: #939393;
         }
 
         .post-card .body .title {

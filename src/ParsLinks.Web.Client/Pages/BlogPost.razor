@@ -18,16 +18,22 @@
                     <div class="title">
                         @Model.Title
                     </div>
-                    <div class="author">
-                        @Model.Author
-                    </div>
 
-                    <div class="date">
+                    @if (!string.IsNullOrWhiteSpace(Model.Author))
+                    {
+                        <div class="info">
+                            <i class="material-icons-outlined">account_circle</i>
+                            <span>@Model.Author</span>
+                        </div>
+                    }
+
+
+                    <div class="info">
                         <i class="material-icons-two-tone">calendar_today</i>
 
                         @Model.PublishedAt.ToElapsedTime()
                     </div>
-                    <div class="info">
+                    <div class="info-bar">
                         <span>
                             <i class="fad fa-solid fa-timer"></i>
                             <span style="color:gray">@Model.EstimatedReadingTime min read</span>

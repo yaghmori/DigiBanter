@@ -21,6 +21,7 @@ namespace ParsLinks.Shared.Services
             string btnIcon = "");
 
         Task<bool> ShowDeleteMessageBoxAsync(string body, string title = "Delete Confirmation", string btnOk = "Delete");
+        Task<bool> ShowConfirmationDialogAsync(string body, string title = "Info", string btnOk = "Submit");
         Task<DialogResult?> ShowSuccessMessageBoxAsync(string body, string title = "Success");
 
     }

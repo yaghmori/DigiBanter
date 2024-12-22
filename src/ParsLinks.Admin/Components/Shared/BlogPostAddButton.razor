@@ -14,10 +14,10 @@
     public async Task OpenDialogAsync()
     {
         var parameters = new Dictionary<string, object> {
-                { nameof(NewPostPage.OnValidSubmit),EventCallback.Factory.Create(this,async () => await OnActionCompleted.InvokeAsync())} };
+                { nameof(PostDetailPage.OnValidSubmit),EventCallback.Factory.Create(this,async () => await OnActionCompleted.InvokeAsync())} };
         var options = new DialogOptions()
             { CloseButton = true, BackdropClick = false, FullWidth = true, MaxWidth = MaxWidth.Large };
-        _dialogService.ShowDialog<NewPostPage>(parameters, options, _viewLocalizer[ViewResources.AddNewPost]);
+        _dialogService.ShowDialog<PostDetailPage>(parameters, options, _viewLocalizer[ViewResources.AddNewPost]);
     }
 
 

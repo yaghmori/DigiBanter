@@ -5,5 +5,6 @@
 
 .thumbnail {
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: .5rem;
+    max-width:100%;
 }

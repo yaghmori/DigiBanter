@@ -56,6 +56,11 @@
 
 
     }
+    else if (!string.IsNullOrWhiteSpace(ImagePreview))
+    {
+        <img class="img-preview"  src="@ImagePreview" />
+    }
+
     @if (ShowFooter)
     {
         <div class="footer">
@@ -83,10 +88,11 @@
 
 @code {
     [Parameter]
-    [EditorRequired]
-    public FileDto File { get; set; }
+    public FileDto? File { get; set; } = null;
     private FileDto? _file = null;
 
+    [Parameter]
+    public string? ImagePreview { get; set; }
 
     [Parameter]
     public string? Preview { get; set; } = AppConstants.NoPreview;
@@ -101,7 +107,7 @@
     public int Width { get; set; } = 250;
 
     [Parameter]
-    public string? ImageStyle { get; set; } 
+    public string? ImageStyle { get; set; }
     [Parameter]
     public string? IconStyle { get; set; }
 

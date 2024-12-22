@@ -178,6 +178,36 @@ namespace ParsLinks.Admin.Services
             return result;
 
         }
+
+        public async Task<bool> ShowConfirmationDialogAsync(string body, string title = "", string btnOk = "Submit")
+        {
+
+
+            var color = Color.Primary;
+
+
+
+            var param = new DialogParameters()
+            {
+                {nameof(MessageDialog.Title), title },
+                { nameof(MessageDialog.ButtonText), btnOk },
+                { nameof(MessageDialog.ContentText), body },
+                { nameof(MessageDialog.ButtonColor), color },
+                { nameof(MessageDialog.BtnCancel), "Cancel" }
+            };
+
+            var options = new DialogOptions()
+            {
+                CloseButton = true,
+                CloseOnEscapeKey = false,
+                MaxWidth = MaxWidth.ExtraSmall
+            };
+            var dg = _dialog.Show<MessageDialog>("", param, options);
+            var result = await dg.Result;
+            return result?.Canceled == false;
+
+        }
+
         public async Task<bool> ShowDeleteMessageBoxAsync(string body, string title = "Delete", string btnOk = "Delete")
         {
 

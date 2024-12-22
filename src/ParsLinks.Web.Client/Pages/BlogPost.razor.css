@@ -30,13 +30,21 @@
                 display: flex;
                 flex-flow: row;
             }
-            .container .article .body .info {
+            .container .article .body .info-bar {
                 display: flex;
                 flex-flow: row;
                 justify-content:space-between;
                 align-items:center;
 
             }
+            .container .article .body .info {
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                gap: 5px;
+                text-emphasis-color: #939393;
+            }
+
             .container .article .body .title {
                 font-size: 40px;
                 font-weight: bold;

@@ -1,0 +1,13 @@
+﻿
+<div class="d-flex align-items-center justify-content-center gap-3">
+    <div class="spinner-border text-primary @SpinnerClass"></div>
+    <div class="justify-content-center">@Content</div>
+</div>
+
+@code{
+    [Parameter]
+    public string Content { get; set; } = string.Empty;
+    [Parameter]
+    public string SpinnerClass { get; set; } = string.Empty;
+
+}

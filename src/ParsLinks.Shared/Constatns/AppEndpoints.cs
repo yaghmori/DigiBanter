@@ -26,8 +26,9 @@ public static class AppEndPoints
         public const string Base = BaseAddress + "/posts";
         public const string GetById = Base + "/{0}";
         public const string GetDetailById = Base + "/{0}/detail";
+        public const string ChangeStatus = Base + "/{0}/status";
         public const string DeleteById = Base + "/{0}";
-        public const string UpdateById = Base + "/{0}";
+        public const string UpdateById = Base + "/";
         public const string AddPost = Base;
     }
     public static class LanguageEndpoints

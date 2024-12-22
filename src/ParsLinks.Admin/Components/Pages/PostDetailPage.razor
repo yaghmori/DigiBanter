@@ -12,7 +12,7 @@
         {
             <EditForm EditContext="editContext">
                 <FluentValidationValidator />
-                <FilePickerComp @bind-File="@ImageFile" />
+                <FilePickerComp @bind-File="@ImageFile" ImagePreview="@Model.Image" FileDeleted="OnImageDeleted" />
                 <br />
                 <br />
                 <div class="form">
@@ -20,29 +20,29 @@
                     @foreach (var item in Model.Translations)
                     {
                         <MudTabs KeepPanelsAlive="true"
-                                 Context="tab_ctx"
-                                 ApplyEffectsToContainer="true"
-                                 Border="true"
-                                 Outlined="true"
-                                 Rounded="true">
+                        Context="tab_ctx"
+                        ApplyEffectsToContainer="true"
+                        Border="true"
+                        Outlined="true"
+                        Rounded="true">
                             <ChildContent>
                                 <MudTabPanel Text="Edit">
                                     <div class="translation-form">
                                         <MudTextField @bind-Value="@item.Title"
-                                                      For="()=>item.Title"
-                                                      Label="@_viewLocalizer[ViewResources.Title]"
-                                                      Variant="@MudBlazor.Variant.Outlined" />
+                                        For="()=>item.Title"
+                                        Label="@_viewLocalizer[ViewResources.Title]"
+                                        Variant="@MudBlazor.Variant.Outlined" />
 
                                         <MudTextField @bind-Value="@item.Slug"
-                                                      For="()=>item.Slug"
-                                                      Label="@_viewLocalizer[ViewResources.Slug]"
-                                                      Variant="@MudBlazor.Variant.Outlined" />
+                                        For="()=>item.Slug"
+                                        Label="@_viewLocalizer[ViewResources.Slug]"
+                                        Variant="@MudBlazor.Variant.Outlined" />
 
                                         <MudSelect @bind-Value="item.CategoryId"
-                                                   For="()=>item.CategoryId"
-                                                   Label="@_viewLocalizer[ViewResources.Categories]"
-                                                   T="int?"
-                                                   Variant="@MudBlazor.Variant.Outlined">
+                                        For="()=>item.CategoryId"
+                                        Label="@_viewLocalizer[ViewResources.Categories]"
+                                        T="int?"
+                                        Variant="@MudBlazor.Variant.Outlined">
                                             @foreach (var category in Categories)
                                             {
                                                 <MudSelectItem T="int?" Value="@category.Id">@category.Name</MudSelectItem>
@@ -64,11 +64,11 @@
                             <Header>
                                 <div class="d-flex flex-row align-items-center gap-3 px-3">
                                     <MudSelect @bind-Value="item.LanguageId"
-                                               Style="min-width:120px;"
-                                               T="int"
-                                               Dense="true"
-                                               Margin="Margin.Dense"
-                                               Variant="@MudBlazor.Variant.Outlined">
+                                    Style="min-width:120px;"
+                                    T="int"
+                                    Dense="true"
+                                    Margin="Margin.Dense"
+                                    Variant="@MudBlazor.Variant.Outlined">
                                         @foreach (var lang in Languages)
                                         {
                                             <MudSelectItem T="int" Value="lang.Id">
@@ -82,10 +82,12 @@
                                             </MudSelectItem>
                                         }
                                     </MudSelect>
-                                    <MudIconButton Icon="@Icons.Material.Rounded.Delete"
-                                                   Size="MudBlazor.Size.Small"
-                                                   Color="MudBlazor.Color.Error"
-                                                   OnClick="()=>Model.Translations.Remove(item)" />
+                                    <MudButton StartIcon="fas fa-trash-can"
+                                    Size="MudBlazor.Size.Small"
+                                    Color="MudBlazor.Color.Error"
+                                    OnClick="()=>RemoveTranslation(item)">
+                                        @_viewLocalizer[ViewResources.Delete]
+                                    </MudButton>
                                 </div>
 
                             </Header>
@@ -93,6 +95,7 @@
 
                     }
                 </div>
+                <ValidationSummary />
             </EditForm>
         }
         else
@@ -105,22 +108,22 @@
     <DialogActions>
         <div class="action-bar">
             <MudButton OnClick="AddNewTranslation"
-                       Class="action-button"
-                       Disabled="@(Model.Translations.Count==Languages.Count)"
-                       StartIcon="@Icons.Material.Rounded.AddCircle"
-                       Size="MudBlazor.Size.Large"
-                       Color="MudBlazor.Color.Primary"
-                       Variant="MudBlazor.Variant.Text">
+            Class="action-button"
+            Disabled="@(Model.Translations.Count==Languages.Count)"
+            StartIcon="@Icons.Material.Rounded.AddCircle"
+            Size="MudBlazor.Size.Large"
+            Color="MudBlazor.Color.Primary"
+            Variant="MudBlazor.Variant.Text">
                 Add Translation
             </MudButton>
 
             <MudButton Disabled="@(!IsValid)"
-                       Class="action-button"
-                       OnClick="OnSubmitAsync"
-                       StartIcon="@Icons.Material.Rounded.Save"
-                       Color="MudBlazor.Color.Primary"
-                       Size="MudBlazor.Size.Large"
-                       Variant="MudBlazor.Variant.Filled">
+            Class="action-button"
+            OnClick="OnSubmitAsync"
+            StartIcon="@Icons.Material.Rounded.Save"
+            Color="MudBlazor.Color.Primary"
+            Size="MudBlazor.Size.Large"
+            Variant="MudBlazor.Variant.Filled">
                 @if (IsBusy)
                 {
                     <MudProgressCircular Class="ms-n1" Size="MudBlazor.Size.Small" Indeterminate="true" />
@@ -149,7 +152,9 @@
     private string PreviewContent = string.Empty;
     private int selectedTabIndex = 0;
     private string editorKey = Guid.NewGuid().ToString();
-    bool IsValid => editContext != null && editContext.Validate() && !IsLoading && !IsBusy;
+    bool IsValid => editContext != null && editContext.Validate() && Model!=null 
+    && (!string.IsNullOrWhiteSpace(Model.Image) || ImageFile?.StreamContent != null)
+    && !IsLoading && !IsBusy;
 
     [Parameter]
     public EventCallback OnValidSubmit { get; set; }
@@ -165,7 +170,6 @@
 
 
             IsLoading = true;
-            editContext = new EditContext(Model);
             var languageResponse = await _languageApiService.GetAllAsync(cancellationToken);
             if (languageResponse.Succeeded)
             {
@@ -184,7 +188,9 @@
                 var response = await _blogPostApiService.GetPostByDetailIdAsync(Id.Value, cancellationToken: cancellationToken);
                 if (response.Succeeded)
                 {
-                    Model = _mapper.Map<BlogPostRequest>(response.Data);
+                    Model = response.Data;
+                    //editContext?.NotifyFieldChanged(new FieldIdentifier(editContext.Model, eventArgs.FieldIdentifier.FieldName));
+
                 }
 
             }
@@ -197,10 +203,12 @@
                         CategoryId = Categories.FirstOrDefault()?.Id
                     });
             }
+            editContext = new EditContext(Model);
 
-            _handler = (sender, eventArgs) =>
+            _handler = async (sender, eventArgs) =>
             {
-                editContext?.NotifyFieldChanged(new FieldIdentifier(editContext.Model, eventArgs.FieldIdentifier.FieldName));
+
+                await InvokeAsync(StateHasChanged);
             };
 
             editContext.OnFieldChanged += _handler;
@@ -224,7 +232,7 @@
 
             IsBusy = true;
 
-            if (ImageFile?.StreamContent == null)
+            if (string.IsNullOrEmpty(Model.Image) &&  ImageFile?.StreamContent == null)
             {
                 _snackbarService.DisplayError("Please select an image file for the post.");
                 return;
@@ -236,11 +244,6 @@
             }
 
 
-            if (editContext?.Validate() == false)
-            {
-                _snackbarService.DisplayError("Please fix the validation errors.");
-                return;
-            }
 
 
 
@@ -302,9 +305,26 @@
                 {
                     LanguageId = missingLanguage.Id
                 });
+            //editContext?.NotifyFieldChanged(new FieldIdentifier(editContext.Model, nameof(Model.Translations)));
         }
     }
 
+    private void RemoveTranslation(BlogPostTranslationRequest? blogPostTranslation)
+    {
+
+        if (blogPostTranslation != null)
+        {
+            Model.Translations.Remove(blogPostTranslation);
+            //editContext?.NotifyFieldChanged(new FieldIdentifier(editContext.Model, nameof(Model.Translations)));
+        }
+    }
+
+    void OnImageDeleted()
+    {
+        Model.Image = string.Empty;
+        editContext?.NotifyFieldChanged(new FieldIdentifier(editContext.Model, nameof(Model.Image)));
+        
+    }
     public override void Dispose()
     {
         base.Dispose();

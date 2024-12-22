@@ -22,7 +22,7 @@
             {
                 @foreach (var post in BlogPosts)
                 {
-                    <BlogPostAdminCard Model="@post" OnDeleted="LoadDataAsync" IsBusy="true" />
+                    <BlogPostAdminCard Model="@post" OnEdited="LoadDataAsync" OnDeleted="LoadDataAsync" IsBusy="true" />
                 }
             }
             else

@@ -161,6 +161,6 @@ h1:focus {
 
 
 
-.material-icons-two-tone {
+.material-icons-two-tone, .material-icons-outlined {
     font-size: 1rem; /* Preferred icon size */
 }

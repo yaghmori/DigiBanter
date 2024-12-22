@@ -1,4 +1,5 @@
-﻿using ParsLinks.Shared.Constatns;
+﻿using ParsLinks.Domain.Enums;
+using ParsLinks.Shared.Constatns;
 using ParsLinks.Shared.Dto;
 using ParsLinks.Shared.Dto.Request;
 using ParsLinks.Shared.Dto.Response;
@@ -40,12 +41,15 @@ namespace ParsLinks.Application.ApiServices
             var uri = AppEndPoints.BlogPosts.UpdateById;
 
             var formData = new MultipartFormDataContent();
+            if (image != null)
+            {
+                image.StreamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(image.ContentType);
+                formData.Add(image.StreamContent, nameof(image), image.Name);
 
-            image.StreamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(image.ContentType);
-            formData.Add(image.StreamContent, nameof(image), image.Name);
+            }
             formData.Add(new StringContent(_jsonService.Serialize(request), Encoding.UTF8, "application/json"), nameof(request));
 
-            var response = await _httpClient.PostAsync(uri, formData, cancellationToken);
+            var response = await _httpClient.PatchAsync(uri, formData, cancellationToken);
             return await response.ToResultAsync(_jsonService, cancellationToken);
         }
 
@@ -102,6 +106,12 @@ namespace ParsLinks.Application.ApiServices
             var response = await _httpClient.GetAsync(uri, cancellationToken);
             return await response.ToResultAsync<BlogPostRequest>(_jsonService, cancellationToken);
         }
-
+        public async Task<IApiResult> ChangePostStatusAsync(int postId, BlogPostStatusEnum status, CancellationToken cancellationToken = default)
+        {
+            var uri = $"{string.Format(AppEndPoints.BlogPosts.ChangeStatus, postId)}";
+            var content = new StringContent(_jsonService.Serialize(status), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(uri, content, cancellationToken);
+            return await response.ToResultAsync(_jsonService, cancellationToken);
+        }
     }
 }

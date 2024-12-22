@@ -32,6 +32,7 @@ public class MappingProfile : AutoMapper.Profile
         //================================= [Blog] =================================
         CreateMap<PostTranslation, BlogPostResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PostId))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Post.Status))
             .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Post.Author.DisplayName))
             .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Post.Image))
             .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
@@ -52,9 +53,17 @@ public class MappingProfile : AutoMapper.Profile
             .ForMember(dest => dest.EstimatedReadingTime, opt => opt.MapFrom(src => CalculateReadingTime(src.Content)));
 
 
+
+
+
+        CreateMap<PostTranslation, BlogPostTranslationRequest>()
+            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Post.CategoryId))
+            .ReverseMap();
+
+
+
         CreateMap<Post, BlogPostRequest>().ReverseMap();
         CreateMap<BlogPostResponse, BlogPostRequest>().ReverseMap();
-        CreateMap<PostTranslation, BlogPostTranslationRequest>().ReverseMap();
         CreateMap<LanguageResponse, Language>().ReverseMap();
         CreateMap<Category, CategoryResponse>().ReverseMap();
         CreateMap<CategoryTranslation, CategoryResponse>()

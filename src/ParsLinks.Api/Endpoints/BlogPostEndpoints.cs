@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ParsLinks.Domain.Enums;
 using ParsLinks.Shared.Constatns;
 using ParsLinks.Shared.Dto.Request;
 using ParsLinks.Shared.Models;
@@ -13,11 +14,12 @@ public static class BlogPostEndpoints
 
 
         posts.MapPost("/", AddPost).AllowAnonymous().DisableAntiforgery();
+        posts.MapPost("/{postId}/status", ChangePostStatusAsync).AllowAnonymous();
         posts.MapGet("/", GetAllPosts).AllowAnonymous();
         posts.MapGet("/{postId}", GetPostById).AllowAnonymous();
         posts.MapGet("/{postId}/detail", GetPostDetailById).AllowAnonymous();
         posts.MapDelete("/{postId}", DeletePostById).AllowAnonymous();
-        posts.MapPatch("/", UpdatePostById).AllowAnonymous();
+        posts.MapPatch("/", UpdatePostById).AllowAnonymous().DisableAntiforgery();
     }
 
 
@@ -92,6 +94,14 @@ public static class BlogPostEndpoints
 
     }
 
+    private static async Task<IResult> ChangePostStatusAsync(
+        [FromRoute] int postId,
+        [FromBody] BlogPostStatusEnum status,
+        IBlogPostService postService,
+        CancellationToken cancellationToken)
+    {
+        return await postService.ChangePostStatusAsync(postId, status, cancellationToken);
 
+    }
 
 }

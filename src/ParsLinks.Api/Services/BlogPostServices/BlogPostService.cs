@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using ParsLinks.Api.Services;
 using ParsLinks.DataAccess.DbContext;
 using ParsLinks.Domain.Entities;
+using ParsLinks.Domain.Enums;
 using ParsLinks.Shared.Dto.Request;
 using ParsLinks.Shared.Dto.Response;
 using ParsLinks.Shared.Extensions;
@@ -304,22 +305,36 @@ public class BlogPostService : IBlogPostService
     {
         var baseUrl = _config.Endpoints.Api;
 
-        var post = await _appDbContext.PostTranslations
-            .Where(x => x.Post.Id == postId)
+        var post = await _appDbContext.Posts
+            .Where(x => x.Id == postId)
             .ProjectTo<BlogPostRequest>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (post == null)
             return TypedResults.NotFound("Post not found or assumed to be deleted.");
 
-        //post.Image = $"{baseUrl}{post.Image}";
+        post.Image = $"{baseUrl}{post.Image}";
 
         return TypedResults.Ok(ApiResult<BlogPostRequest>.Success(post));
 
     }
 
+    public async Task<IResult> ChangePostStatusAsync(int postId, BlogPostStatusEnum status, CancellationToken cancellationToken)
+    {
+        var post = await _appDbContext.Posts
+            .Where(x => x.Id == postId)
+            .FirstOrDefaultAsync(cancellationToken);
 
+        if (post == null)
+            return TypedResults.NotFound("Post not found or assumed to be deleted.");
 
+        post.Status = status;
+        await _appDbContext.SaveChangesAsync(cancellationToken);
+
+        // Return success with the ID of the first translation
+        return TypedResults.Ok(ApiResult.Success("Post status successfully updated."));
+
+    }
 }
 
 

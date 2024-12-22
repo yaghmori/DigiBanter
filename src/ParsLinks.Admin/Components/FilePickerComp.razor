@@ -2,7 +2,7 @@
 @if (!IsReadOnly)
 {
     <EditForm Context="editform" EditContext="editContext">
-        @if (File == null)
+        @if (File == null && string.IsNullOrWhiteSpace(ImagePreview))
         {
 
             <MudFileUpload T="IBrowserFile"
@@ -42,16 +42,28 @@
         else
         {
             <div class="picker-preview">
-                <FilePreviewComp File="@File"
-                                 IconSize="5x"
-                                 ShowFooter=false
-                                 ShowHeader=false />
+                @if (File!=null)
+                {
+                    <FilePreviewComp File="@File"
+                                     IconSize="5x"
+                                     ShowFooter=false
+                                     ShowHeader=false />
 
+                }
+                else if (!string.IsNullOrWhiteSpace(ImagePreview))
+                {
+
+                    <FilePreviewComp ImagePreview="@ImagePreview"
+                                     IconSize="5x"
+                                     ShowFooter=false
+                                     ShowHeader=false />
+
+                }
                 <div class="footer">
                     <div class="action">
                         <div class="title">
-                            <small><b>@File.Name</b></small>
-                            <small>@($"Size : {File.Size.ByteToString()}")</small>
+                            <small><b>@File?.Name</b></small>
+                            <small>@($"Size : {File?.Size.ByteToString()}")</small>
                         </div>
                         <div class="buttons">
                             <XCloseButton OnClick="ClearFileAsync">
@@ -71,7 +83,7 @@
                         </div>
                     </div>
                     <div>
-                        @if (!File.IsUploaded)
+                        @if (File?.IsUploaded==false)
                         {
 
 
@@ -98,7 +110,7 @@
                                 </div>
                             }
                         }
-                        else
+                        else if (File?.IsUploaded == true)
                         {
                             <div class="success">
                                 <i class="fad fa-circle-check text-success"></i>
@@ -129,7 +141,7 @@ else
 
 
     [Parameter]
-    public string? ImageBase64 { get; set; }
+    public string? ImagePreview { get; set; }
 
     [Parameter]
     public string Width { get; set; } = "auto";
@@ -194,7 +206,7 @@ else
             imageMemoryStream.Position = 0;
 
             dto.StreamContent = new StreamContent(imageMemoryStream);
-            dto.Base64 = ImageBase64 = await resizedImage.ToBase64StringAsync();
+            dto.Base64 = await resizedImage.ToBase64StringAsync();
             dto.FileName = WebUtility.HtmlEncode(e.File.Name);
             File = dto;
 
@@ -216,21 +228,13 @@ else
     private async Task ClearFileAsync()
     {
         File = null;
+        ImagePreview = null;
         ClearDragClass();
-        ImageBase64 = null;
         await InvokeAsync(StateHasChanged);
         hasError = false;
 
         await FileChanged.InvokeAsync(File);
-
-    }
-    private async Task DeleteFileAsync()
-    {
-        ImageBase64 = null;
         await FileDeleted.InvokeAsync();
-
-        await InvokeAsync(StateHasChanged);
-
 
     }
 

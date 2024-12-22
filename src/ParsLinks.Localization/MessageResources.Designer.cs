@@ -115,6 +115,15 @@ namespace ParsLinks.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to change post status?.
+        /// </summary>
+        public static string PostStatusChangeConfirmation {
+            get {
+                return ResourceManager.GetString("PostStatusChangeConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Post has been successfully deleted..
         /// </summary>
         public static string PostSuccessfullyDeleted {

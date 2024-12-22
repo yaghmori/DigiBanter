@@ -52,16 +52,52 @@
 
                 <div class="action-group">
 
-                    <MudButtonGroup Color="@MudBlazor.Color.Primary" Variant="@MudBlazor.Variant.Text">
+                    <MudButtonGroup Color="MudBlazor.Color.Primary" Variant="@MudBlazor.Variant.Text">
+                        @{
+                            var statusColor = Model.Status == BlogPostStatusEnum.Published ? MudBlazor.Color.Success : Model.Status == BlogPostStatusEnum.Draft ? MudBlazor.Color.Warning : MudBlazor.Color.Inherit;
 
-                        <MudIconButton Color="@MudBlazor.Color.Primary">@_viewLocalizer[ViewResources.AddTranslation]</MudIconButton>
+                        }
+                        @if (!postStatusLoading)
+                        {
+                            <MudMenu Dense>
+                                <ActivatorContent>
+                                    <MudIconButton Color="statusColor">
+                                        <span class="d-flex align-items-center gap-1">
+                                            <i class="@("far "+Model.Status.GetDisplayShortName())" />
+                                            @Model.Status.GetDisplayDescription()
+
+                                        </span>
+                                    </MudIconButton>
+                                </ActivatorContent>
+                                <ChildContent>
+                                    @foreach (var item in Enum.GetValues<BlogPostStatusEnum>().ToList())
+                                    {
+                                        var itemColor = item == BlogPostStatusEnum.Published ? MudBlazor.Color.Success : item == BlogPostStatusEnum.Draft ? MudBlazor.Color.Warning : MudBlazor.Color.Inherit;
+
+                                        <MudMenuItem OnClick="() => OnStatusChangedAsync(item)">
+                                            <span class="d-flex align-items-center gap-3">
+                                                <i class="@("fad "+item.GetDisplayShortName())" />
+                                                @item.GetDisplayDescription()
+
+                                            </span>
+                                        </MudMenuItem>
+                                    }
+                                </ChildContent>
+                            </MudMenu>
+
+                        }
+                        else
+                        {
+                            <CircularLoading Class="spinner-border-sm" />
+                        }
+
 
                         <MudTooltip Text="@_viewLocalizer[ViewResources.Edit]" Arrow="true" Placement="Placement.Top">
-                            <MudIconButton OnClick="()=>OnEditAsync(Model)" Color="@MudBlazor.Color.Inherit"><i class="far fa-edit" /></MudIconButton>
+                            <MudIconButton OnClick="OnEdit" Color="@MudBlazor.Color.Inherit"><i class="far fa-edit" /></MudIconButton>
                         </MudTooltip>
 
                         <MudTooltip Text="@_viewLocalizer[ViewResources.Delete]" Arrow="true" Placement="Placement.Top">
-                            <MudIconButton OnClick="()=>OnDeleteAsync(Model)" Color="@MudBlazor.Color.Error"><i class="fas fa-trash-can" /></MudIconButton>
+                            <MudIconButton OnClick="OnDeleteAsync" Color="@MudBlazor.Color.Error"><i class="fas fa-trash-can" /></MudIconButton>
                         </MudTooltip>
                     </MudButtonGroup>
 
@@ -120,8 +156,13 @@ else
 
 
 @code {
+    bool postStatusLoading = false;
+
     [Parameter]
     public BlogPostResponse Model { get; set; }
+
+    [Parameter]
+    public EventCallback<BlogPostResponse> OnStatusChanged { get; set; }
 
 
     [Parameter]
@@ -130,17 +171,17 @@ else
     [Parameter]
     public EventCallback<BlogPostResponse> OnEdited { get; set; }
 
-    public async Task OnDeleteAsync(BlogPostResponse post)
+    public async Task OnDeleteAsync()
     {
 
         var dgResult = await _dialogService.ShowDeleteMessageBoxAsync(_messageLocalizer[MessageResources.PostDeleteConfirmation].Value);
         if (dgResult)
         {
-            var response = await _blogPostApiService.DeletePostByIdAsync(post.Id);
+            var response = await _blogPostApiService.DeletePostByIdAsync(Model.Id);
             if (response.Succeeded)
             {
                 _snackbarService.DisplaySuccess(_messageLocalizer[MessageResources.PostSuccessfullyDeleted]);
-                await OnDeleted.InvokeAsync(post);
+                await OnDeleted.InvokeAsync(Model);
             }
             else
             {
@@ -149,18 +190,54 @@ else
 
         }
     }
-    public async Task OnEditAsync(BlogPostResponse post)
+    public void OnEdit()
     {
 
         var parameters = new Dictionary<string, object>
         {
-            { nameof(NewPostPage.OnValidSubmit),EventCallback.Factory.Create(this,async () => await OnEdited.InvokeAsync())},
-            { nameof(NewPostPage.Id),post.Id}
+            { nameof(PostDetailPage.OnValidSubmit),EventCallback.Factory.Create(this,async () => await OnEdited.InvokeAsync())},
+            { nameof(PostDetailPage.Id),Model.Id}
         };
 
         var options = new DialogOptions()
             { CloseButton = true, BackdropClick = false, FullWidth = true, MaxWidth = MaxWidth.Large };
-        _dialogService.ShowDialog<NewPostPage>(parameters, options, _viewLocalizer[ViewResources.EditPost]);
+        _dialogService.ShowDialog<PostDetailPage>(parameters, options, _viewLocalizer[ViewResources.EditPost]);
 
     }
+    public async Task OnStatusChangedAsync(BlogPostStatusEnum status)
+    {
+        try
+        {
+            if (Model.Status == status)
+                return;
+
+            postStatusLoading = true;
+            var dgResult = await _dialogService.ShowConfirmationDialogAsync(_messageLocalizer[MessageResources.PostStatusChangeConfirmation].Value, btnOk: _viewLocalizer[ViewResources.ChangeStatus].Value);
+            if (dgResult)
+            {
+                var response = await _blogPostApiService.ChangePostStatusAsync(Model.Id, status, cancellationToken);
+                if (response.Succeeded)
+                {
+                    Model.Status = status;
+                    await OnStatusChanged.InvokeAsync(Model);
+                }
+                else
+                {
+                    _snackbarService.DisplayError(response?.Messages);
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+            _snackbarService.DisplayError(ex.Message);
+        }
+        finally
+        {
+            postStatusLoading = false;
+            await InvokeAsync(StateHasChanged);
+
+        }
+    }
+
 }

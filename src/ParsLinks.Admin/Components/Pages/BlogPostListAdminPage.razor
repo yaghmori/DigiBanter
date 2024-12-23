@@ -1,4 +1,5 @@
 ﻿@page "/Posts"
+@using ParsLinks.Shared.PagedCollections
 
 <div class="page">
     <div class="header">
@@ -8,7 +9,23 @@
                 @_viewLocalizer[ViewResources.BlogPostList]
             </h4>
         </div>
+
         <div class="action-group">
+            <div class="flex-grow-1">
+                <MudTextField T="string"
+                @bind-Value="@Query"
+                TextChanged="@(s=>OnSearchData(s))"
+                Placeholder="@_viewLocalizer[ViewResources.Search]"
+                Adornment="Adornment.Start"
+                Margin="Margin.Dense"
+                Variant="@Variant.Text"
+                Class="shadow-box"
+                Underline=false
+                Immediate="false"
+                AdornmentIcon="@Icons.Material.Filled.Search"
+                IconSize="MudBlazor.Size.Medium" />
+            </div>
+
             <div class="add-btn-lg">
                 <BlogPostAddButton OnActionCompleted="LoadDataAsync" />
             </div>
@@ -17,22 +34,21 @@
 
     </div>
     <div class="body">
+        <span style="color:var(--gray-500)">@_viewLocalizer[ViewResources.Count]: @ItemSource.TotalCount</span>
         <div class="list">
-            @if (!IsLoading)
-            {
-                @foreach (var post in BlogPosts)
-                {
-                    <BlogPostAdminCard Model="@post" OnEdited="LoadDataAsync" OnDeleted="LoadDataAsync" IsBusy="true" />
-                }
-            }
-            else
-            {
-
-                <BlogPostAdminCard IsLoading="true" />
-                <BlogPostAdminCard IsLoading="true" />
-                <BlogPostAdminCard IsLoading="true" />
-                <BlogPostAdminCard IsLoading="true" />
-            }
+            <Virtualize @ref=_virtualizeGrid Context="post" ItemsProvider="LoadVirtualizeDataAsync" OverscanCount="10">
+                <ItemContent>
+                    <BlogPostAdminCard Model="@post" OnEdited="LoadDataAsync" OnDeleted="LoadDataAsync" />
+                </ItemContent>
+                <Placeholder>
+                    <BlogPostAdminCard IsLoading="true" />
+                </Placeholder>
+                <EmptyContent>
+                    <div>
+                        @_messageLocalizer[MessageResources.no_records_found_please_add_new_entries_to_manage]
+                    </div>
+                </EmptyContent>
+            </Virtualize>
         </div>
     </div>
 
@@ -45,40 +61,43 @@
 
 
 
-    public List<BlogPostResponse> BlogPosts { get; set; } = new();
+    Virtualize<BlogPostResponse>? _virtualizeGrid;
+    List<BlogPostResponse> BlogPosts { get; set; } = new();
+    string? Query;
+    IVirtualizedList<BlogPostResponse> ItemSource = new VirtualizedList<BlogPostResponse>();
 
-
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadDataAsync();
-
-    }
 
     async Task LoadDataAsync()
     {
-        try
-        {
-            IsLoading = true;
-            var response = await _blogPostApiService.GetAllPostsAsync(new BlogPostQueryParameters
-                {
-                    Lang = lang
-                }, cancellationToken);
-            if (response.Succeeded)
-            {
-                BlogPosts = response.Data;
-            }
-            else
-            {
-                _snackbarService.DisplayError(response.Messages);
-            }
-        }
-        catch (Exception ex)
-        {
-            _snackbarService.DisplayError(ex.Message);
-        }
-        finally
-        {
-            IsLoading = false;
-        }
+        if (_virtualizeGrid != null)
+            await _virtualizeGrid.RefreshDataAsync();
     }
+
+    async ValueTask<ItemsProviderResult<BlogPostResponse>> LoadVirtualizeDataAsync(ItemsProviderRequest request)
+    {
+
+        var response = await _blogPostApiService.GetVirtualizedAllPostsAsync(new BlogPostQueryParameters
+            {
+                Index = request.StartIndex,
+                Size = request.Count,
+                Query = Query,
+                Lang = lang
+            }, request.CancellationToken);
+
+        if (response.Succeeded)
+        {
+            ItemSource = response.Data;
+            StateHasChanged();
+        }
+
+        return new ItemsProviderResult<BlogPostResponse>(ItemSource.Items, ItemSource.TotalCount);
+
+    }
+    private async Task OnSearchData(string query)
+    {
+        Query = query;
+        await LoadDataAsync();
+    }
+
+
 }

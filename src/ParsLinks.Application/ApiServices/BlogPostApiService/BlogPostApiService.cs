@@ -73,6 +73,7 @@ namespace ParsLinks.Application.ApiServices
             var response = await _httpClient.GetAsync(uri, cancellationToken);
             return await response.ToResultAsync<List<BlogPostResponse>>(_jsonService, cancellationToken);
         }
+
         public async Task<IApiResult<IPagedList<BlogPostResponse>>> GetPagedAllPostsAsync(BlogPostQueryParameters? parameters = null, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
@@ -82,8 +83,17 @@ namespace ParsLinks.Application.ApiServices
             var queryString = parameters.ToQueryString();
             var uri = $"{AppEndPoints.BlogPosts.Base}{queryString}";
             var response = await _httpClient.GetAsync(uri, cancellationToken);
-            return await response.ToResultAsync<IPagedList<BlogPostResponse>>(_jsonService, cancellationToken);
+            return await response.ToResultAsync<PagedList<BlogPostResponse>>(_jsonService, cancellationToken);
+        }
+        public async Task<IApiResult<IVirtualizedList<BlogPostResponse>>> GetVirtualizedAllPostsAsync(BlogPostQueryParameters? parameters = null, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+                parameters = new();
 
+            var queryString = parameters.ToQueryString();
+            var uri = $"{AppEndPoints.BlogPosts.Base}{queryString}";
+            var response = await _httpClient.GetAsync(uri, cancellationToken);
+            return await response.ToResultAsync<VirtualizedList<BlogPostResponse>>(_jsonService, cancellationToken);
         }
 
         public async Task<IApiResult<BlogPostResponse>> GetPostByIdAsync(int postId, BlogPostQueryParameters? parameters = null, CancellationToken cancellationToken = default)
@@ -98,6 +108,7 @@ namespace ParsLinks.Application.ApiServices
             var response = await _httpClient.GetAsync(uri, cancellationToken);
             return await response.ToResultAsync<BlogPostResponse>(_jsonService, cancellationToken);
         }
+
         public async Task<IApiResult<BlogPostRequest>> GetPostByDetailIdAsync(int postId, CancellationToken cancellationToken = default)
         {
             var uri = $"{string.Format(AppEndPoints.BlogPosts.GetDetailById, postId)}";

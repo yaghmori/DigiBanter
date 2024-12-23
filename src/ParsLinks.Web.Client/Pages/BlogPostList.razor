@@ -5,13 +5,30 @@
 <PageTitle>Blog Post List</PageTitle>
 @if (!IsBussy)
 {
-    <div class="post-list" style="width:100%">
-        @foreach (var item in ItemSource)
-        {
-            <BlogPostCard Model="item" />
-        }
-    </div>
+    @if (ItemSource.TotalCount > 0)
+    {
+        <div class="list" style="width:100%">
+            <div class="items">
+                @foreach (var item in ItemSource.Items)
+                {
+                    <BlogPostCard Model="item" />
+                }
+            </div>
+            <div class="pager">
 
+                <Pagination HasPrev="@ItemSource.HasPreviousPage"
+                            HasNext="@ItemSource.HasNextPage"
+                            CurrentPage="@(ItemSource.PageIndex+1)"
+                            TotalPages="@ItemSource.TotalPages"
+                            PageSize="@(ItemSource.PageSize)" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <h2 style="padding:10% 0; align-self:center; text-align:center">@_messageLocalizer[MessageResources.nothing_here_yet_stay_tuned_for_updates]</h2>
+
+    }
 }
 else
 {
@@ -27,21 +44,33 @@ else
 }
 @code {
     public bool IsBussy { get; set; }
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int? Page { get; set; } = 1;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int? Size { get; set; } = 10;
 
 
-    public List<BlogPostResponse> ItemSource { get; set; } = new();
+    public IPagedList<BlogPostResponse> ItemSource { get; set; } = new PagedList<BlogPostResponse>();
     protected override async Task OnInitializedAsync()
     {
         try
         {
             IsBussy = true;
-            var response = await _blogPostApiService.GetAllPostsAsync(new BlogPostQueryParameters
+            var response = await _blogPostApiService.GetPagedAllPostsAsync(new BlogPostQueryParameters
                 {
+                    Index = Page - 1 ?? 0,
+                    Size = Size ?? 10,
                     Lang = lang,
                     Status = ((int)BlogPostStatusEnum.Published).ToString()
                 }, cancellationToken);
+
             if (response.Succeeded)
+            {
                 ItemSource = response.Data;
+            }
 
         }
         catch (Exception ex)

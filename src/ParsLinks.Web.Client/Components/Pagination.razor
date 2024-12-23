@@ -1,0 +1,47 @@
+﻿
+<nav aria-label="Pagination Navigation">
+    <ul class="pagination">
+        <li class="page-item @(HasPrev ? "" : "disabled")">
+            <a class="page-link" href="@GetPageUrl(CurrentPage - 1)">
+                Previous
+            </a>
+        </li>
+        @for (int i = 1; i <= TotalPages; i++)
+        {
+            <li class="page-item @(i == CurrentPage ? "active" : "")">
+                <a class="page-link" href="@GetPageUrl(i)">
+                    @i
+                </a>
+            </li>
+        }
+        <li class="page-item @(HasNext ? "" : "disabled")">
+            <a class="page-link" href="@GetPageUrl(CurrentPage + 1)">
+                Next
+            </a>
+        </li>
+    </ul>
+</nav>
+
+@code {
+    [Parameter] public bool HasPrev { get; set; }
+    [Parameter] public bool HasNext { get; set; }
+    [Parameter] public int CurrentPage { get; set; }
+    [Parameter] public int TotalPages { get; set; }
+    [Parameter] public int PageSize { get; set; } = 10;
+
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
+    private string GetPageUrl(int page)
+    {
+        // // Ensure the page number is within valid bounds
+        // if (page < 0 || page > TotalPages)
+        //     return "#";
+
+        // Construct the URL with query string
+        var uriBuilder = new UriBuilder(NavigationManager.Uri)
+            {
+                Query = $"page={page}&size={PageSize}"
+            };
+        return uriBuilder.Uri.PathAndQuery;
+    }
+}

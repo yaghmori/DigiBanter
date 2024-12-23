@@ -39,5 +39,38 @@ namespace ParsLinks.Shared.PagedCollections
 
             return pagedList;
         }
+
+        /// <summary>
+        /// Converts the specified source to <see cref="IPagedList{T}"/> by the specified <paramref name="pageIndex"/> and <paramref name="pageSize"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the source.</typeparam>
+        /// <param name="source">The source to paging.</param>
+        /// <param name="pageIndex">The index of the page.</param>
+        /// <param name="pageSize">The size of the page.</param>
+        /// <param name="cancellationToken">
+        ///     A <see cref="CancellationToken" /> to observe while waiting for the task to complete.
+        /// </param>
+        /// <param name="indexFrom">The start index value.</param>
+        /// <returns>An instance of the inherited from <see cref="IPagedList{T}"/> interface.</returns>
+        public static async Task<IVirtualizedList<T>> ToVirtualizedListAsync<T>(this IQueryable<T> source, int startIndex, int size, CancellationToken cancellationToken = default)
+        {
+            var count = await source.CountAsync(cancellationToken);
+            var items = await source.Skip(startIndex)
+                                    .Take(size).ToListAsync(cancellationToken);
+
+            var virtualizedList = new VirtualizedList<T>()
+            {
+                StartIndex = startIndex,
+                Size = size,
+                TotalCount = count,
+                Items = items,
+            };
+
+            return virtualizedList;
+
+        }
+
+
+
     }
 }

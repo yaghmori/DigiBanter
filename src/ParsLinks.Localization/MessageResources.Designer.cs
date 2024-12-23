@@ -106,6 +106,24 @@ namespace ParsLinks.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No records found. Please add new entries to manage.
+        /// </summary>
+        public static string no_records_found_please_add_new_entries_to_manage {
+            get {
+                return ResourceManager.GetString("no_records_found_please_add_new_entries_to_manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing here yet. Stay tuned for updates!.
+        /// </summary>
+        public static string nothing_here_yet_stay_tuned_for_updates {
+            get {
+                return ResourceManager.GetString("nothing_here-yet_stay_tuned_for_updates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete this post? This action will permanently delete all related data as well..
         /// </summary>
         public static string PostDeleteConfirmation {

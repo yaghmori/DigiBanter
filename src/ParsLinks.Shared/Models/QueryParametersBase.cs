@@ -3,9 +3,9 @@
 public class QueryParametersBase
 {
     public string? Query { get; set; }
-    public int Page { get; set; } = 0;
-    public int Size { get; set; } = 10;
-    public bool Paged { get; set; } = true;
+    public int? Size { get; set; }
+    public int? Index { get; set; }
+    public bool? Paged { get; set; }
     public string? Lang { get; set; } = "en-US";
 
 }

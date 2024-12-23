@@ -13,6 +13,7 @@ public interface IBlogPostApiService
     Task<IApiResult<int>> AddPostAsync(FileDto image, BlogPostRequest request, CancellationToken cancellationToken = default);
     Task<IApiResult> UpdatePostAsync(FileDto? image, BlogPostRequest request, CancellationToken cancellationToken = default);
     Task<IApiResult<List<BlogPostResponse>>> GetAllPostsAsync(BlogPostQueryParameters? parameters = null, CancellationToken cancellationToken = default);
+    Task<IApiResult<IVirtualizedList<BlogPostResponse>>> GetVirtualizedAllPostsAsync(BlogPostQueryParameters? parameters = null, CancellationToken cancellationToken = default);
     Task<IApiResult<IPagedList<BlogPostResponse>>> GetPagedAllPostsAsync(BlogPostQueryParameters? parameters = null, CancellationToken cancellationToken = default);
     Task<IApiResult<BlogPostResponse>> GetPostByIdAsync(int postId, BlogPostQueryParameters? parameter = null, CancellationToken cancellationToken = default);
     Task<IApiResult<BlogPostRequest>> GetPostByDetailIdAsync(int postId, CancellationToken cancellationToken = default);

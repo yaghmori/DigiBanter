@@ -132,6 +132,12 @@
   <data name="FileUploadSucceed" xml:space="preserve">
     <value>The file upload was successful</value>
   </data>
+  <data name="nothing_here-yet_stay_tuned_for_updates" xml:space="preserve">
+    <value>Nothing here yet. Stay tuned for updates!</value>
+  </data>
+  <data name="no_records_found_please_add_new_entries_to_manage" xml:space="preserve">
+    <value>No records found. Please add new entries to manage</value>
+  </data>
   <data name="PostDeleteConfirmation" xml:space="preserve">
     <value>Are you sure you want to delete this post? This action will permanently delete all related data as well.</value>
   </data>

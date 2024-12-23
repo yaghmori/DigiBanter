@@ -199,13 +199,15 @@ public class BlogPostService : IBlogPostService
 
     public async Task<IResult> GetPostAsync(BlogPostQueryParameters parameters, CancellationToken cancellationToken)
     {
-        var pageIndex = parameters.Page;
-        var pageSize = parameters.Size > 100 ? 100 : parameters.Size;
+
+
         var queryable = _appDbContext.PostTranslations
             .Where(x => EF.Functions.Like(x.Language.Code, $"%{parameters.Lang ?? "en-US"}%"))
             .Include(x => x.Post).ThenInclude(x => x.Author)
             .Include(x => x.Post).ThenInclude(x => x.Category).ThenInclude(x => x.Translations)
-            .OrderByDescending(x => x.Post.PublishedAt)
+                        //.OrderByDescending(x => x.Post.PublishedAt)
+                        .OrderBy(x => x.Post.Id)
+
             .AsQueryable();
 
         if (parameters.Status?.ToLower() == "all")
@@ -256,9 +258,12 @@ public class BlogPostService : IBlogPostService
 
         var baseUrl = _config.Endpoints.Api;
 
-        if (parameters.Paged)
+        if (parameters.Paged == true)
         {
-            var response = await result.ToPagedListAsync(pageIndex, pageSize, cancellationToken: cancellationToken);
+            var index = parameters.Index ?? 0;
+            var size = parameters.Size > 100 ? 100 : parameters.Size ?? 10;
+
+            var response = await result.ToPagedListAsync(index, size, cancellationToken: cancellationToken);
             foreach (var item in response.Items)
             {
                 item.Image = $"{baseUrl}{item.Image}";
@@ -269,13 +274,30 @@ public class BlogPostService : IBlogPostService
         else
         {
 
-            var response = await result.ToListAsync(cancellationToken);
-            foreach (var item in response)
+            if (parameters.Index.HasValue)
             {
-                item.Image = $"{baseUrl}{item.Image}";
+                var size = parameters.Size ?? 0;
+
+                var response = await result.ToVirtualizedListAsync(parameters.Index.Value, size, cancellationToken);
+                foreach (var item in response.Items)
+                {
+                    item.Image = $"{baseUrl}{item.Image}";
+                }
+                return TypedResults.Ok(ApiResult<IVirtualizedList<BlogPostResponse>>.Success(response));
+
+            }
+            else
+            {
+                var response = await result.ToListAsync(cancellationToken);
+
+                foreach (var item in response)
+                {
+                    item.Image = $"{baseUrl}{item.Image}";
+                }
+                return TypedResults.Ok(ApiResult<List<BlogPostResponse>>.Success(response));
+
             }
 
-            return TypedResults.Ok(ApiResult<List<BlogPostResponse>>.Success(response));
         }
     }
 

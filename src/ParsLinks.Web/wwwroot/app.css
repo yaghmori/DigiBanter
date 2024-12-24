@@ -2,7 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Play:wght@400;700&display=swap');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Vazir', sans-serif;
+}
+:lang(fa) {
+    font-family: 'Vazir', sans-serif; /* Font for Persian content */
 }
 
 a, .btn-link {

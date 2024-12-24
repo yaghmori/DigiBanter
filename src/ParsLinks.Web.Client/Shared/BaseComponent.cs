@@ -13,7 +13,7 @@ public abstract class BaseComponent : ComponentBase, IDisposable
 
 
     [CascadingParameter] public MudDialogInstance? _mudDialog { get; set; }
-    [CascadingParameter(Name = "Language")] public string? Langauge { get; set; }
+    [CascadingParameter(Name = "Language")] public string? Language { get; set; }
     [Parameter] public string? lang { get; set; }
     [Parameter] public string ReturnUrl { get; set; } = string.Empty;
     [Parameter] public bool IsBusy { get; set; } = false;

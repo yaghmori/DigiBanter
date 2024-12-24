@@ -2,7 +2,7 @@
 <CascadingValue Name="Language" Value="@CurrentLanguage">
 
 
-    <Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(Client._Imports).Assembly }">
+    <Router AppAssembly="typeof(Program).Assembly" OnNavigateAsync="OnNavigateAsync" AdditionalAssemblies="new[] { typeof(Client._Imports).Assembly }">
 
 
         <Found Context="routeData">
@@ -21,35 +21,39 @@
     private string CurrentLanguage { get; set; } = "en"; // Default language
     private readonly HashSet<string> SupportedLanguages = new() { "en", "fa", "fr", "es" };
 
-    // private Task OnNavigateAsync(Microsoft.AspNetCore.Components.Routing.NavigationContext args)
-    // {
-    //     var uri = NavigationManager.ToAbsoluteUri(args.Path);
-    //     var segments = uri.Segments;
+    private Task OnNavigateAsync(Microsoft.AspNetCore.Components.Routing.NavigationContext args)
+    {
+        var uri = NavigationManager.ToAbsoluteUri(args.Path);
+        var segments = uri.Segments;
 
-    //     if (segments.Length < 2 || string.IsNullOrWhiteSpace(segments[1]))
-    //     {
-    //         // // No language segment, redirect to default language.
-    //         // var route = $"/{CurrentLanguage}" + uri.PathAndQuery.TrimEnd('/');
-    //         // NavigationManager.NavigateTo(route, forceLoad: true);
-    //     }
-    //     else
-    //     {
-    //         var firstSegment = segments[1].TrimEnd('/');
-    //         if (SupportedLanguages.Contains(firstSegment))
-    //         {
-    //             // Valid language segment, set as current language.
-    //             CurrentLanguage = firstSegment;
-    //         }
-    //         else
-    //         {
-    //             // // Invalid language segment, redirect to default language without losing path.
-    //             // CurrentLanguage = "en"; // Default fallback language
-    //             if (uri.AbsolutePath != "/404")
-    //                 NavigationManager.NavigateTo($"/{CurrentLanguage}/{uri.PathAndQuery}");
-    //         }
-    //     }
+        if (segments.Length < 2 || string.IsNullOrWhiteSpace(segments[1]))
+        {
+            // No language segment, redirect to default language.
+            var route = $"/{CurrentLanguage}" + uri.PathAndQuery.TrimStart('/');
+            NavigationManager.NavigateTo(route, forceLoad: true);
+        }
+        else
+        {
+            var firstSegment = segments[1].TrimEnd('/');
+            if (SupportedLanguages.Contains(firstSegment))
+            {
+                // Valid language segment, set as current language.
+                CurrentLanguage = firstSegment;
+            }
+            else
+            {
+                // Invalid language segment, redirect to default language.
+                CurrentLanguage = "en"; // Default fallback language
+                var pathAndQuery = uri.PathAndQuery.TrimStart('/');
+                var newPath = $"/{CurrentLanguage}/{pathAndQuery}";
 
-    //     return Task.CompletedTask;
+                if (!pathAndQuery.StartsWith($"{CurrentLanguage}/", StringComparison.OrdinalIgnoreCase))
+                {
+                    NavigationManager.NavigateTo(newPath, forceLoad: true);
+                }
+            }
+        }
 
-    // }
+        return Task.CompletedTask;
+    }
 }

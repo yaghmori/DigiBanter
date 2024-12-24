@@ -1,4 +1,9 @@
-﻿
+﻿* {
+    text-align:justify-all;
+}
+:lang(fa) {
+    text-align: justify;
+}
 .section-title {
     display: flex;
     flex-flow: column;

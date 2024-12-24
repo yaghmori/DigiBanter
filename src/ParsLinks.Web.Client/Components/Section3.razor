@@ -1,10 +1,22 @@
 ﻿<div class="container">
     <div class="row">
         <div class="section-title">
+            @if(Language=="fa")
+            {
+                <h1 style="font-size:48px" lang="fa" dir="rtl" >
+                    تیم پشت ایده
+                </h1>
+                <p style="font-size:18px;font-weight:500;" lang="fa" dir="rtl">
+                    رهبران تیم ما از حرفه‌ای‌های با تجربه‌ای تشکیل شده‌اند که شرکت ما را به آنچه امروز هست شکل داده‌اند. در اینجا یک مرور کوتاه از هر یک از اعضا آورده شده است:
+                </p>
+            }
+            else{
             <h1 class="h3-lg">The Team Behind the Vision</h1>
-            <p>
+            <p >
                 Our team leads are comprised of experienced professionals who have shaped our company into what it is today. Here's a brief overview of each member:
             </p>
+            }
+
         </div>
     </div>
     <div class="team">
@@ -13,11 +25,28 @@
                 <img class="img" src="assets/team-member/ehsan.jpeg">
             </div>
             <div class="member-data">
-                <h5>Ehsan Yaghmori</h5>
+                @if (Language == "fa")
+                {
+                    <h5 lang="fa" dir="rtl">احسان یغموری</h5>
+
+                }
+                else
+                {
+                    <h5>Ehsan Yaghmori</h5>
+                }
+
                 <a href="#">@@yaghmori</a>
-                <p>
-                    He drives our technology strategy and direction, leveraging 15+ years of IT leadership experience to inform business growth and innovation. Her expertise has been pivotal in navigating complex tech challenges and positioning us for success in emerging trends.
-                </p>
+                @if (Language == "fa")
+                {
+                    <p lang="fa" dir="rtl">احسان استراتژی و جهت‌گیری فناوری ما را هدایت می‌کند و با بهره‌گیری از بیش از ۱۵ سال تجربه رهبری در حوزه فناوری اطلاعات، رشد و نوآوری کسب‌وکار را شکل می‌دهد. تخصص او نقش کلیدی در عبور از چالش‌های پیچیده فناوری داشته و ما را برای موفقیت در روندهای نوظهور آماده کرده است.</p>
+                }
+                else
+                {
+                    <p>
+                        Ehsan drives our technology strategy and direction, leveraging 15+ years of IT leadership experience to inform business growth and innovation. Her expertise has been pivotal in navigating complex tech challenges and positioning us for success in emerging trends.
+                    </p>
+                }
+
             </div>
         </div>
         <div class="member">
@@ -26,11 +55,30 @@
                 <img class="img" src="assets/team-member/ali.jpeg" alt="team-member-foto">
             </div>
             <div class="member-data">
-                <h5>Alireza Tadi</h5>
+                @if (Language == "fa")
+                {
+                    <h5 lang="fa" dir="rtl">علیرضا طادی</h5>
+
+                }
+                else
+                {
+                    <h5>Alireza Tadi</h5>
+                }
                 <a href="#">@@atadi</a>
-                <p>
-                    As the visionary leader of our organization, he set the strategic direction and drive growth through innovative thinking, bold decision-making, and a customer-centric approach. With a proven track record of success, he built a team of talented professionals who are passionate about delivering exceptional results.
-                </p>
+                @if (Language == "fa")
+                {
+                    <p lang="fa" dir="rtl">
+                        علی به‌عنوان رهبر چشم‌انداز سازمان ما، با تعیین جهت استراتژیک و هدایت رشد از طریق تفکر نوآورانه، تصمیم‌گیری‌های جسورانه و رویکرد مشتری‌محور، نقش کلیدی ایفا می‌کند. با سابقه‌ای اثبات‌شده از موفقیت، او تیمی از متخصصان بااستعداد را تشکیل داده است که با اشتیاق به ارائه نتایج بی‌نظیر متعهد هستند.
+                    </p>
+
+                }
+                else
+                {
+                    <p>
+                        Ali As the visionary leader of our organization, he set the strategic direction and drive growth through innovative thinking, bold decision-making, and a customer-centric approach. With a proven track record of success, he built a team of talented professionals who are passionate about delivering exceptional results.
+                    </p>
+                }
+
             </div>
         </div>
         <div class="member">
@@ -41,22 +89,49 @@
             <div class="member-data">
                 <h5>Matthew Anderson</h5>
                 <a href="#">@@matthewanderson</a>
-                <p>
-                    A skilled and award-winning photographer with a passion for capturing high-quality images, he appeared in various publications and exhibitions, showcasing expertise in lighting, composition, and visual storytelling.his work is not only visually stunning but also tells powerful stories that capture the essence of our brand
-                </p>
+                @if (Language == "fa")
+                {
+                    <p lang="fa" dir="rtl">یک عکاس ماهر و برنده جوایز که با اشتیاق به ثبت تصاویر باکیفیت، در نشریات و نمایشگاه های مختلف حضور داشته و تخصص خود را در نورپردازی، ترکیب‌بندی و روایت داستان‌های بصری به نمایش گذاشته است. آثار او نه‌تنها از نظر بصری خیره‌کننده هستند، بلکه داستان‌های قدرتمندی را بازگو می‌کنند که جوهره برند ما را به تصویر می‌کشند.</p>
+                }
+                else
+                {
+                    <p>
+                        A skilled and award-winning photographer with a passion for capturing high-quality images, he appeared in various publications and exhibitions, showcasing expertise in lighting, composition, and visual storytelling.his work is not only visually stunning but also tells powerful stories that capture the essence of our brand
+                    </p>
+
+                }
             </div>
         </div>
         <div class="member">
             <div class="cover">
 
-                <img class="img" src="assets/team-member/megan.jpg" alt="team-member-foto">
+                <img class="img" src="assets/team-member/amir.jpg" alt="team-member-foto">
             </div>
             <div class="member-data">
-                <h5>Megan Coleman</h5>
-                <a href="#">@@megancoleman</a>
-                <p>
-                    With a proven track record of success in digital marketing and branding, she always brings a keen eye for innovation, creativity, and data-driven insights to the table. Her work on our marketing strategy has been instrumental in helping us stay ahead of the curve in our industry.
-                </p>
+                @if (Language == "fa")
+                {
+                    <h5 lang="fa" dir="rtl">امیر رهبر</h5>
+
+                }
+                else
+                {
+                    <h5>Amir Rahbar</h5>
+                }
+                <a href="#">@@amirerahbar</a>
+
+                @if (Language == "fa")
+                {
+                    <p lang="fa" dir="rtl">
+                        امیر یک کارآفرین پیشرو، مدیر رسانه و مدرس خلاقیت است که با تمرکز بر نوآوری و استراتژی محتوا، به افراد و سازمان‌ها کمک می‌کند پتانسیل‌های خلاقانه خود را شکوفا کنند و نتایجی ماندگار خلق کنند. او با تجربه در رهبری تیم‌ها و توسعه کسب‌وکارهای موفق، به‌عنوان یک پیشگام در صنعت رسانه و کسب‌وکار شناخته می‌شود و با ترکیب رهبری خلاقانه و بینش‌های عملی، ایده‌های جسورانه را به موفقیت‌های پایدار تبدیل می‌کند.
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        Amir is a visionary entrepreneur, media executive, and creativity coach who empowers individuals and organizations to unlock their potential and achieve impactful results. With expertise in content strategy and leadership, he drives growth through compelling narratives and innovative solutions. As an educator and trailblazer in media and business, Amir transforms bold ideas into sustainable successes.
+                    </p>
+                }
+
             </div>
         </div>
     </div>

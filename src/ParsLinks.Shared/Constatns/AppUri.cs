@@ -10,6 +10,7 @@ public static class AppUri
     public const string Dashboard = "/";
     public const string Users = "/users";
     public const string Posts = "/posts";
+    public const string CategoryList = "/categories";
     public const string post = "/post";
 
     public static string Hangfire = $"{AppConstants.ApiBaseAddress}{AppEndPoints.Hangfire}";

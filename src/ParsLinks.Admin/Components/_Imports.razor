@@ -35,6 +35,8 @@
 @using Sitko.Blazor.CKEditor
 @using ParsLinks.Admin.Components.Pages
 @using ParsLinks.Shared.Models
+@using ParsLinks.Shared.PagedCollections
+@using ParsLinks.Admin.Components.Dialog
 
 
 
@@ -73,6 +75,7 @@
 @inject NavigationManager _navigationManager
 @inject IStringLocalizer<ViewResources> _viewLocalizer
 @inject IStringLocalizer<MessageResources> _messageLocalizer
+@inject IStringLocalizer<ContextResources> _contextLocalizer
 
 
 @inject ISnackbarService _snackbarService

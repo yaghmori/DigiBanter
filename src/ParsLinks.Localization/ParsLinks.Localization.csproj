@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Update="ContextResources.Designer.cs">
+      <DependentUpon>ContextResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="MessageResources.Designer.cs">
       <DependentUpon>MessageResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -25,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="ContextResources.resx">
+      <LastGenOutput>ContextResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="MessageResources.resx">
       <LastGenOutput>MessageResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -40,8 +40,11 @@ public static class AppEndPoints
     public static class CategoryEndpoints
     {
         public const string Base = BaseAddress + "/categories";
-        public const string GetById = Base + "/{0}";
+        public const string GetDetailById = Base + "/{0}/detail";
         public const string AddCategory = Base;
+        public const string UpdateCategory = Base;
+        public const string DeleteById = Base + "/{0}";
+
 
     }
     public static class Seed

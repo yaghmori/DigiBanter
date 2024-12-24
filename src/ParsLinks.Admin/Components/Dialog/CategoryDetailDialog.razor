@@ -1,0 +1,265 @@
+﻿
+<MudDialog>
+    <DialogContent>
+
+        @if (!IsLoading)
+        {
+            <EditForm EditContext="editContext">
+                <FluentValidationValidator />
+                <div class="form">
+                    <MudButton OnClick="AddNewTranslation"
+                               StartIcon="@Icons.Material.Filled.AddCircle"
+                               Disabled="@(Model.Translations.Count==Languages.Count)"
+                               Size="MudBlazor.Size.Large"
+                               Color="MudBlazor.Color.Primary"
+                               Variant="MudBlazor.Variant.Text">
+                        @_viewLocalizer[ViewResources.AddNewTranslation]
+                    </MudButton>
+
+                    <MudExpansionPanels>
+                        @foreach (var item in Model.Translations)
+                        {
+                            <MudExpansionPanel Expanded>
+                                <TitleContent>
+                                    <div class="d-flex align-items-center justify-content-between gap-2">
+                                        <MudText>@Languages.FirstOrDefault(l => l.Id == item.LanguageId)?.Name</MudText>
+
+                                    </div>
+                                </TitleContent>
+                                <ChildContent>
+                                    <MudTextField @bind-Value="@item.Name"
+                                                  For="()=>item.Name"
+                                                  Label="@_contextLocalizer[ContextResources.Category_name]"
+                                                  Variant="@MudBlazor.Variant.Outlined" />
+
+                                    <MudTextField @bind-Value="@item.Slug"
+                                                  For="()=>item.Slug"
+                                                  Label="@_contextLocalizer[ContextResources.Category_Slug]"
+                                                  Variant="@MudBlazor.Variant.Outlined" />
+
+                                    <MudTextField @bind-Value="@item.Description"
+                                                  For="()=>item.Description"
+                                                  Label="@_contextLocalizer[ContextResources.Category_Description]"
+                                                  Variant="@MudBlazor.Variant.Outlined" />
+                                    <div class="delete-btn">
+                                        <MudButton StartIcon="fas fa-trash-can"
+                                                   FullWidth="true"
+                                                   Size="MudBlazor.Size.Large"
+                                                   Color="MudBlazor.Color.Error"
+                                                   Variant="Variant.Outlined"
+                                                   OnClick="()=>RemoveTranslation(item)">
+                                            @_viewLocalizer[ViewResources.Remove]
+                                        </MudButton>
+
+                                    </div>
+
+                                </ChildContent>
+                            </MudExpansionPanel>
+                        }
+                    </MudExpansionPanels>
+                </div>
+            </EditForm>
+        }
+        else
+        {
+            <MudProgressLinear Indeterminate="true" />
+        }
+
+
+    </DialogContent>
+    <DialogActions>
+        <div class="action-bar">
+            <MudButton Size="MudBlazor.Size.Large" OnClick="Cancel">@_viewLocalizer[ViewResources.Cancel]</MudButton>
+            <MudButton Disabled="!IsValid"
+                       Size="MudBlazor.Size.Large"
+                       OnClick="OnSubmitAsync"
+                       StartIcon="@Icons.Material.Rounded.Save"
+                       ButtonType="ButtonType.Submit"
+                       Class="w-85"
+                       Variant="Variant.Filled"
+                       Color="MudBlazor.Color.Primary">
+                @if (IsBusy)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="MudBlazor.Size.Small" Indeterminate="true" />
+                    <MudText Class="ms-2">@_viewLocalizer[ViewResources.Processing]</MudText>
+                }
+                else
+                {
+                    @_viewLocalizer[ViewResources.Submit]
+
+                }
+            </MudButton>
+        </div>
+
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+
+    EditContext? editContext;
+    public List<LanguageResponse> Languages { get; set; } = new();
+    public CategoryRequest Model { get; set; } = new();
+    bool IsValid => editContext != null && editContext.Validate() && Model != null && !IsLoading && !IsBusy;
+
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    private EventHandler<FieldChangedEventArgs> _handler;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+
+
+            IsLoading = true;
+            var languageResponse = await _languageApiService.GetAllAsync(cancellationToken);
+            if (languageResponse.Succeeded)
+            {
+                Languages = languageResponse.Data;
+            }
+
+
+
+            if (Id != null)
+            {
+                var response = await _categoryApiService.GetDetailByIdAsync(Id.Value, cancellationToken: cancellationToken);
+                if (response.Succeeded)
+                {
+                    Model = response.Data;
+
+                }
+
+            }
+            else
+            {
+                Model = new();
+                Model.Translations.Add(new CategoryTranslationRequest
+                    {
+                        LanguageId = Languages.FirstOrDefault()?.Id ?? 0,
+                    });
+            }
+            editContext = new EditContext(Model);
+
+            _handler = async (sender, eventArgs) =>
+            {
+
+                await InvokeAsync(StateHasChanged);
+            };
+
+            editContext.OnFieldChanged += _handler;
+
+        }
+        catch (Exception ex)
+        {
+            _snackbarService.DisplayError(ex.Message);
+        }
+        finally
+        {
+            IsLoading = false;
+
+        }
+    }
+
+    public async Task OnSubmitAsync()
+    {
+        try
+        {
+
+            IsBusy = true;
+
+            if (Model.Translations.Count == 0)
+            {
+                _snackbarService.DisplayError("Please add at least one translation for the category.");
+                return;
+            }
+
+
+
+
+
+            if (Id == null)//New
+            {
+
+
+                var response = await _categoryApiService.AddCategoryAsync(Model, cancellationToken);
+                if (response.Succeeded)
+                {
+                    await OnValidSubmit.InvokeAsync();
+                    _mudDialog?.Close();
+
+                    _snackbarService.DisplaySuccess("Category successfully added.");
+                }
+                else
+                {
+                    _snackbarService.DisplayError(response.Messages);
+                }
+            }
+            else
+            {
+                var response = await _categoryApiService.UpdateCategoryAsync(Model, cancellationToken);
+                if (response.Succeeded)
+                {
+                    await OnValidSubmit.InvokeAsync();
+                    _mudDialog?.Close();
+
+                    _snackbarService.DisplaySuccess("Category successfully updated.");
+                }
+                else
+                {
+                    _snackbarService.DisplayError(response.Messages);
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+            _snackbarService.DisplayError(ex.Message);
+        }
+        finally
+        {
+            IsBusy = false;
+            StateHasChanged();
+
+        }
+    }
+
+    private void AddNewTranslation()
+    {
+        var missingLanguage = Languages
+            .FirstOrDefault(lang => !Model.Translations.Any(t => t.LanguageId == lang.Id));
+
+        if (missingLanguage != null)
+        {
+            Model.Translations.Add(new CategoryTranslationRequest
+                {
+                    LanguageId = missingLanguage.Id
+                });
+        }
+    }
+
+    private void RemoveTranslation(CategoryTranslationRequest? translation)
+    {
+
+        if (translation != null)
+        {
+            Model.Translations.Remove(translation);
+        }
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        editContext.OnFieldChanged -= _handler;
+
+    }
+
+    private void Cancel() => _mudDialog?.Cancel();
+
+
+}
+

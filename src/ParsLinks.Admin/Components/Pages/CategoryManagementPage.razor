@@ -1,0 +1,101 @@
+﻿@page "/categories"
+
+<div class="page">
+    <div class="header">
+        <div class="title">
+            <i class="fad fa-list-tree fa-2x"></i>
+            <h4>
+                @_viewLocalizer[ViewResources.Categories]
+            </h4>
+        </div>
+
+        <div class="action-group">
+            <div class="flex-grow-1">
+                <MudTextField T="string"
+                @bind-Value="@Query"
+                TextChanged="@(s=>OnSearchData(s))"
+                Placeholder="@_viewLocalizer[ViewResources.Search]"
+                Adornment="Adornment.Start"
+                Margin="Margin.Dense"
+                Variant="@Variant.Text"
+                Class="shadow-box"
+                Underline=false
+                Immediate="false"
+                AdornmentIcon="@Icons.Material.Filled.Search"
+                IconSize="MudBlazor.Size.Medium" />
+            </div>
+
+            <div class="add-btn-lg">
+                <CategoryAddButton OnActionCompleted="LoadDataAsync" />
+            </div>
+            <RefreshPageButton OnActionCompleted="LoadDataAsync" />
+        </div>
+
+    </div>
+    <div class="body">
+        <span style="color:var(--gray-500)">@_viewLocalizer[ViewResources.Count]: @ItemSource.TotalCount</span>
+        <div class="list">
+            <Virtualize @ref=_virtualizeGrid Context="category" ItemsProvider="LoadVirtualizeDataAsync" OverscanCount="10">
+                <ItemContent>
+                    <CategoryAdminCard Model="@category" OnEdited="LoadDataAsync" OnDeleted="LoadDataAsync" />
+                </ItemContent>
+                <Placeholder>
+                    <BlogPostAdminCard IsLoading="true" />
+                </Placeholder>
+                <EmptyContent>
+                    <div>
+                        @_messageLocalizer[MessageResources.no_records_found_please_add_new_entries_to_manage]
+                    </div>
+                </EmptyContent>
+            </Virtualize>
+        </div>
+    </div>
+
+
+</div>
+<div class="add-btn-sm">
+    <CategoryAddFabButton OnActionCompleted="LoadDataAsync" />
+</div>
+@code {
+
+
+
+    Virtualize<CategoryResponse>? _virtualizeGrid;
+    string? Query;
+    IVirtualizedList<CategoryResponse> ItemSource = new VirtualizedList<CategoryResponse>();
+
+
+    async Task LoadDataAsync()
+    {
+        if (_virtualizeGrid != null)
+            await _virtualizeGrid.RefreshDataAsync();
+    }
+
+    async ValueTask<ItemsProviderResult<CategoryResponse>> LoadVirtualizeDataAsync(ItemsProviderRequest request)
+    {
+
+        var response = await _categoryApiService.GetVirtualizedAllAsync(new CategoryQueryParameters
+            {
+                Index = request.StartIndex,
+                Size = request.Count,
+                Query = Query,
+                Lang = lang
+            }, request.CancellationToken);
+
+        if (response.Succeeded)
+        {
+            ItemSource = response.Data;
+            StateHasChanged();
+        }
+
+        return new ItemsProviderResult<CategoryResponse>(ItemSource.Items, ItemSource.TotalCount);
+
+    }
+    private async Task OnSearchData(string query)
+    {
+        Query = query;
+        await LoadDataAsync();
+    }
+
+
+}

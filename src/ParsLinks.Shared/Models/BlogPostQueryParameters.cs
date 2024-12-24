@@ -8,3 +8,8 @@ public class BlogPostQueryParameters : QueryParametersBase
 
 
 }
+public class CategoryQueryParameters : QueryParametersBase
+{
+
+
+}

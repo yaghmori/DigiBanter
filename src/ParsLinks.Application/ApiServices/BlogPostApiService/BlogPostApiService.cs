@@ -53,7 +53,6 @@ namespace ParsLinks.Application.ApiServices
             return await response.ToResultAsync(_jsonService, cancellationToken);
         }
 
-
         public async Task<IApiResult> DeletePostByIdAsync(int postId, CancellationToken cancellationToken = default)
         {
             var uri = string.Format(AppEndPoints.BlogPosts.DeleteById, postId);

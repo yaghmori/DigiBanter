@@ -3,6 +3,7 @@
 <MudNavMenu  Bordered="true" Rounded="true" Color="MudBlazor.Color.Primary" Class="pa-2">
     <MudNavLink Href="@AppUri.Dashboard" Match="NavLinkMatch.All" Icon="fad fa-grid-2">@_viewLocalizer[ViewResources.Dashboard]</MudNavLink>
     <MudNavLink Href="@AppUri.Posts" Icon="fad fa-blog">@_viewLocalizer[ViewResources.BlogPostList]</MudNavLink>
+    <MudNavLink Href="@AppUri.CategoryList" Icon="fad fa-list-tree">@_viewLocalizer[ViewResources.CategoryList]</MudNavLink>
 
     <MudNavLink OnClick="Logout" Icon="fad fa-right-from-bracket">@_viewLocalizer[ViewResources.Logout]</MudNavLink>
 

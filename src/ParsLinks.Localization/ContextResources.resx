@@ -117,40 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AttachmentDeleteConfirmation" xml:space="preserve">
-    <value>Are you sure you want to delete this attachment?</value>
+  <data name="Category_Description" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="FileSizeExceedsMmaximumLimit" xml:space="preserve">
-    <value>The file size exceeds the maximum limit {0}.</value>
+  <data name="Category_name" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="FileSuccessfullyUploaded" xml:space="preserve">
-    <value>The file has been successfully uploaded.</value>
-  </data>
-  <data name="FileUploadError" xml:space="preserve">
-    <value>The file upload was intrupted</value>
-  </data>
-  <data name="FileUploadSucceed" xml:space="preserve">
-    <value>The file upload was successful</value>
-  </data>
-  <data name="nothing_here-yet_stay_tuned_for_updates" xml:space="preserve">
-    <value>Nothing here yet. Stay tuned for updates!</value>
-  </data>
-  <data name="no_records_found_please_add_new_entries_to_manage" xml:space="preserve">
-    <value>No records found. Please add new entries to manage</value>
-  </data>
-  <data name="PostDeleteConfirmation" xml:space="preserve">
-    <value>Are you sure you want to delete this post? This action will permanently delete all related data as well.</value>
-  </data>
-  <data name="PostStatusChangeConfirmation" xml:space="preserve">
-    <value>Are you sure you want to change post status?</value>
-  </data>
-  <data name="PostSuccessfullyDeleted" xml:space="preserve">
-    <value>Post has been successfully deleted.</value>
-  </data>
-  <data name="CategorySuccessfullyDeleted" xml:space="preserve">
-    <value>Category has been successfully deleted.</value>
-  </data>
-  <data name="CategoryDeleteConfirmation" xml:space="preserve">
-    <value>Are you sure you want to delete this category? This action will permanently delete all related data as well.</value>
+  <data name="Category_Slug" xml:space="preserve">
+    <value>Slug</value>
   </data>
 </root>

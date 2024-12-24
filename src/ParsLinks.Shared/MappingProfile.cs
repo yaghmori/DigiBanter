@@ -53,7 +53,14 @@ public class MappingProfile : AutoMapper.Profile
             .ForMember(dest => dest.EstimatedReadingTime, opt => opt.MapFrom(src => CalculateReadingTime(src.Content)));
 
 
+        CreateMap<CategoryTranslation, CategoryTranslationRequest>()
+            .ReverseMap();
 
+
+
+        CreateMap<Category, CategoryTranslationRequest>()
+            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id))
+            .ReverseMap();
 
 
         CreateMap<PostTranslation, BlogPostTranslationRequest>()
@@ -62,12 +69,14 @@ public class MappingProfile : AutoMapper.Profile
 
 
 
+        CreateMap<Category, CategoryRequest>().ReverseMap();
         CreateMap<Post, BlogPostRequest>().ReverseMap();
         CreateMap<BlogPostResponse, BlogPostRequest>().ReverseMap();
         CreateMap<LanguageResponse, Language>().ReverseMap();
         CreateMap<Category, CategoryResponse>().ReverseMap();
         CreateMap<CategoryTranslation, CategoryResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CategoryId))
+            .ForMember(dest => dest.AvailableTranslations, opt => opt.MapFrom(src => src.Category.Translations.Select(x => x.Language.Name).ToList()))
             .ReverseMap();
     }
 

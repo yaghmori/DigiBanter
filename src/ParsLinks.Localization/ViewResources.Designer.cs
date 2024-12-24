@@ -70,11 +70,29 @@ namespace ParsLinks.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New Category.
+        /// </summary>
+        public static string AddNewCategory {
+            get {
+                return ResourceManager.GetString("AddNewCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Post.
         /// </summary>
         public static string AddNewPost {
             get {
                 return ResourceManager.GetString("AddNewPost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Translation.
+        /// </summary>
+        public static string AddNewTranslation {
+            get {
+                return ResourceManager.GetString("AddNewTranslation", resourceCulture);
             }
         }
         
@@ -97,11 +115,29 @@ namespace ParsLinks.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Categories.
         /// </summary>
         public static string Categories {
             get {
                 return ResourceManager.GetString("Categories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category List.
+        /// </summary>
+        public static string CategoryList {
+            get {
+                return ResourceManager.GetString("CategoryList", resourceCulture);
             }
         }
         
@@ -246,6 +282,15 @@ namespace ParsLinks.Localization {
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         

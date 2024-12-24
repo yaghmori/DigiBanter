@@ -1,6 +1,6 @@
 ﻿namespace ParsLinks.Domain.Entities;
 
-public class CategoryTranslation:BaseEntity<int>
+public class CategoryTranslation : BaseEntity<int>
 {
     public int CategoryId { get; set; }
     public int LanguageId { get; set; }

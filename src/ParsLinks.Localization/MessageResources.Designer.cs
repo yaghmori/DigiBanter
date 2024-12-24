@@ -70,6 +70,24 @@ namespace ParsLinks.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this category? This action will permanently delete all related data as well..
+        /// </summary>
+        public static string CategoryDeleteConfirmation {
+            get {
+                return ResourceManager.GetString("CategoryDeleteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category has been successfully deleted..
+        /// </summary>
+        public static string CategorySuccessfullyDeleted {
+            get {
+                return ResourceManager.GetString("CategorySuccessfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The file size exceeds the maximum limit {0}..
         /// </summary>
         public static string FileSizeExceedsMmaximumLimit {

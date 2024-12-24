@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParsLinks.Shared.Constatns;
 using ParsLinks.Shared.Dto.Response;
-using ParsLinks.Shared.ResultWrapper;
+using ParsLinks.Shared.Models;
 
 public static class CategoryEndpoints
 {
@@ -11,19 +11,53 @@ public static class CategoryEndpoints
 
 
         group.MapGet("/", GetAll).AllowAnonymous();
+        group.MapGet("/{categoryId}/detail", GetDetailById).AllowAnonymous();
+        group.MapPost("/", AddCategory).AllowAnonymous();
+        group.MapPatch("/", UpdateCategory).AllowAnonymous();
+        group.MapDelete("/{categoryId}", DeletePostById).AllowAnonymous();
+
     }
 
 
-
-
-
-    private static async Task<IResult> GetAll(ICategoryService categoryService, [FromQuery] string? lang = "en-US", CancellationToken cancellationToken = default!)
+    private static async Task<IResult> AddCategory(
+      [FromBody] CategoryRequest request,
+      ICategoryService categoryService,
+      CancellationToken cancellationToken = default!)
     {
-        var result = await categoryService.GetAllAsync(lang, cancellationToken);
+        return await categoryService.AddAsync(request, cancellationToken);
 
-        if (!result.IsSuccess)
-            return Results.BadRequest(result.ErrorMessage);
+    }
 
-        return TypedResults.Ok(ApiResult<List<CategoryResponse>>.Success(result.Data));
+    private static async Task<IResult> UpdateCategory(
+        [FromBody] CategoryRequest request,
+        ICategoryService categoryService,
+        CancellationToken cancellationToken = default!)
+    {
+        return await categoryService.UpdateAsync(request, cancellationToken);
+
+    }
+
+
+    private static async Task<IResult> DeletePostById(
+  [FromRoute] int categoryId,
+  ICategoryService categoryService,
+  CancellationToken cancellationToken)
+    {
+        return await categoryService.DeleteAsync(categoryId, cancellationToken);
+    }
+    private static async Task<IResult> GetAll(ICategoryService categoryService,
+        [AsParameters] CategoryQueryParameters parameters,
+        CancellationToken cancellationToken = default!)
+    {
+        return await categoryService.GetAllAsync(parameters, cancellationToken);
+    }
+
+    private static async Task<IResult> GetDetailById(
+        [FromRoute] int categoryId,
+        ICategoryService categoryService,
+        CancellationToken cancellationToken = default!)
+    {
+        return await categoryService.GetDetailByIdAsync(categoryId, cancellationToken);
+
     }
 }
